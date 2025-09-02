@@ -355,10 +355,31 @@ const FazerPedido = () => {
 
   const handleCheckoutConfirm = ({ name, address, payment }: { name: string; address: string; payment: PaymentMethod }) => {
     if (cartItems.length === 0) return;
-    const itemsText = cartItems.map((i, idx) => `${idx + 1}. ${i.nome} x${i.quantity} (${i.precoString})`).join("\n");
+    
+    // Formatar itens com quantidade e preço individual
+    const itemsText = cartItems.map((i) => {
+      if (i.quantity === 1) {
+        return `${i.quantity}x ${i.nome} — ${i.precoString}`;
+      } else {
+        return `${i.quantity}x ${i.nome} — ${i.precoString}`;
+      }
+    }).join("  \n");
+    
     const total = cartItems.reduce((acc, i) => acc + i.unitPrice * i.quantity, 0);
     const totalBRL = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    const messageRaw = `Olá! Gostaria de fazer um pedido:\n\nItens:\n${itemsText}\n\nTotal: ${totalBRL}\n\nNome: ${name}\nEndereço: ${address}\nPagamento: ${payment}\n\nEnviado via site.`;
+    
+    // Mensagem formatada com emojis e quebras de linha
+    const messageRaw = `✨🍫 **Novo Pedido Doce Emergência!** 🍫✨  
+ 
+📦 **Itens:**  
+${itemsText}  
+ 
+💰 **Total:** ${totalBRL}  
+ 
+👤 **Cliente:** ${name}  
+📍 **Endereço:** ${address}  
+💳 **Forma de Pagamento:** ${payment}`;
+
     const phone = "5511976824710";
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(messageRaw)}`;
     window.open(url, '_blank');

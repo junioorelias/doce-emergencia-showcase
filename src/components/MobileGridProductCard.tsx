@@ -23,7 +23,7 @@ const MobileGridProductCard = ({ product, onAddToCart, onOpenDetails }: MobileGr
       <div className="p-3 flex flex-col gap-2">
         <div className="w-full aspect-square bg-doce-yellow/10 rounded-lg flex items-center justify-center overflow-hidden">
           <img
-            src={product.image || "/placeholder.svg"}
+            src={product.image || "/doce-placeholder.svg"}
             alt={`Imagem de ${product.nome} - Doce Emergência`}
             className="w-3/4 h-3/4 object-contain"
             loading="lazy"

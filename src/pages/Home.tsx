@@ -52,19 +52,25 @@ const Home = () => {
                     />
                   </CarouselItem>
                   <CarouselItem>
-                    <img
-                      src="/lovable-uploads/a4a13826-9001-4d9f-aae3-2ad87589ea6d.png"
+                     <img
+                      src="/lovable-uploads/doce-emergencia-logo.png"
                       alt="Promoções e novidades - Doce Emergência - Slide 2"
                       className="w-full h-40 md:h-56 object-cover"
                       loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = "/doce-placeholder.svg";
+                      }}
                     />
                   </CarouselItem>
                   <CarouselItem>
-                    <img
-                      src="/lovable-uploads/8756e0fa-396e-4224-9737-73def986814f.png"
+                     <img
+                      src="/lovable-uploads/doce-emergencia-logo.png"
                       alt="Lançamentos da semana - Doce Emergência - Slide 3"
                       className="w-full h-40 md:h-56 object-cover"
                       loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = "/doce-placeholder.svg";
+                      }}
                     />
                   </CarouselItem>
                   <CarouselItem>
@@ -103,7 +109,7 @@ const Home = () => {
         <div className="max-w-2xl mx-auto">
           <Button
             onClick={handleWhatsAppRedirect}
-            className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 text-lg md:text-xl font-bold py-8 md:py-10 h-auto shadow-lg transition-all duration-300 active:scale-95 rounded-xl"
+            className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 hover:scale-105 text-lg md:text-xl font-bold py-8 md:py-10 h-auto shadow-lg transition-all duration-300 active:scale-95 rounded-xl"
           >
             ⚡ PEDIR AGORA
           </Button>

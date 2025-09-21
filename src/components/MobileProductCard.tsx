@@ -28,7 +28,7 @@ const MobileProductCard = ({ product, onWhatsAppRedirect }: MobileProductCardPro
             {/* Product */}
             <div className="relative w-44 h-44 bg-doce-white/10 rounded-full flex items-center justify-center backdrop-blur-sm overflow-hidden drop-shadow-xl animate-float-slow">
               <img
-                src={product.image || "/placeholder.svg"}
+                src={product.image || "/doce-placeholder.svg"}
                 alt={`Imagem de ${product.nome} - Doce Emergência`}
                 className="w-40 h-40 object-contain"
                 loading="lazy"

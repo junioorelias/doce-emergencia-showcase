@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -26,6 +26,9 @@ const CheckoutModal = ({ open, onOpenChange, onConfirm }: CheckoutModalProps) =>
       <DialogContent className="sm:max-w-[520px]">
         <DialogHeader>
           <DialogTitle className="text-doce-brown">Finalizar pedido</DialogTitle>
+          <DialogDescription className="text-doce-brown/80">
+            Preencha os dados abaixo para enviar seu pedido pelo WhatsApp
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
@@ -41,9 +44,11 @@ const CheckoutModal = ({ open, onOpenChange, onConfirm }: CheckoutModalProps) =>
             <Label className="text-doce-brown mb-2 block">Forma de pagamento</Label>
             <RadioGroup value={payment} onValueChange={(v) => setPayment(v as PaymentMethod)} className="grid grid-cols-3 gap-2">
               {(["Pix", "Dinheiro", "Cartão"] as PaymentMethod[]).map((opt) => (
-                <div key={opt} className="flex items-center space-x-2 border rounded-md p-2">
+                <div key={opt} className={`flex items-center space-x-2 border rounded-md p-3 cursor-pointer transition-all duration-200 hover:bg-doce-yellow/10 hover:border-doce-yellow active:scale-95 ${
+                  payment === opt ? 'border-doce-yellow bg-doce-yellow/10 shadow-sm' : 'border-doce-gray/20 hover:border-doce-yellow/50'
+                }`}>
                   <RadioGroupItem id={`pm-${opt}`} value={opt} />
-                  <Label htmlFor={`pm-${opt}`} className="text-doce-brown text-sm">{opt}</Label>
+                  <Label htmlFor={`pm-${opt}`} className="text-doce-brown text-sm font-medium cursor-pointer flex-1">{opt}</Label>
                 </div>
               ))}
             </RadioGroup>

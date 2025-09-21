@@ -45,9 +45,12 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center flex-shrink-0">
             <img 
-              src="/lovable-uploads/a4a13826-9001-4d9f-aae3-2ad87589ea6d.png" 
-              alt="Doce Emergência" 
-              className="h-20 w-auto"
+              src="/lovable-uploads/doce-emergencia-logo.png" 
+              alt="Doce Emergência - Delivery de Doces" 
+              className="h-16 w-auto transition-transform hover:scale-105"
+              onError={(e) => {
+                e.currentTarget.src = "/placeholder.svg";
+              }}
             />
           </Link>
 

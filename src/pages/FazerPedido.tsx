@@ -20,7 +20,7 @@ const doces = [
     preco: "R$3,80",
     peso: "20g",
     categoria: "Dia a Dia",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ const doces = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const doces = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ const doces = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const doces = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
 
   // Bolo
@@ -67,7 +67,7 @@ const doces = [
     preco: "R$11,90",
     peso: "300g",
     categoria: "Bolo",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 7,
@@ -76,7 +76,7 @@ const doces = [
     preco: "R$11,90",
     peso: "300g",
     categoria: "Bolo",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 8,
@@ -85,7 +85,7 @@ const doces = [
     preco: "R$11,90",
     peso: "300g",
     categoria: "Bolo",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
 
   // Snacks
@@ -96,7 +96,7 @@ const doces = [
     preco: "R$16",
     peso: "100g",
     categoria: "Snacks",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 10,
@@ -105,7 +105,7 @@ const doces = [
     preco: "R$21",
     peso: "200g",
     categoria: "Snacks",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 11,
@@ -114,7 +114,7 @@ const doces = [
     preco: "R$42",
     peso: "400g",
     categoria: "Snacks",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
 
   // Tradicionais
@@ -125,7 +125,7 @@ const doces = [
     preco: "R$3,50",
     peso: "73g",
     categoria: "Tradicionais",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 13,
@@ -134,7 +134,7 @@ const doces = [
     preco: "R$3,50",
     peso: "55g",
     categoria: "Tradicionais",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 14,
@@ -143,7 +143,7 @@ const doces = [
     preco: "R$3,50",
     peso: "70g",
     categoria: "Tradicionais",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 15,
@@ -152,7 +152,7 @@ const doces = [
     preco: "R$3,50",
     peso: "70g",
     categoria: "Tradicionais",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
 
   // Salgados
@@ -163,7 +163,7 @@ const doces = [
     preco: "R$27",
     peso: "500g",
     categoria: "Salgados",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 17,
@@ -172,7 +172,7 @@ const doces = [
     preco: "R$25",
     peso: "500g",
     categoria: "Salgados",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 18,
@@ -181,7 +181,7 @@ const doces = [
     preco: "R$18,90",
     peso: "250g",
     categoria: "Salgados",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
 
   // Bebidas
@@ -192,7 +192,7 @@ const doces = [
     preco: "R$6",
     peso: "470ml",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 20,
@@ -201,7 +201,7 @@ const doces = [
     preco: "R$9",
     peso: "470ml",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 21,
@@ -210,7 +210,7 @@ const doces = [
     preco: "R$17",
     peso: "1L",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 22,
@@ -219,7 +219,7 @@ const doces = [
     preco: "R$4",
     peso: "500ml",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 23,
@@ -228,7 +228,7 @@ const doces = [
     preco: "R$5",
     peso: "500ml",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 24,
@@ -237,7 +237,7 @@ const doces = [
     preco: "R$6",
     peso: "350ml",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
   {
     id: 25,
@@ -246,7 +246,7 @@ const doces = [
     preco: "R$9",
     peso: "2L",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "/doce-placeholder.svg",
   },
 ];
 

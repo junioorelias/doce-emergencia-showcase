@@ -9,7 +9,7 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Doce Emergência Color Palette */
-    --background: 300 100% 99%; /* #FFFAFF - branco suave */
+    --background: 0 75% 57%; /* #DB3A34 - vermelho vivo */
     --foreground: 24 75% 15%; /* #3F220F - marrom chocolate */
 
     --card: 300 100% 99%; /* #FFFAFF - branco suave */
@@ -44,7 +44,6 @@ All colors MUST be HSL.
     --doce-yellow: 43 100% 67%; /* #FFC857 */
     --doce-brown: 24 75% 15%; /* #3F220F */
     --doce-gray: 240 3% 15%; /* #252527 */
-    --doce-light-gray: 240 3% 95%; /* #F2F2F2 - cinza muito claro */
     
     /* Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(var(--doce-red)), hsl(var(--doce-red) / 0.9));

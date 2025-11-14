@@ -55,10 +55,9 @@ export default {
 				'doce-red': 'hsl(var(--doce-red))',
 				'doce-white': 'hsl(var(--doce-white))',
 				'doce-yellow': 'hsl(var(--doce-yellow))',
-					'doce-brown': 'hsl(var(--doce-brown))',
-					'doce-gray': 'hsl(var(--doce-gray))',
-					'doce-light-gray': 'hsl(var(--doce-light-gray))',
-				},
+				'doce-brown': 'hsl(var(--doce-brown))',
+				'doce-gray': 'hsl(var(--doce-gray))',
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',

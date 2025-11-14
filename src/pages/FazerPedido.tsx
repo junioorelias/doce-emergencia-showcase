@@ -11,47 +11,246 @@ import CartSheet, { CartItem } from "@/components/CartSheet";
 import CheckoutModal, { type PaymentMethod } from "@/components/CheckoutModal";
 import MobileGridProductCard from "@/components/MobileGridProductCard";
 import { ShoppingCart } from "lucide-react";
-  const [doces, setDoces] = useState<Product[]>([]);
-  const [loadingProducts, setLoadingProducts] = useState(true);
-  const [errorProducts, setErrorProducts] = useState<string | null>(null);
-  const { toast } = useToast(); // Adicionar useToast aqui
+const doces = [
+  // Dia a Dia
+  {
+    id: 1,
+    nome: "BRIGADEIRO da SORTE",
+    descricao: "Brigadeiro de chocolate dentro de um blister com um bilhete da sorte.",
+    preco: "R$3,80",
+    peso: "20g",
+    categoria: "Dia a Dia",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 2,
+    nome: "BRIGADEIRO de COLHER: Chocolate",
+    descricao: "Brigadeiro de colher no copinho.",
+    preco: "R$5",
+    peso: "40g",
+    categoria: "Dia a Dia",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 3,
+    nome: "BRIGADEIRO de COLHER: Beijinho",
+    descricao: "Brigadeiro de colher no copinho.",
+    preco: "R$5",
+    peso: "40g",
+    categoria: "Dia a Dia",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 4,
+    nome: "BRIGADEIRO de COLHER: Amendoim",
+    descricao: "Brigadeiro de colher no copinho.",
+    preco: "R$5",
+    peso: "40g",
+    categoria: "Dia a Dia",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 5,
+    nome: "BRIGADEIRO de COLHER: Pistache",
+    descricao: "Brigadeiro de colher no copinho.",
+    preco: "R$5",
+    peso: "40g",
+    categoria: "Dia a Dia",
+    image: "/doce-placeholder.svg",
+  },
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoadingProducts(true);
-      setErrorProducts(null);
-      try {
-        const { data, error } = await supabase.from('products').select('*');
-        if (error) throw error;
-        setDoces(data as Product[]);
-      } catch (error: any) {
-        setErrorProducts(error.message);
-        toast({
-          title: "Erro ao carregar produtos",
-          description: error.message || "Não foi possível carregar os produtos do cardápio.",
-          variant: "destructive",
-        });
-      } finally {
-        setLoadingProducts(false);
-      }
-    };
-    fetchProducts();
-  }, [toast]); // Adicionar toast como dependência do useEffect
+  // Bolo
+  {
+    id: 6,
+    nome: "CAKE BOX: Doce de Leite com Nozes",
+    descricao: "Bolo de camadas recheado em bandeja de alumínio com tampa transparente + colherzinha.",
+    preco: "R$11,90",
+    peso: "300g",
+    categoria: "Bolo",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 7,
+    nome: "CAKE BOX: Chocolate",
+    descricao: "Bolo de camadas recheado em bandeja de alumínio com tampa transparente + colherzinha.",
+    preco: "R$11,90",
+    peso: "300g",
+    categoria: "Bolo",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 8,
+    nome: "CAKE BOX: Toalha Felpuda",
+    descricao: "Bolo de camadas recheado em bandeja de alumínio com tampa transparente + colherzinha.",
+    preco: "R$11,90",
+    peso: "300g",
+    categoria: "Bolo",
+    image: "/doce-placeholder.svg",
+  },
 
-  // Definir o tipo Product com base na estrutura do Supabase
-  interface Product {
-    id: number;
-    nome: string;
-    descricao: string;
-    preco: string;
-    peso: string;
-    categoria: string;
-    image: string;
-  }
+  // Snacks
+  {
+    id: 9,
+    nome: "MOONROCKS SOLO",
+    descricao: "Pipocas caramelizadas com cobertura de chocolate branco e leite ninho.",
+    preco: "R$16",
+    peso: "100g",
+    categoria: "Snacks",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 10,
+    nome: "MOONROCKS DUO",
+    descricao: "Pipocas caramelizadas com cobertura de chocolate branco e leite ninho.",
+    preco: "R$21",
+    peso: "200g",
+    categoria: "Snacks",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 11,
+    nome: "MOONROCKS FAMÍLIA",
+    descricao: "Pipocas caramelizadas com cobertura de chocolate branco e leite ninho.",
+    preco: "R$42",
+    peso: "400g",
+    categoria: "Snacks",
+    image: "/doce-placeholder.svg",
+  },
 
+  // Tradicionais
+  {
+    id: 12,
+    nome: "Doce de Amendoim (GALVANI)",
+    descricao: "Doce de amendoim tradicional.",
+    preco: "R$3,50",
+    peso: "73g",
+    categoria: "Tradicionais",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 13,
+    nome: "Doce de Abóbora",
+    descricao: "Doce de abóbora tradicional.",
+    preco: "R$3,50",
+    peso: "55g",
+    categoria: "Tradicionais",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 14,
+    nome: "Quindim",
+    descricao: "Quindim tradicional.",
+    preco: "R$3,50",
+    peso: "70g",
+    categoria: "Tradicionais",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 15,
+    nome: "Queijadinha",
+    descricao: "Queijadinha tradicional.",
+    preco: "R$3,50",
+    peso: "70g",
+    categoria: "Tradicionais",
+    image: "/doce-placeholder.svg",
+  },
 
+  // Salgados
+  {
+    id: 16,
+    nome: "BAGUETE IMPERIAL: Casadinhos",
+    descricao: "Presunto, queijo, catupiry e parmesão.",
+    preco: "R$27",
+    peso: "500g",
+    categoria: "Salgados",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 17,
+    nome: "BAGUETE IMPERIAL: Vegetariana",
+    descricao: "Brócolis, alho frito, mussarela e parmesão.",
+    preco: "R$25",
+    peso: "500g",
+    categoria: "Salgados",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 18,
+    nome: "SUPER REQHNAZE",
+    descricao: "Fatia de torta de frango macio, muito requeijão e queijo gratinado.",
+    preco: "R$18,90",
+    peso: "250g",
+    categoria: "Salgados",
+    image: "/doce-placeholder.svg",
+  },
 
-  const categorias = ["Todos", ...Array.from(new Set(doces.map(doce => doce.categoria)))];
+  // Bebidas
+  {
+    id: 19,
+    nome: "REFRÊSKO",
+    descricao: "Água saborizada com limão e açúcar.",
+    preco: "R$6",
+    peso: "470ml",
+    categoria: "Bebidas",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 20,
+    nome: "NUKU-JUICE (470ml)",
+    descricao: "Mix de maracujá, limão e morango (com ou sem açúcar).",
+    preco: "R$9",
+    peso: "470ml",
+    categoria: "Bebidas",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 21,
+    nome: "NUKU-JUICE (1 litro)",
+    descricao: "Mix de maracujá, limão e morango (com ou sem açúcar).",
+    preco: "R$17",
+    peso: "1L",
+    categoria: "Bebidas",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 22,
+    nome: "Água",
+    descricao: "Água mineral.",
+    preco: "R$4",
+    peso: "500ml",
+    categoria: "Bebidas",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 23,
+    nome: "Água com gás",
+    descricao: "Água mineral com gás.",
+    preco: "R$5",
+    peso: "500ml",
+    categoria: "Bebidas",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 24,
+    nome: "Refrigerante lata",
+    descricao: "Refrigerante em lata.",
+    preco: "R$6",
+    peso: "350ml",
+    categoria: "Bebidas",
+    image: "/doce-placeholder.svg",
+  },
+  {
+    id: 25,
+    nome: "Coca-Cola retornável",
+    descricao: "Coca-Cola retornável.",
+    preco: "R$9",
+    peso: "2L",
+    categoria: "Bebidas",
+    image: "/doce-placeholder.svg",
+  },
+];
+
+const categorias = ["Todos", "Dia a Dia", "Bolo", "Snacks", "Tradicionais", "Salgados", "Bebidas"];
 
 const FazerPedido = () => {
   const [categoriaAtiva, setCategoriaAtiva] = useState("Todos");
@@ -109,24 +308,6 @@ const FazerPedido = () => {
     ? doces
     : doces.filter(doce => doce.categoria === categoriaAtiva);
 
-  // Adicionar função para enviar o pedido para o Supabase
-  const sendOrderToSupabase = async (orderData: any) => {
-    try {
-      const { data, error } = await supabase.from('orders').insert([orderData]);
-      if (error) throw error;
-      console.log('Pedido enviado com sucesso:', data);
-      return true;
-    } catch (error: any) {
-      console.error('Erro ao enviar pedido:', error.message);
-      toast({
-        title: "Erro ao finalizar pedido",
-        description: error.message || "Não foi possível enviar seu pedido. Tente novamente.",
-        variant: "destructive",
-      });
-      return false;
-    }
-  };
-
   useEffect(() => {
     setVisibleCount(8);
   }, [categoriaAtiva, isMobile]);
@@ -172,7 +353,7 @@ const FazerPedido = () => {
 
   const cartCount = cartItems.reduce((acc, i) => acc + i.quantity, 0);
 
-  const handleCheckoutConfirm = async ({ name, address, payment }: { name: string; address: string; payment: PaymentMethod }) => {
+  const handleCheckoutConfirm = ({ name, address, payment }: { name: string; address: string; payment: PaymentMethod }) => {
     if (cartItems.length === 0) return;
     
     // Formatar itens com quantidade e preço individual
@@ -200,28 +381,8 @@ ${itemsText}
 💳 **Forma de Pagamento:** ${payment}`;
 
     const phone = "5511976824710";
-        const orderData = {
-      user_id: session?.user.id || null,
-      client_name: name,
-      delivery_address: address,
-      payment_method: payment,
-      total_amount: total,
-      items: cartItems.map(item => ({
-        product_id: item.id,
-        name: item.nome,
-        quantity: item.quantity,
-        unit_price: item.unitPrice,
-      })),
-      status: 'pending_whatsapp',
-    };
-
-    const isOrderSaved = await sendOrderToSupabase(orderData);
-
-    if (isOrderSaved) {
-      const phone = "5511976824710";
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(messageRaw)}`;
-      window.open(url, '_blank');
-    }
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(messageRaw)}`;
+    window.open(url, '_blank');
     setCheckoutOpen(false);
     setCartOpen(false);
     setCartItems([]);
@@ -246,31 +407,13 @@ ${itemsText}
   };
 
   return (
-    <>
-      <CartSheet
-        open={cartOpen}
-        onOpenChange={setCartOpen}
-        items={cartItems}
-        onIncrease={increaseItem}
-        onDecrease={decreaseItem}
-        onRemove={removeItem}
-        onCheckout={() => {
-          setCartOpen(false);
-          setCheckoutOpen(true);
-        }}
-      />
-      <CheckoutModal
-        open={checkoutOpen}
-        onOpenChange={setCheckoutOpen}
-        onConfirm={handleCheckoutConfirm}
-      />
-    <div className="min-h-screen bg-doce-light-gray py-6">
+    <div className="min-h-screen bg-background py-6">
       <div className="container mx-auto px-4 py-4 md:py-12">
         <div className="text-center mb-6 md:mb-12">
-          <h1 className="text-4xl font-bold text-doce-brown mb-2 md:mb-4">
+          <h1 className="text-4xl font-bold text-doce-white mb-2 md:mb-4">
             Nosso Cardápio
           </h1>
-          <p className="text-doce-brown/80 text-lg">
+          <p className="text-doce-white/80 text-lg">
             Escolha seus doces favoritos e faça seu pedido pelo WhatsApp
           </p>
         </div>
@@ -355,7 +498,23 @@ ${itemsText}
         </Button>
       </div>
 
+        {/* Cart Sheet */}
+        <CartSheet
+          open={cartOpen}
+          onOpenChange={setCartOpen}
+          items={cartItems}
+          onIncrease={increaseItem}
+          onDecrease={decreaseItem}
+          onRemove={removeItem}
+          onCheckout={() => setCheckoutOpen(true)}
+        />
 
+        {/* Checkout Modal */}
+        <CheckoutModal
+          open={checkoutOpen}
+          onOpenChange={setCheckoutOpen}
+          onConfirm={handleCheckoutConfirm}
+        />
 
         {/* Product Modal */}
         <ProductModal
@@ -384,7 +543,6 @@ ${itemsText}
         </div>
       </div>
     </div>
-    </>
   );
 };
 

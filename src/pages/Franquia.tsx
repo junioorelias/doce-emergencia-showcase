@@ -50,7 +50,7 @@ const Franquia = () => {
 
   if (enviado) {
     return (
-      <div className="min-h-screen bg-background pt-20">
+      <div className="min-h-screen bg-doce-light-gray pt-20">
         <div className="container mx-auto px-4 py-16">
           <Card className="max-w-2xl mx-auto p-12 text-center bg-doce-white shadow-xl">
             <div className="bg-green-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -89,7 +89,7 @@ const Franquia = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-doce-light-gray pt-20">
       <div className="container mx-auto px-4 py-8">
         {/* Header com Urgência */}
         <div className="text-center mb-12">
@@ -97,77 +97,57 @@ const Franquia = () => {
             🚀 EXCLUSIVO
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold text-doce-white mb-4 leading-tight">
-            Torne-se um dos poucos parceiros da<br />
-            <span className="text-doce-yellow">Doce Emergência!</span>
-          </h1>
-          
-          <p className="text-xl text-doce-white/90 max-w-3xl mx-auto leading-relaxed">
-            Ainda estamos estruturando a operação de franquias, mas já é possível entrar na lista de interessados.<br />
-            Mostre que você leva isso a sério e será um dos primeiros a receber as novidades oficiais.
-          </p>
+            <h1 className="text-4xl md:text-5xl font-bold text-doce-brown mb-4 leading-tight">
+	              Seja um dos Primeiros a Fazer Parte da <span className="text-doce-yellow">Doce Emergência!</span>
+	            </h1>
+	            
+	            <p className="text-xl text-doce-brown/90 max-w-3xl mx-auto leading-relaxed">
+	              Uma Oportunidade Única de Empreender no Mercado de Doces Gourmet com um Modelo de Negócio Promissor e de Alto Impacto.
+	            </p>
         </div>
 
-        {/* Destacadores de Autoridade */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
-          <Card className="p-6 text-center bg-doce-white shadow-lg">
-            <div className="bg-doce-yellow w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <TrendingUp className="h-8 w-8 text-doce-brown" />
-            </div>
-            <h3 className="font-bold text-doce-brown mb-2">Demanda Acelerada</h3>
-            <p className="text-sm text-doce-brown/70">
-              Crescimento orgânico e público fiel buscando nossos doces todos os dias.
-            </p>
-          </Card>
-          
-          <Card className="p-6 text-center bg-doce-white shadow-lg">
-            <div className="bg-doce-yellow w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Star className="h-8 w-8 text-doce-brown" />
-            </div>
-            <h3 className="font-bold text-doce-brown mb-2">Receita Exclusiva</h3>
-            <p className="text-sm text-doce-brown/70">
-              Produtos autorais com forte conexão emocional.
-            </p>
-          </Card>
-          
-          <Card className="p-6 text-center bg-doce-white shadow-lg">
-            <div className="bg-doce-yellow w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Handshake className="h-8 w-8 text-doce-brown" />
-            </div>
-            <h3 className="font-bold text-doce-brown mb-2">Mentoria Total</h3>
-            <p className="text-sm text-doce-brown/70">
-              Você não estará sozinho. Suporte estratégico e ferramentas, do início à operação.
-            </p>
-          </Card>
-        </div>
-
-        {/* Escassez e Seleção */}
-        <Card className="max-w-2xl mx-auto p-8 bg-doce-white border-2 border-doce-yellow/20">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-doce-brown mb-4">
-              ⏰ Critérios de Seleção
-            </h2>
-            <div className="space-y-3 text-left">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-doce-brown rounded-full"></div>
-                <span className="text-doce-brown">
-                  <strong>Prioridade será dada aos primeiros interessados</strong>
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-doce-brown rounded-full"></div>
-                <span className="text-doce-brown">
-                  Apenas cadastros com <strong>real intenção</strong> serão considerados
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-doce-brown rounded-full"></div>
-                <span className="text-doce-brown">
-                  Análise de perfil e localização estratégica
-                </span>
-              </div>
-            </div>
-          </div>
+	        {/* Seção 1: A Revolução da Doçura */}
+	        <div className="max-w-4xl mx-auto mb-12">
+	          <h2 className="text-3xl font-bold text-doce-brown mb-4 text-center">
+	            O Mercado Pede Mais, e Nós Entregamos.
+	          </h2>
+	          <p className="text-lg text-doce-brown/80 text-center max-w-3xl mx-auto leading-relaxed">
+	            A <strong>Doce Emergência</strong> nasceu de uma necessidade clara: a vontade inadiável por um doce gourmet de alta qualidade, entregue com agilidade e excelência. Em um mercado saturado de opções comuns, nosso modelo de negócio se destaca por ser focado na <strong>conveniência, na qualidade premium e na experiência do cliente</strong>.
+	          </p>
+	          <p className="text-lg text-doce-brown/80 text-center max-w-3xl mx-auto leading-relaxed mt-4">
+	            Não vendemos apenas doces; vendemos <strong>soluções para momentos de emergência de doçura</strong>. Isso nos posiciona em um nicho de alto crescimento e fidelidade. Nossos produtos, feitos com ingredientes selecionados e receitas exclusivas, garantem um diferencial competitivo que se traduz em alta lucratividade.
+	          </p>
+	        </div>
+	
+	        {/* Seção 2: O Modelo de Negócio (Implícito) */}
+	        <div className="max-w-4xl mx-auto mb-12 p-8 bg-doce-yellow/10 rounded-xl">
+	          <h2 className="text-3xl font-bold text-doce-brown mb-4 text-center">
+	            O Segredo do Nosso Sucesso
+	          </h2>
+	          <p className="text-lg text-doce-brown/80 text-center max-w-3xl mx-auto leading-relaxed">
+	            Nosso modelo de operação foi desenhado para ser <strong>enxuto, escalável e altamente replicável</strong>. Utilizamos tecnologia de ponta (como o nosso sistema de pedidos integrado) para otimizar cada etapa, desde a produção até a entrega final. Isso permite que nossos parceiros se concentrem no que realmente importa: <strong>a qualidade do produto e o relacionamento com o cliente</strong>.
+	          </p>
+	          <p className="text-lg text-doce-brown/80 text-center max-w-3xl mx-auto leading-relaxed mt-4">
+	            Embora os detalhes do nosso <em>know-how</em> sejam reservados aos nossos futuros franqueados, o que podemos revelar é que a estrutura é pensada para <strong>maximizar a margem de lucro</strong> e <strong>minimizar os custos operacionais</strong> tradicionais do setor. É um negócio de futuro, com foco em delivery e na experiência digital.
+	          </p>
+	        </div>
+	
+	        {/* Seção 3: A Lista de Espera - Sua Vantagem Competitiva */}
+	        <Card className="max-w-2xl mx-auto p-8 bg-doce-white border-2 border-doce-yellow/20">
+	          <div className="text-center mb-8">
+	            <h2 className="text-2xl font-bold text-doce-brown mb-4">
+	              Não Perca o Momento Certo: Entre na Lista de Espera Exclusiva.
+	            </h2>
+	            <p className="text-doce-brown/80 mb-6">
+	              A demanda por franquias da Doce Emergência tem sido extraordinária. Para garantir que cada novo parceiro receba o suporte e a atenção que merece, estamos abrindo um número <strong>limitado</strong> de vagas para a nossa primeira onda de expansão.
+	            </p>
+	            <p className="text-doce-brown/80 font-semibold">
+	              Ao se inscrever na nossa <strong>Lista de Espera Exclusiva</strong>, você garante a oportunidade de ser um dos primeiros a receber o nosso <strong>Plano de Expansão Detalhado</strong> e ter prioridade no processo de seleção.
+	            </p>
+	            <p className="text-xl font-bold text-doce-red mt-4">
+	              Aja agora. O futuro da doçura espera por você.
+	            </p>
+	          </div>
 
           {/* Formulário */}
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -228,17 +208,10 @@ const Franquia = () => {
             </Button>
           </form>
 
-          <p className="text-xs text-gray-600 text-center mt-4">
-            * Ao enviar, você concorda em receber comunicações sobre oportunidades de franquia
-          </p>
-        </Card>
-
-        {/* Footer de Credibilidade */}
-        <div className="text-center mt-12">
-          <p className="text-sm text-doce-brown/60">
-            📈 Seja parte de uma marca que cresce 25% ao mês
-          </p>
-        </div>
+	          <p className="text-xs text-gray-600 text-center mt-4">
+	            * Ao enviar, você concorda em receber comunicações sobre oportunidades de franquia
+	          </p>
+	        </Card>
       </div>
     </div>
   );

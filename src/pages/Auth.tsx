@@ -129,6 +129,39 @@ const Auth = () => {
     }
   };
 
+  const handlePasswordReset = async () => {
+    if (!loginData.email) {
+      toast({
+        title: "E-mail obrigatório",
+        description: "Por favor, digite seu e-mail para recuperar a senha.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(loginData.email, {
+        redirectTo: `${window.location.origin}/meu-perfil` // ou uma página específica para reset de senha
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "E-mail de recuperação enviado!",
+        description: "Verifique sua caixa de entrada para instruções de recuperação de senha.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Erro ao enviar e-mail de recuperação",
+        description: error.message || "Tente novamente mais tarde.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleGoogleLogin = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
@@ -148,8 +181,8 @@ const Auth = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-background pt-20 flex items-center justify-center">
+	  return (
+	    <div className="min-h-screen bg-doce-light-gray pt-20 flex items-center justify-center">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-md mx-auto">
           {/* Header */}
@@ -221,13 +254,23 @@ const Auth = () => {
                     </div>
                   </div>
 
-                  <Button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 font-bold py-3 mt-6"
-                  >
-                    {loading ? "Entrando..." : "Entrar"}
-                  </Button>
+                    <Button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 font-bold py-3 mt-6"
+                    >
+                      {loading ? "Entrando..." : "Entrar"}
+                    </Button>
+
+                    <div className="text-center mt-4">
+                      <button
+                        type="button"
+                        onClick={handlePasswordReset}
+                        className="text-sm text-doce-brown/70 hover:underline"
+                      >
+                        Esqueceu sua senha?
+                      </button>
+                    </div>
 
                   <div className="relative my-6">
                     <div className="absolute inset-0 flex items-center">

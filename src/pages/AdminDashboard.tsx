@@ -270,6 +270,58 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleDeleteCoupon = async (couponId: string) => {
+    if (!window.confirm("Tem certeza que deseja excluir este cupom?")) return;
+    try {
+      const { error } = await supabase
+        .from('coupons')
+        .delete()
+        .eq('id', couponId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Cupom excluído",
+        description: "O cupom foi removido com sucesso.",
+      });
+
+      loadData();
+    } catch (error) {
+      console.error('Error deleting coupon:', error);
+      toast({
+        title: "Erro ao excluir cupom",
+        description: "Tente novamente",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteReward = async (rewardId: string) => {
+    if (!window.confirm("Tem certeza que deseja excluir esta recompensa?")) return;
+    try {
+      const { error } = await supabase
+        .from('rewards')
+        .delete()
+        .eq('id', rewardId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Recompensa excluída",
+        description: "A recompensa foi removida com sucesso.",
+      });
+
+      loadData();
+    } catch (error) {
+      console.error('Error deleting reward:', error);
+      toast({
+        title: "Erro ao excluir recompensa",
+        description: "Tente novamente",
+        variant: "destructive",
+      });
+    }
+  };
+
   const toggleRewardStatus = async (rewardId: string, currentStatus: boolean) => {
     try {
       const { error } = await supabase
@@ -469,17 +521,27 @@ const AdminDashboard = () => {
                         )}
                       </div>
                     </div>
-                    <Button
-                      onClick={() => toggleCouponStatus(coupon.id, coupon.is_active)}
-                      variant="ghost"
-                      size="sm"
-                    >
-                      {coupon.is_active ? (
-                        <ToggleRight className="h-5 w-5 text-green-600" />
-                      ) : (
-                        <ToggleLeft className="h-5 w-5 text-gray-400" />
-                      )}
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => toggleCouponStatus(coupon.id, coupon.is_active)}
+                        variant="ghost"
+                        size="sm"
+                      >
+                        {coupon.is_active ? (
+                          <ToggleRight className="h-5 w-5 text-green-600" />
+                        ) : (
+                          <ToggleLeft className="h-5 w-5 text-gray-400" />
+                        )}
+                      </Button>
+                      <Button
+                        onClick={() => handleDeleteCoupon(coupon.id)}
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-500 hover:bg-red-50"
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </Button>
+                    </div>
                   </div>
                 </Card>
               ))}
@@ -594,17 +656,27 @@ const AdminDashboard = () => {
                         )}
                       </div>
                     </div>
-                    <Button
-                      onClick={() => toggleRewardStatus(reward.id, reward.is_active)}
-                      variant="ghost"
-                      size="sm"
-                    >
-                      {reward.is_active ? (
-                        <ToggleRight className="h-5 w-5 text-green-600" />
-                      ) : (
-                        <ToggleLeft className="h-5 w-5 text-gray-400" />
-                      )}
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => toggleRewardStatus(reward.id, reward.is_active)}
+                        variant="ghost"
+                        size="sm"
+                      >
+                        {reward.is_active ? (
+                          <ToggleRight className="h-5 w-5 text-green-600" />
+                        ) : (
+                          <ToggleLeft className="h-5 w-5 text-gray-400" />
+                        )}
+                      </Button>
+                      <Button
+                        onClick={() => handleDeleteReward(reward.id)}
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-500 hover:bg-red-50"
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </Button>
+                    </div>
                   </div>
                 </Card>
               ))}

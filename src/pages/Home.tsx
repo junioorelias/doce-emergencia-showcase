@@ -35,10 +35,10 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-doce-light-gray">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="container mx-auto px-4 py-6 md:py-8">
+      <section className="relative overflow-hidden pt-6 md:pt-8">
+        <div className="container mx-auto px-4">
           <div className="relative max-w-2xl mx-auto">
             <div className="relative h-40 md:h-56 rounded-2xl overflow-hidden shadow-2xl">
               <Carousel setApi={setCarouselApi} opts={{ loop: true }}>
@@ -156,8 +156,8 @@ const Home = () => {
       </section>
 
       {/* Quick Info Section */}
-      <section className="container mx-auto px-4 py-6">
-        <div className="bg-[#222] border border-[#FFD700] rounded-2xl p-6 md:p-8 shadow-xl max-w-2xl mx-auto text-center">
+      <section className="container mx-auto px-4 py-6 md:py-8">
+        <div className="bg-doce-brown rounded-2xl p-6 md:p-8 shadow-xl max-w-2xl mx-auto text-center">
           <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">
             🍰 Doce Emergência
           </h2>

@@ -183,14 +183,14 @@ const Recompensas = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background pt-20 flex items-center justify-center">
+      <div className="min-h-screen bg-doce-light-gray pt-20 flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-doce-brown" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-doce-light-gray pt-20">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">

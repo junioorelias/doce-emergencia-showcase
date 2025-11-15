@@ -1,32 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { TrendingUp, Users, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client"; // Importar supabase
 
 const Votacao = () => {
-  const [usuarioLogado, setUsuarioLogado] = useState(false); // Alterado para estado real
+  const [usuarioLogado] = useState(false); // Simulação - integrar com auth depois
   const [votosRealizados, setVotosRealizados] = useState<string[]>([]);
   const { toast } = useToast();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUsuarioLogado(!!session); // Define se o usuário está logado
-    };
-
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUsuarioLogado(!!session); // Atualiza o estado de login em tempo real
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   const enquetes = [
     {

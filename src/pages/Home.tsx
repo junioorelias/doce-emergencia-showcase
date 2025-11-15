@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import { Gift, User, TrendingUp, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -52,47 +53,17 @@ const Home = () => {
                     />
                   </CarouselItem>
                   <CarouselItem>
-                     <img
-                      src="/lovable-uploads/doce-emergencia-logo.png"
+                    <img
+                      src="/lovable-uploads/a4a13826-9001-4d9f-aae3-2ad87589ea6d.png"
                       alt="Promoções e novidades - Doce Emergência - Slide 2"
                       className="w-full h-40 md:h-56 object-cover"
                       loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.src = "/doce-placeholder.svg";
-                      }}
                     />
                   </CarouselItem>
                   <CarouselItem>
-                     <img
-                      src="/lovable-uploads/doce-emergencia-logo.png"
+                    <img
+                      src="/lovable-uploads/8756e0fa-396e-4224-9737-73def986814f.png"
                       alt="Lançamentos da semana - Doce Emergência - Slide 3"
-                      className="w-full h-40 md:h-56 object-cover"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.src = "/doce-placeholder.svg";
-                      }}
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <img
-                      src="/lovable-uploads/pexels-abhinavcoca-291528.jpg"
-                      alt="Bolo de chocolate com cobertura de cereja"
-                      className="w-full h-40 md:h-56 object-cover"
-                      loading="lazy"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <img
-                      src="/lovable-uploads/pexels-pelageia-zelenina-58865108-10390453.jpg"
-                      alt="Doces variados em forminhas de papel"
-                      className="w-full h-40 md:h-56 object-cover"
-                      loading="lazy"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <img
-                      src="/lovable-uploads/pexels-istvanpszabo-10338832.jpg"
-                      alt="Biscoitos em formato de coração com recheio de geleia"
                       className="w-full h-40 md:h-56 object-cover"
                       loading="lazy"
                     />
@@ -109,7 +80,7 @@ const Home = () => {
         <div className="max-w-2xl mx-auto">
           <Button
             onClick={handleWhatsAppRedirect}
-            className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 hover:scale-105 text-lg md:text-xl font-bold py-8 md:py-10 h-auto shadow-lg transition-all duration-300 active:scale-95 rounded-xl"
+            className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 text-lg md:text-xl font-bold py-8 md:py-10 h-auto shadow-lg transition-all duration-300 active:scale-95 rounded-xl"
           >
             ⚡ PEDIR AGORA
           </Button>

@@ -47,7 +47,7 @@ const ProductModal = ({ isOpen, onClose, product, onAddToCart }: ProductModalPro
           {/* Product Image */}
           <div className="h-48 bg-doce-yellow/20 rounded-lg flex items-center justify-center overflow-hidden">
             <img
-              src={product.image || "/doce-placeholder.svg"}
+              src={product.image || "/placeholder.svg"}
               alt={`Imagem de ${product.nome} - Doce Emergência`}
               className="h-full w-auto object-contain"
               loading="lazy"

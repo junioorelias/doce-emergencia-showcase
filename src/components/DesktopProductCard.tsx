@@ -27,7 +27,7 @@ const DesktopProductCard = ({ product, onProductClick, onAddToCart, onPedir }: D
       <div className="p-2 md:p-4 lg:p-6">
         <div className="h-16 md:h-24 lg:h-32 bg-doce-yellow/20 rounded-lg mb-2 flex items-center justify-center">
           <img
-            src={product.image || "/doce-placeholder.svg"}
+            src={product.image || "/placeholder.svg"}
             alt={`Imagem de ${product.nome} - Doce Emergência`}
             className="h-12 md:h-20 lg:h-28 object-contain"
             loading="lazy"

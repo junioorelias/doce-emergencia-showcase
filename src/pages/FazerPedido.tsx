@@ -20,7 +20,7 @@ const doces = [
     preco: "R$3,80",
     peso: "20g",
     categoria: "Dia a Dia",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ const doces = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const doces = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ const doces = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const doces = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
 
   // Bolo
@@ -67,7 +67,7 @@ const doces = [
     preco: "R$11,90",
     peso: "300g",
     categoria: "Bolo",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 7,
@@ -76,7 +76,7 @@ const doces = [
     preco: "R$11,90",
     peso: "300g",
     categoria: "Bolo",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 8,
@@ -85,7 +85,7 @@ const doces = [
     preco: "R$11,90",
     peso: "300g",
     categoria: "Bolo",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
 
   // Snacks
@@ -96,7 +96,7 @@ const doces = [
     preco: "R$16",
     peso: "100g",
     categoria: "Snacks",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 10,
@@ -105,7 +105,7 @@ const doces = [
     preco: "R$21",
     peso: "200g",
     categoria: "Snacks",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 11,
@@ -114,7 +114,7 @@ const doces = [
     preco: "R$42",
     peso: "400g",
     categoria: "Snacks",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
 
   // Tradicionais
@@ -125,7 +125,7 @@ const doces = [
     preco: "R$3,50",
     peso: "73g",
     categoria: "Tradicionais",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 13,
@@ -134,7 +134,7 @@ const doces = [
     preco: "R$3,50",
     peso: "55g",
     categoria: "Tradicionais",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 14,
@@ -143,7 +143,7 @@ const doces = [
     preco: "R$3,50",
     peso: "70g",
     categoria: "Tradicionais",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 15,
@@ -152,7 +152,7 @@ const doces = [
     preco: "R$3,50",
     peso: "70g",
     categoria: "Tradicionais",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
 
   // Salgados
@@ -163,7 +163,7 @@ const doces = [
     preco: "R$27",
     peso: "500g",
     categoria: "Salgados",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 17,
@@ -172,7 +172,7 @@ const doces = [
     preco: "R$25",
     peso: "500g",
     categoria: "Salgados",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 18,
@@ -181,7 +181,7 @@ const doces = [
     preco: "R$18,90",
     peso: "250g",
     categoria: "Salgados",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
 
   // Bebidas
@@ -192,7 +192,7 @@ const doces = [
     preco: "R$6",
     peso: "470ml",
     categoria: "Bebidas",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 20,
@@ -201,7 +201,7 @@ const doces = [
     preco: "R$9",
     peso: "470ml",
     categoria: "Bebidas",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 21,
@@ -210,7 +210,7 @@ const doces = [
     preco: "R$17",
     peso: "1L",
     categoria: "Bebidas",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 22,
@@ -219,7 +219,7 @@ const doces = [
     preco: "R$4",
     peso: "500ml",
     categoria: "Bebidas",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 23,
@@ -228,7 +228,7 @@ const doces = [
     preco: "R$5",
     peso: "500ml",
     categoria: "Bebidas",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 24,
@@ -237,7 +237,7 @@ const doces = [
     preco: "R$6",
     peso: "350ml",
     categoria: "Bebidas",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 25,
@@ -246,7 +246,7 @@ const doces = [
     preco: "R$9",
     peso: "2L",
     categoria: "Bebidas",
-    image: "/doce-placeholder.svg",
+    image: "/placeholder.svg",
   },
 ];
 
@@ -355,31 +355,10 @@ const FazerPedido = () => {
 
   const handleCheckoutConfirm = ({ name, address, payment }: { name: string; address: string; payment: PaymentMethod }) => {
     if (cartItems.length === 0) return;
-    
-    // Formatar itens com quantidade e preço individual
-    const itemsText = cartItems.map((i) => {
-      if (i.quantity === 1) {
-        return `${i.quantity}x ${i.nome} — ${i.precoString}`;
-      } else {
-        return `${i.quantity}x ${i.nome} — ${i.precoString}`;
-      }
-    }).join("  \n");
-    
+    const itemsText = cartItems.map((i, idx) => `${idx + 1}. ${i.nome} x${i.quantity} (${i.precoString})`).join("\n");
     const total = cartItems.reduce((acc, i) => acc + i.unitPrice * i.quantity, 0);
     const totalBRL = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    
-    // Mensagem formatada com emojis e quebras de linha
-    const messageRaw = `✨🍫 **Novo Pedido Doce Emergência!** 🍫✨  
- 
-📦 **Itens:**  
-${itemsText}  
- 
-💰 **Total:** ${totalBRL}  
- 
-👤 **Cliente:** ${name}  
-📍 **Endereço:** ${address}  
-💳 **Forma de Pagamento:** ${payment}`;
-
+    const messageRaw = `Olá! Gostaria de fazer um pedido:\n\nItens:\n${itemsText}\n\nTotal: ${totalBRL}\n\nNome: ${name}\nEndereço: ${address}\nPagamento: ${payment}\n\nEnviado via site.`;
     const phone = "5511976824710";
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(messageRaw)}`;
     window.open(url, '_blank');

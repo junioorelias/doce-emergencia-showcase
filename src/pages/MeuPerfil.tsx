@@ -72,18 +72,32 @@ const MeuPerfil = () => {
 
   const loadUserProfile = async (userId: string) => {
     try {
-      const { data: profileData, error } = await supabase
+      let { data: profile, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('user_id', userId)
         .single();
 
-      if (error && error.code !== 'PGRST116') { // PGRST116 means no rows found
+      if (error && error.code === 'PGRST116') {
+        // Profile doesn't exist, create it
+        const { data: newProfile, error: createError } = await supabase
+          .from('profiles')
+          .insert({
+            user_id: userId,
+            display_name: user?.user_metadata?.display_name || 'Usuário',
+            points: 0
+          })
+          .select()
+          .single();
+
+        if (createError) throw createError;
+        profile = newProfile;
+      } else if (error) {
         throw error;
       }
 
-      setProfile(profileData);
-      setNewDisplayName(profileData?.display_name || user?.user_metadata?.display_name || '');
+      setProfile(profile);
+      setNewDisplayName(profile?.display_name || '');
     } catch (error: any) {
       console.error('Error loading profile:', error);
       toast({

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Gift, Handshake } from "lucide-react";
+import { Flame, Percent, BookOpen, Handshake, Shield, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import ActionCard from "@/components/ActionCard";
 import heroDoces from "@/assets/hero-doces.jpg";
 import { useNavigate } from "react-router-dom";
@@ -59,15 +60,96 @@ const Home = () => {
       <section className="container mx-auto px-4 py-4 md:py-6">
         <div className="max-w-2xl mx-auto">
           <div className="grid grid-cols-2 gap-4 md:gap-6">
-            <ActionCard title="RECOMPENSAS" icon={Gift} variant="cream" onClick={() => navigate('/recompensas')} className="w-full" />
-            <ActionCard title="SEJA UM FRANQUEADO" icon={Handshake} variant="cream" onClick={() => navigate('/franquia')} className="w-full" />
+            <ActionCard 
+              title="MAIS PEDIDOS" 
+              icon={Flame} 
+              variant="cream" 
+              onClick={() => navigate('/fazer-pedido?filter=mais-pedidos')} 
+              className="w-full" 
+            />
+            <ActionCard 
+              title="DESCONTOS EXCLUSIVOS" 
+              icon={Percent} 
+              variant="cream" 
+              onClick={() => navigate('/descontos-exclusivos')} 
+              className="w-full" 
+            />
+            <ActionCard 
+              title="NOSSA HISTÓRIA" 
+              icon={BookOpen} 
+              variant="cream" 
+              onClick={() => navigate('/nossa-historia')} 
+              className="w-full" 
+            />
+            <ActionCard 
+              title="SEJA UM FRANQUEADO" 
+              icon={Handshake} 
+              variant="cream" 
+              onClick={() => navigate('/franquia')} 
+              className="w-full" 
+            />
           </div>
         </div>
       </section>
 
       <footer className="container mx-auto px-4 py-6 md:py-8">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-doce-brown/60 text-sm">© 2024 Doce Emergência. Todos os direitos reservados.</p>
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-doce-gray rounded-2xl p-6 md:p-8 shadow-xl">
+            {/* Logo */}
+            <div className="flex justify-center mb-4">
+              <img 
+                src="/lovable-uploads/a4a13826-9001-4d9f-aae3-2ad87589ea6d.png" 
+                alt="Doce Emergência" 
+                className="h-16 w-auto"
+              />
+            </div>
+
+            {/* Security Text */}
+            <div className="text-center mb-4">
+              <div className="flex items-center justify-center gap-2 text-doce-white/90 mb-1">
+                <Shield className="w-4 h-4" />
+                <span className="text-sm font-medium">Site Seguro</span>
+              </div>
+              <p className="text-doce-white/70 text-xs">
+                Suas informações estão protegidas
+              </p>
+            </div>
+
+            {/* Payment Methods */}
+            <div className="flex justify-center items-center gap-3 mb-4 pb-4 border-b border-doce-white/10">
+              <CreditCard className="w-6 h-6 text-doce-white/70" />
+              <span className="text-doce-white/70 text-sm">Pix</span>
+              <span className="text-doce-white/70">•</span>
+              <span className="text-doce-white/70 text-sm">Dinheiro</span>
+              <span className="text-doce-white/70">•</span>
+              <span className="text-doce-white/70 text-sm">Cartão</span>
+            </div>
+
+            {/* Links */}
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-doce-white/60 text-xs mb-3">
+              <Link to="/politica-privacidade" className="hover:text-doce-white transition-colors">
+                Política de Privacidade
+              </Link>
+              <span>•</span>
+              <Link to="/termos-uso" className="hover:text-doce-white transition-colors">
+                Termos de Uso
+              </Link>
+              <span>•</span>
+              <a 
+                href="https://wa.me/5511976824710" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-doce-white transition-colors"
+              >
+                Contato
+              </a>
+            </div>
+
+            {/* Copyright */}
+            <p className="text-center text-doce-white/50 text-xs">
+              © 2025-2026 Doce Emergência. Todos os direitos reservados.
+            </p>
+          </div>
         </div>
       </footer>
 

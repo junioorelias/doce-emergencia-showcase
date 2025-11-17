@@ -5,10 +5,12 @@ import ActionCard from "@/components/ActionCard";
 import heroDoces from "@/assets/hero-doces.jpg";
 import { useNavigate } from "react-router-dom";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
+import QuickOrderModal from "@/components/QuickOrderModal";
 
 const Home = () => {
   const navigate = useNavigate();
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
+  const [quickOrderOpen, setQuickOrderOpen] = useState(false);
 
   useEffect(() => {
     if (!carouselApi) return;
@@ -18,10 +20,8 @@ const Home = () => {
     return () => clearInterval(id);
   }, [carouselApi]);
 
-  const handleWhatsAppRedirect = () => {
-    const message = "Olá! Quero fazer um pedido rápido dos deliciosos doces da Doce Emergência! ⚡";
-    const whatsappUrl = `https://wa.me/5511976824710?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+  const handleQuickOrder = () => {
+    setQuickOrderOpen(true);
   };
 
   return (
@@ -50,7 +50,7 @@ const Home = () => {
 
       <section className="container mx-auto px-4 mb-4 md:mb-6">
         <div className="max-w-2xl mx-auto">
-          <Button onClick={handleWhatsAppRedirect} className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 text-lg md:text-xl font-bold py-8 md:py-10 h-auto shadow-lg transition-all duration-300 active:scale-95 rounded-xl">
+          <Button onClick={handleQuickOrder} className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 text-lg md:text-xl font-bold py-8 md:py-10 h-auto shadow-lg transition-all duration-300 active:scale-95 rounded-xl">
             ⚡ PEDIR AGORA
           </Button>
         </div>
@@ -70,6 +70,8 @@ const Home = () => {
           <p className="text-doce-brown/60 text-sm">© 2024 Doce Emergência. Todos os direitos reservados.</p>
         </div>
       </footer>
+
+      <QuickOrderModal open={quickOrderOpen} onOpenChange={setQuickOrderOpen} />
     </div>
   );
 };

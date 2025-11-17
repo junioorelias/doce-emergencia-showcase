@@ -1,0 +1,248 @@
+export interface Product {
+  id: number;
+  nome: string;
+  descricao: string;
+  preco: string;
+  peso: string;
+  categoria: string;
+  image: string;
+}
+
+export const products: Product[] = [
+  // Dia a Dia
+  {
+    id: 1,
+    nome: "BRIGADEIRO da SORTE",
+    descricao: "Brigadeiro de chocolate dentro de um blister com um bilhete da sorte.",
+    preco: "R$3,80",
+    peso: "20g",
+    categoria: "Dia a Dia",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 2,
+    nome: "BRIGADEIRO de COLHER: Chocolate",
+    descricao: "Brigadeiro de colher no copinho.",
+    preco: "R$5",
+    peso: "40g",
+    categoria: "Dia a Dia",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 3,
+    nome: "BRIGADEIRO de COLHER: Beijinho",
+    descricao: "Brigadeiro de colher no copinho.",
+    preco: "R$5",
+    peso: "40g",
+    categoria: "Dia a Dia",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 4,
+    nome: "BRIGADEIRO de COLHER: Amendoim",
+    descricao: "Brigadeiro de colher no copinho.",
+    preco: "R$5",
+    peso: "40g",
+    categoria: "Dia a Dia",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 5,
+    nome: "BRIGADEIRO de COLHER: Pistache",
+    descricao: "Brigadeiro de colher no copinho.",
+    preco: "R$5",
+    peso: "40g",
+    categoria: "Dia a Dia",
+    image: "/placeholder.svg",
+  },
+
+  // Bolo
+  {
+    id: 6,
+    nome: "CAKE BOX: Doce de Leite com Nozes",
+    descricao: "Bolo de camadas recheado em bandeja de alumínio com tampa transparente + colherzinha.",
+    preco: "R$11,90",
+    peso: "300g",
+    categoria: "Bolo",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 7,
+    nome: "CAKE BOX: Chocolate",
+    descricao: "Bolo de camadas recheado em bandeja de alumínio com tampa transparente + colherzinha.",
+    preco: "R$11,90",
+    peso: "300g",
+    categoria: "Bolo",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 8,
+    nome: "CAKE BOX: Toalha Felpuda",
+    descricao: "Bolo de camadas recheado em bandeja de alumínio com tampa transparente + colherzinha.",
+    preco: "R$11,90",
+    peso: "300g",
+    categoria: "Bolo",
+    image: "/placeholder.svg",
+  },
+
+  // Snacks
+  {
+    id: 9,
+    nome: "MOONROCKS SOLO",
+    descricao: "Pipocas caramelizadas com cobertura de chocolate branco e leite ninho.",
+    preco: "R$16",
+    peso: "100g",
+    categoria: "Snacks",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 10,
+    nome: "MOONROCKS DUO",
+    descricao: "Pipocas caramelizadas com cobertura de chocolate branco e leite ninho.",
+    preco: "R$21",
+    peso: "200g",
+    categoria: "Snacks",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 11,
+    nome: "MOONROCKS FAMÍLIA",
+    descricao: "Pipocas caramelizadas com cobertura de chocolate branco e leite ninho.",
+    preco: "R$42",
+    peso: "400g",
+    categoria: "Snacks",
+    image: "/placeholder.svg",
+  },
+
+  // Tradicionais
+  {
+    id: 12,
+    nome: "Doce de Amendoim (GALVANI)",
+    descricao: "Doce de amendoim tradicional.",
+    preco: "R$3,50",
+    peso: "73g",
+    categoria: "Tradicionais",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 13,
+    nome: "Doce de Abóbora",
+    descricao: "Doce de abóbora tradicional.",
+    preco: "R$3,50",
+    peso: "55g",
+    categoria: "Tradicionais",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 14,
+    nome: "Quindim",
+    descricao: "Quindim tradicional.",
+    preco: "R$3,50",
+    peso: "70g",
+    categoria: "Tradicionais",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 15,
+    nome: "Queijadinha",
+    descricao: "Queijadinha tradicional.",
+    preco: "R$3,50",
+    peso: "70g",
+    categoria: "Tradicionais",
+    image: "/placeholder.svg",
+  },
+
+  // Salgados
+  {
+    id: 16,
+    nome: "BAGUETE IMPERIAL: Casadinhos",
+    descricao: "Presunto, queijo, catupiry e parmesão.",
+    preco: "R$27",
+    peso: "500g",
+    categoria: "Salgados",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 17,
+    nome: "BAGUETE IMPERIAL: Vegetariana",
+    descricao: "Brócolis, alho frito, mussarela e parmesão.",
+    preco: "R$25",
+    peso: "500g",
+    categoria: "Salgados",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 18,
+    nome: "SUPER REQHNAZE",
+    descricao: "Fatia de torta de frango macio, muito requeijão e queijo gratinado.",
+    preco: "R$18,90",
+    peso: "250g",
+    categoria: "Salgados",
+    image: "/placeholder.svg",
+  },
+
+  // Bebidas
+  {
+    id: 19,
+    nome: "REFRÊSKO",
+    descricao: "Água saborizada com limão e açúcar.",
+    preco: "R$6",
+    peso: "470ml",
+    categoria: "Bebidas",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 20,
+    nome: "NUKU-JUICE (470ml)",
+    descricao: "Mix de maracujá, limão e morango (com ou sem açúcar).",
+    preco: "R$9",
+    peso: "470ml",
+    categoria: "Bebidas",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 21,
+    nome: "NUKU-JUICE (1 litro)",
+    descricao: "Mix de maracujá, limão e morango (com ou sem açúcar).",
+    preco: "R$17",
+    peso: "1L",
+    categoria: "Bebidas",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 22,
+    nome: "Água",
+    descricao: "Água mineral.",
+    preco: "R$4",
+    peso: "500ml",
+    categoria: "Bebidas",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 23,
+    nome: "Água com gás",
+    descricao: "Água mineral com gás.",
+    preco: "R$5",
+    peso: "500ml",
+    categoria: "Bebidas",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 24,
+    nome: "Refrigerante lata",
+    descricao: "Refrigerante em lata.",
+    preco: "R$6",
+    peso: "350ml",
+    categoria: "Bebidas",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 25,
+    nome: "Coca-Cola retornável",
+    descricao: "Coca-Cola retornável.",
+    preco: "R$9",
+    peso: "2L",
+    categoria: "Bebidas",
+    image: "/placeholder.svg",
+  },
+];

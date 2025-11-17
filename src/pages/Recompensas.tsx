@@ -1,11 +1,7 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Coins, Star, Package, Percent, Gift, Loader2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { Coins, Star, Package, Percent, Gift } from "lucide-react";
 
 interface Reward {
   id: string;
@@ -17,143 +13,39 @@ interface Reward {
   image_url: string | null;
 }
 
-interface UserProfile {
-  points: number;
-}
-
 const Recompensas = () => {
-  const [rewards, setRewards] = useState<Reward[]>([]);
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [redeeming, setRedeeming] = useState<string | null>(null);
-  const [user, setUser] = useState(null);
-  const { toast } = useToast();
-  const navigate = useNavigate();
+  // Mock data - será substituído por integração real posteriormente
+  const [rewards] = useState<Reward[]>([
+    {
+      id: "1",
+      name: "Desconto de 10%",
+      description: "Ganhe 10% de desconto em qualquer pedido",
+      points_cost: 100,
+      category: "desconto",
+      stock_quantity: null,
+      image_url: null,
+    },
+    {
+      id: "2",
+      name: "Doce Grátis",
+      description: "Um doce especial por nossa conta",
+      points_cost: 200,
+      category: "produto",
+      stock_quantity: 50,
+      image_url: null,
+    },
+    {
+      id: "3",
+      name: "Frete Grátis",
+      description: "Entrega grátis na sua próxima compra",
+      points_cost: 150,
+      category: "beneficio",
+      stock_quantity: null,
+      image_url: null,
+    },
+  ]);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate('/auth');
-        return;
-      }
-      setUser(session.user);
-      await loadData(session.user.id);
-    };
-
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (!session) {
-          navigate('/auth');
-        } else {
-          setUser(session.user);
-          loadData(session.user.id);
-        }
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, [navigate]);
-
-  const loadData = async (userId: string) => {
-    setLoading(true);
-    try {
-      // Load rewards
-      const { data: rewardsData, error: rewardsError } = await supabase
-        .from('rewards')
-        .select('*')
-        .eq('is_active', true)
-        .order('points_cost');
-
-      if (rewardsError) {
-        console.error('Error loading rewards:', rewardsError);
-        toast({
-          title: "Erro",
-          description: "Erro ao carregar recompensas",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Load user profile
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('points')
-        .eq('user_id', userId)
-        .single();
-
-      if (profileError) {
-        console.error('Error loading profile:', profileError);
-        toast({
-          title: "Erro",
-          description: "Erro ao carregar perfil do usuário",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      setRewards(rewardsData || []);
-      setUserProfile(profileData);
-    } catch (error) {
-      console.error('Error:', error);
-      toast({
-        title: "Erro",
-        description: "Erro inesperado",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleRedeemReward = async (rewardId: string) => {
-    if (!user) return;
-
-    setRedeeming(rewardId);
-    try {
-      const { data, error } = await supabase.rpc('redeem_reward', {
-        reward_id: rewardId
-      });
-
-      if (error) {
-        console.error('Error redeeming reward:', error);
-        toast({
-          title: "Erro",
-          description: "Erro ao resgatar recompensa. Tente novamente.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      const result = data as any;
-      if (result.success) {
-        toast({
-          title: "🎉 " + result.message,
-          description: `Você gastou ${result.points_spent} pontos!`,
-        });
-        
-        // Reload data to update user points
-        await loadData(user.id);
-      } else {
-        toast({
-          title: "Erro",
-          description: result.message,
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      toast({
-        title: "Erro",
-        description: "Erro inesperado. Tente novamente.",
-        variant: "destructive",
-      });
-    } finally {
-      setRedeeming(null);
-    }
-  };
+  const userPoints = 250; // Mock - será dinâmico posteriormente
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -181,14 +73,6 @@ const Recompensas = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background pt-20 flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-doce-brown" />
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-background pt-20">
       <div className="container mx-auto px-4 py-8">
@@ -206,17 +90,15 @@ const Recompensas = () => {
         </div>
 
         {/* User Points */}
-        {userProfile && (
-          <Card className="max-w-md mx-auto p-6 mb-8 bg-gradient-to-r from-doce-yellow/20 to-doce-yellow/10 border-doce-yellow/30">
-            <div className="flex items-center justify-center space-x-3">
-              <Coins className="h-8 w-8 text-doce-brown" />
-              <div className="text-center">
-                <p className="text-sm text-doce-brown/80">Seus Pontos</p>
-                <p className="text-2xl font-bold text-doce-brown">{userProfile.points}</p>
-              </div>
+        <Card className="max-w-md mx-auto p-6 mb-8 bg-gradient-to-r from-doce-yellow/20 to-doce-yellow/10 border-doce-yellow/30">
+          <div className="flex items-center justify-center space-x-3">
+            <Coins className="h-8 w-8 text-doce-brown" />
+            <div className="text-center">
+              <p className="text-sm text-doce-brown/80">Seus Pontos</p>
+              <p className="text-2xl font-bold text-doce-brown">{userPoints}</p>
             </div>
-          </Card>
-        )}
+          </div>
+        </Card>
 
         {/* Rewards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -251,29 +133,9 @@ const Recompensas = () => {
                 </p>
               )}
 
-              <Button
-                onClick={() => handleRedeemReward(reward.id)}
-                disabled={
-                  !userProfile || 
-                  userProfile.points < reward.points_cost ||
-                  redeeming === reward.id ||
-                  (reward.stock_quantity !== null && reward.stock_quantity <= 0)
-                }
-                className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 font-bold"
-              >
-                {redeeming === reward.id ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Resgatando...
-                  </>
-                ) : userProfile && userProfile.points < reward.points_cost ? (
-                  "Pontos Insuficientes"
-                ) : reward.stock_quantity !== null && reward.stock_quantity <= 0 ? (
-                  "Esgotado"
-                ) : (
-                  `Resgatar por ${reward.points_cost} pontos`
-                )}
-              </Button>
+              <div className="w-full bg-doce-yellow/10 text-doce-brown font-bold py-3 rounded-md text-center border-2 border-doce-yellow">
+                Resgatar por {reward.points_cost} pontos
+              </div>
             </Card>
           ))}
         </div>

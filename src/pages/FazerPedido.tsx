@@ -1,8 +1,6 @@
 
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { Session } from "@supabase/supabase-js";
 import { useToast } from "@/hooks/use-toast";
 import ProductModal from "@/components/ProductModal";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -254,7 +252,6 @@ const categorias = ["Todos", "Dia a Dia", "Bolo", "Snacks", "Tradicionais", "Sal
 
 const FazerPedido = () => {
   const [categoriaAtiva, setCategoriaAtiva] = useState("Todos");
-  const [session, setSession] = useState<Session | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<typeof doces[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { toast } = useToast();
@@ -268,20 +265,6 @@ const FazerPedido = () => {
   // Infinite scroll (mobile)
   const [visibleCount, setVisibleCount] = useState(8);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setSession(session);
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   // SEO básico para a página
   useEffect(() => {

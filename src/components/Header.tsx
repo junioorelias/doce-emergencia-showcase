@@ -72,8 +72,15 @@ const Header = () => {
             </nav>
           </div>
 
-          {/* Empty space to maintain layout balance */}
-          <div className="hidden md:block w-24"></div>
+          {/* Member Button - Desktop */}
+          <Link 
+            to="/descontos-exclusivos"
+            className="hidden md:block"
+          >
+            <button className="bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 transition-colors px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap">
+              Torne-se Membro
+            </button>
+          </Link>
 
           {/* Mobile Menu */}
           <div className="md:hidden">
@@ -103,6 +110,11 @@ const Header = () => {
                 <DropdownMenuItem asChild>
                   <Link to="/franquia" className="w-full cursor-pointer">
                     FRANQUIA
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/descontos-exclusivos" className="w-full cursor-pointer">
+                    TORNE-SE MEMBRO
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useSearchParams } from "react-router-dom";
 import ProductModal from "@/components/ProductModal";
 import { useIsMobile } from "@/hooks/use-mobile";
 import DesktopProductCard from "@/components/DesktopProductCard";
@@ -12,14 +13,23 @@ import { products } from "@/data/products";
 
 const doces = products;
 
-const categorias = ["Todos", "Dia a Dia", "Bolo", "Snacks", "Tradicionais", "Salgados", "Bebidas"];
+const categorias = ["Todos", "Mais pedidos", "Dia a Dia", "Bolo", "Snacks", "Tradicionais", "Salgados", "Bebidas"];
 
 const FazerPedido = () => {
+  const [searchParams] = useSearchParams();
   const [categoriaAtiva, setCategoriaAtiva] = useState("Todos");
   const [selectedProduct, setSelectedProduct] = useState<typeof doces[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { toast } = useToast();
   const isMobile = useIsMobile();
+
+  // Handle filter from URL params
+  useEffect(() => {
+    const filter = searchParams.get('filter');
+    if (filter === 'mais-pedidos') {
+      setCategoriaAtiva('Mais pedidos');
+    }
+  }, [searchParams]);
 
   // Carrinho
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -53,6 +63,12 @@ const FazerPedido = () => {
 
   const docesFiltrados = categoriaAtiva === "Todos"
     ? doces
+    : categoriaAtiva === "Mais pedidos"
+    ? doces.filter(doce => 
+        doce.nome.includes("BRIGADEIRO") || 
+        doce.nome.includes("Bolo") || 
+        doce.categoria === "Dia a Dia"
+      )
     : doces.filter(doce => doce.categoria === categoriaAtiva);
 
   useEffect(() => {

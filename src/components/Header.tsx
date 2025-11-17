@@ -1,11 +1,5 @@
-
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, Menu, User } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useEffect, useState } from "react";
-import { Session } from "@supabase/supabase-js";
+import { Menu } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,27 +10,8 @@ import {
 const Header = () => {
   const location = useLocation();
   const currentPath = location.pathname;
-  const [session, setSession] = useState<Session | null>(null);
 
   const isActive = (path: string) => currentPath === path;
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-  };
 
   return (
     <header className="bg-background shadow-lg">
@@ -75,138 +50,59 @@ const Header = () => {
                 CARDÁPIO
               </Link>
               <Link
-                to="/cupons"
+                to="/recompensas"
                 className={`text-sm font-medium transition-colors whitespace-nowrap ${
-                  isActive("/cupons")
+                  isActive("/recompensas")
                     ? "text-doce-white border-b-2 border-doce-yellow"
                     : "text-doce-white/80 hover:text-doce-white"
                 }`}
               >
-                CUPONS
+                RECOMPENSAS
               </Link>
               <Link
-                to="/votacao"
+                to="/franquia"
                 className={`text-sm font-medium transition-colors whitespace-nowrap ${
-                  isActive("/votacao")
+                  isActive("/franquia")
                     ? "text-doce-white border-b-2 border-doce-yellow"
                     : "text-doce-white/80 hover:text-doce-white"
                 }`}
               >
-                VOTAÇÃO
+                FRANQUIA
               </Link>
             </nav>
           </div>
 
-          {/* Profile Section - Desktop */}
-          <div className="hidden md:flex flex-shrink-0">
-            {session ? (
-              <div className="flex items-center space-x-4">
-                <Link to="/meu-perfil" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="" />
-                    <AvatarFallback className="bg-doce-yellow text-doce-brown">
-                      {session.user.user_metadata?.display_name?.[0] || session.user.email?.[0]?.toUpperCase() || 'U'}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="text-doce-white font-medium text-sm hidden lg:inline">
-                    {session.user.user_metadata?.display_name || session.user.email?.split('@')[0]}
-                  </span>
-                </Link>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleSignOut}
-                  className="text-doce-white hover:bg-doce-white/10 transition-colors active:scale-95"
-                >
-                  <LogOut className="h-4 w-4" />
-                </Button>
-              </div>
-            ) : (
-              <Button
-                variant="secondary"
-                className="bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 font-bold px-4 lg:px-6 shadow-lg transition-all active:scale-95"
-                asChild
-              >
-                <Link to="/auth">
-                  LOGIN
-                </Link>
-              </Button>
-            )}
-          </div>
+          {/* Empty space to maintain layout balance */}
+          <div className="hidden md:block w-24"></div>
 
           {/* Mobile Menu */}
-          <div className="md:hidden flex items-center space-x-3 flex-shrink-0">
-            {/* User Icon */}
-            <Button
-              variant="ghost"
-              className="text-doce-white hover:bg-doce-white/10 transition-colors h-16 w-16 p-0"
-              asChild
-            >
-              <Link to={session ? "/meu-perfil" : "/auth"}>
-                <User className="h-12 w-12" />
-              </Link>
-            </Button>
-            
-            {/* Dropdown Menu */}
+          <div className="md:hidden">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="text-doce-white hover:bg-doce-white/10 transition-colors h-16 w-16 p-0"
-                >
-                  <Menu className="h-12 w-12" />
-                </Button>
+              <DropdownMenuTrigger className="text-doce-white p-2">
+                <Menu className="h-6 w-6" />
               </DropdownMenuTrigger>
               <DropdownMenuContent 
                 align="end" 
-                className="w-48 bg-background border-doce-white/20 z-50"
+                className="w-56 bg-background border-doce-brown/20"
               >
                 <DropdownMenuItem asChild>
-                  <Link 
-                    to="/" 
-                    className={`w-full cursor-pointer ${
-                      isActive("/") 
-                        ? "text-doce-yellow font-bold" 
-                        : "text-doce-white hover:text-doce-yellow"
-                    }`}
-                  >
+                  <Link to="/" className="w-full cursor-pointer">
                     HOME
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link 
-                    to="/fazer-pedido" 
-                    className={`w-full cursor-pointer ${
-                      isActive("/fazer-pedido") 
-                        ? "text-doce-yellow font-bold" 
-                        : "text-doce-white hover:text-doce-yellow"
-                    }`}
-                  >
+                  <Link to="/fazer-pedido" className="w-full cursor-pointer">
                     CARDÁPIO
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link 
-                    to="/cupons" 
-                    className={`w-full cursor-pointer ${
-                      isActive("/cupons") 
-                        ? "text-doce-yellow font-bold" 
-                        : "text-doce-white hover:text-doce-yellow"
-                    }`}
-                  >
-                    CUPONS
+                  <Link to="/recompensas" className="w-full cursor-pointer">
+                    RECOMPENSAS
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link 
-                    to="/votacao" 
-                    className={`w-full cursor-pointer ${
-                      isActive("/votacao") 
-                        ? "text-doce-yellow font-bold" 
-                        : "text-doce-white hover:text-doce-yellow"
-                    }`}
-                  >
-                    VOTAÇÃO
+                  <Link to="/franquia" className="w-full cursor-pointer">
+                    FRANQUIA
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>

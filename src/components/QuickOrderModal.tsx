@@ -1,47 +1,57 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import QuickOrderProgressBar from "./QuickOrderProgressBar";
+import { Plus, Minus, Trash2, ArrowLeft, Package, ShoppingCart, Cake, Coffee, Utensils, Droplet, Cookie, CheckCircle2 } from "lucide-react";
 import { products, Product } from "@/data/products";
-import { CartItem, formatWhatsAppMessage, generateWhatsAppUrl, parsePrice, formatPrice } from "@/lib/orderUtils";
-import { Plus, Minus, Trash2, ArrowLeft, ShoppingCart, TrendingUp, Package, Cake, Pizza, Coffee, Cookie } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { formatWhatsAppMessage, generateWhatsAppUrl, parsePrice, formatPrice, CartItem } from "@/lib/orderUtils";
+import QuickOrderProgressBar from "./QuickOrderProgressBar";
+import { toast } from "sonner";
 
 interface QuickOrderModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-type Category = "Mais Pedidos" | "Todos" | "Tradicionais" | "Dia a Dia" | "Bolo" | "Salgados" | "Bebidas" | "Snacks";
+type Category = "Mais Pedidos" | "Todos" | "Tradicionais" | "Dia a Dia" | "Bolo" | "Snacks" | "Salgados" | "Bebidas";
 
 const categoryIcons: Record<Category, any> = {
-  "Mais Pedidos": TrendingUp,
-  "Todos": Package,
+  "Mais Pedidos": Package,
+  "Todos": ShoppingCart,
   "Tradicionais": Cookie,
   "Dia a Dia": Coffee,
   "Bolo": Cake,
-  "Salgados": Pizza,
-  "Bebidas": Coffee,
-  "Snacks": Cookie,
+  "Snacks": Coffee,
+  "Salgados": Utensils,
+  "Bebidas": Droplet,
 };
 
 const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [customerName, setCustomerName] = useState("");
-  const [address, setAddress] = useState("");
+  const [street, setStreet] = useState("");
+  const [complement, setComplement] = useState("");
+  const [neighborhood, setNeighborhood] = useState("");
+  const [city, setCity] = useState("");
   const [payment, setPayment] = useState("");
-  const { toast } = useToast();
+  const [progress, setProgress] = useState(2);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const progress = step === 1 ? 33 : step === 2 ? 66 : step === 3 ? 66 : 100;
+  const categories: Category[] = [
+    "Mais Pedidos",
+    "Todos",
+    "Tradicionais",
+    "Dia a Dia",
+    "Bolo",
+    "Snacks",
+    "Salgados",
+    "Bebidas",
+  ];
 
-  const mostOrderedIds = [1, 2, 6, 9, 19]; // IDs dos produtos mais pedidos
+  const mostOrderedIds = [1, 2, 6, 9, 19];
 
   const getFilteredProducts = (): Product[] => {
     if (!selectedCategory) return [];
@@ -53,48 +63,36 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
   };
 
   const addToCart = (product: Product) => {
-    setCart(prev => {
-      const existing = prev.find(item => item.id === product.id);
-      if (existing) {
-        return prev.map(item =>
-          item.id === product.id
-            ? { ...item, quantidade: item.quantidade + 1 }
-            : item
-        );
-      }
-      return [...prev, {
-        id: product.id,
-        nome: product.nome,
-        preco: product.preco,
+    const existingItem = cart.find(item => item.id === product.id);
+    if (existingItem) {
+      increaseQuantity(product.id);
+    } else {
+      setCart([...cart, { 
+        id: product.id, 
+        nome: product.nome, 
+        preco: product.preco, 
         quantidade: 1
-      }];
-    });
-    toast({
-      title: "Adicionado ao carrinho",
-      description: product.nome,
-    });
+      }]);
+    }
+    toast.success(`${product.nome} adicionado!`);
   };
 
   const increaseQuantity = (id: number) => {
-    setCart(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, quantidade: item.quantidade + 1 } : item
-      )
-    );
+    setCart(cart.map(item => 
+      item.id === id ? { ...item, quantidade: item.quantidade + 1 } : item
+    ));
   };
 
   const decreaseQuantity = (id: number) => {
-    setCart(prev =>
-      prev.map(item =>
-        item.id === id && item.quantidade > 1
-          ? { ...item, quantidade: item.quantidade - 1 }
-          : item
-      ).filter(item => item.quantidade > 0)
-    );
+    setCart(cart.map(item => 
+      item.id === id && item.quantidade > 1 
+        ? { ...item, quantidade: item.quantidade - 1 } 
+        : item
+    ));
   };
 
   const removeItem = (id: number) => {
-    setCart(prev => prev.filter(item => item.id !== id));
+    setCart(cart.filter(item => item.id !== id));
   };
 
   const calculateTotal = (): number => {
@@ -106,99 +104,85 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
   const handleCategorySelect = (category: Category) => {
     setSelectedCategory(category);
     setStep(2);
+    setProgress(30);
   };
 
   const handleBack = () => {
     if (step === 2) {
       setStep(1);
-      setSelectedCategory(null);
+      setProgress(2);
     } else if (step === 3) {
       setStep(2);
+      setProgress(30);
     } else if (step === 4) {
       setStep(3);
+      setProgress(65);
     }
   };
 
   const handleViewCart = () => {
     setStep(3);
+    setProgress(65);
   };
 
   const handleCheckout = () => {
     setStep(4);
+    setProgress(95);
   };
 
-  const handleSendOrder = () => {
-    if (!customerName.trim() || customerName.length < 3) {
-      toast({
-        title: "Nome inválido",
-        description: "Por favor, insira seu nome completo.",
-        variant: "destructive",
-      });
-      return;
-    }
-    if (!address.trim() || address.length < 10) {
-      toast({
-        title: "Endereço inválido",
-        description: "Por favor, insira seu endereço completo.",
-        variant: "destructive",
-      });
-      return;
-    }
-    if (!payment) {
-      toast({
-        title: "Forma de pagamento",
-        description: "Por favor, selecione uma forma de pagamento.",
-        variant: "destructive",
-      });
+  const handleSendOrder = async () => {
+    if (!customerName || !street || !neighborhood || !city || !payment) {
+      toast.error("Por favor, preencha todos os campos obrigatórios");
       return;
     }
 
+    setProgress(100);
+    setStep(5);
+    setIsLoading(true);
+
+    const address = `${street}${complement ? ', ' + complement : ''}, ${neighborhood}, ${city}`;
     const message = formatWhatsAppMessage(cart, customerName, address, payment);
     const whatsappUrl = generateWhatsAppUrl(message);
-    
+
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
     window.open(whatsappUrl, '_blank');
     
-    // Resetar modal
-    setStep(1);
-    setSelectedCategory(null);
     setCart([]);
     setCustomerName("");
-    setAddress("");
+    setStreet("");
+    setComplement("");
+    setNeighborhood("");
+    setCity("");
     setPayment("");
+    setStep(1);
+    setProgress(2);
+    setSelectedCategory(null);
+    setIsLoading(false);
     onOpenChange(false);
-    
-    toast({
-      title: "Pedido enviado!",
-      description: "Você será redirecionado para o WhatsApp.",
-    });
   };
-
-  const categories: Category[] = [
-    "Mais Pedidos",
-    "Todos",
-    "Tradicionais",
-    "Dia a Dia",
-    "Bolo",
-    "Salgados",
-    "Bebidas",
-    "Snacks",
-  ];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] md:max-w-2xl max-h-[90vh] p-0 bg-card">
+      <DialogContent className="max-w-[95vw] md:max-w-2xl max-h-[90vh] p-0">
         <div className="p-6">
-          <DialogHeader className="mb-4">
-            <DialogTitle className="text-2xl font-bold text-doce-brown">
-              Faça um Pedido Rápido!
-            </DialogTitle>
-          </DialogHeader>
-
           <QuickOrderProgressBar progress={progress} />
 
-          <ScrollArea className="h-[calc(90vh-220px)] pr-4">
-            {/* ETAPA 1: Escolha de Categoria */}
-            {step === 1 && (
+          {step === 5 ? (
+            <div className="flex flex-col items-center justify-center py-12">
+              <CheckCircle2 className="w-16 h-16 text-green-500 mb-4" />
+              <h3 className="text-xl font-bold text-doce-brown mb-2">
+                Pedido realizado com sucesso.
+              </h3>
+              <p className="text-sm text-doce-brown/70">
+                Aguarde! Estamos direcionando seu pedido para o whatsapp.
+              </p>
+            </div>
+          ) : step === 1 ? (
+            <div>
+              <h2 className="text-2xl font-bold text-doce-brown mb-6 text-center">
+                Escolha uma categoria
+              </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {categories.map((category) => {
                   const Icon = categoryIcons[category];
@@ -206,249 +190,280 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
                     <Button
                       key={category}
                       onClick={() => handleCategorySelect(category)}
-                      variant="outline"
-                      className="h-24 flex flex-col items-center justify-center gap-2 bg-doce-yellow/10 hover:bg-doce-yellow hover:text-doce-brown border-2 border-doce-yellow/30 transition-all"
+                      className="h-24 flex flex-col items-center justify-center gap-2 bg-doce-yellow/10 hover:bg-doce-yellow text-doce-brown border-2 border-doce-yellow/20 hover:border-doce-yellow"
                     >
-                      <Icon className="w-6 h-6" />
-                      <span className="font-semibold text-sm text-center">{category}</span>
+                      <Icon className="w-8 h-8" />
+                      <span className="text-sm font-medium">{category}</span>
                     </Button>
                   );
                 })}
               </div>
-            )}
+            </div>
+          ) : step === 2 ? (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleBack}
+                  className="text-doce-brown"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Voltar
+                </Button>
+                <h2 className="text-xl font-bold text-doce-brown">{selectedCategory}</h2>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setStep(1);
+                    setProgress(2);
+                  }}
+                  className="text-doce-brown text-xs"
+                >
+                  Trocar
+                </Button>
+              </div>
 
-            {/* ETAPA 2: Montar Carrinho */}
-            {step === 2 && (
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <Button
-                    variant="ghost"
-                    onClick={handleBack}
-                    className="text-doce-brown"
-                  >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Voltar
-                  </Button>
-                  <h3 className="font-bold text-doce-brown">{selectedCategory}</h3>
-                  <Button
-                    variant="outline"
-                    onClick={() => setStep(1)}
-                    className="text-sm"
-                  >
-                    Trocar
-                  </Button>
-                </div>
-
+              <ScrollArea className="h-[400px] pr-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {getFilteredProducts().map((product) => (
                     <div
                       key={product.id}
-                      className="border-2 border-doce-yellow/20 rounded-lg p-4 bg-card hover:border-doce-yellow/50 transition-all"
+                      className="bg-white rounded-lg border-2 border-doce-brown/10 overflow-hidden hover:shadow-lg transition-shadow"
                     >
-                      <h4 className="font-bold text-doce-brown mb-1">{product.nome}</h4>
-                      <p className="text-sm text-doce-brown/70 mb-2">{product.descricao}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-doce-red">{product.preco}</span>
+                      <img
+                        src={product.image}
+                        alt={product.nome}
+                        className="w-full aspect-square object-cover"
+                      />
+                      <div className="p-3">
+                        <h3 className="font-bold text-doce-brown text-sm mb-1">
+                          {product.nome}
+                        </h3>
+                        <p className="text-lg font-bold text-doce-brown mb-2">
+                          {product.preco}
+                        </p>
                         <Button
                           onClick={() => addToCart(product)}
+                          className="w-full bg-red-600 hover:bg-red-700 text-white"
                           size="sm"
-                          className="bg-doce-yellow hover:bg-doce-yellow/90 text-doce-brown"
                         >
-                          <Plus className="w-4 h-4 mr-1" />
-                          Adicionar
+                          +1
                         </Button>
                       </div>
                     </div>
                   ))}
                 </div>
+              </ScrollArea>
 
-                {cart.length > 0 && (
-                  <div className="fixed bottom-0 left-0 right-0 p-4 bg-card border-t-2 border-doce-yellow">
-                    <div className="max-w-2xl mx-auto">
-                      <Button
-                        onClick={handleViewCart}
-                        className="w-full bg-doce-yellow hover:bg-doce-yellow/90 text-doce-brown font-bold py-6"
-                      >
-                        <ShoppingCart className="w-5 h-5 mr-2" />
-                        Visualizar Carrinho ({cart.length} {cart.length === 1 ? 'item' : 'itens'})
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* ETAPA 3: Revisar Carrinho */}
-            {step === 3 && (
-              <div>
-                <div className="flex items-center mb-4">
+              {cart.length > 0 && (
+                <div className="mt-4 pt-4 border-t">
                   <Button
-                    variant="ghost"
-                    onClick={handleBack}
-                    className="text-doce-brown"
+                    onClick={handleViewCart}
+                    className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90"
                   >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Continuar Comprando
+                    Visualizar Carrinho ({cart.length})
                   </Button>
                 </div>
+              )}
+            </div>
+          ) : step === 3 ? (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleBack}
+                  className="text-doce-brown"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Continuar
+                </Button>
+                <h2 className="text-xl font-bold text-doce-brown">Carrinho</h2>
+                <div></div>
+              </div>
 
-                <div className="space-y-4">
-                  {cart.map((item) => {
-                    const subtotal = parsePrice(item.preco) * item.quantidade;
-                    return (
-                      <div
-                        key={item.id}
-                        className="border-2 border-doce-yellow/20 rounded-lg p-4 bg-card"
-                      >
-                        <div className="flex justify-between items-start mb-2">
-                          <div className="flex-1">
-                            <h4 className="font-bold text-doce-brown">{item.nome}</h4>
-                            <p className="text-sm text-doce-brown/70">{item.preco} cada</p>
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeItem(item.id)}
-                            className="text-doce-red hover:text-doce-red"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => decreaseQuantity(item.id)}
-                              className="h-8 w-8 p-0"
-                            >
-                              <Minus className="w-4 h-4" />
-                            </Button>
-                            <span className="font-bold text-doce-brown min-w-[2rem] text-center">
-                              {item.quantidade}
-                            </span>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => increaseQuantity(item.id)}
-                              className="h-8 w-8 p-0"
-                            >
-                              <Plus className="w-4 h-4" />
-                            </Button>
-                          </div>
-                          <span className="font-bold text-doce-red">
-                            {formatPrice(subtotal)}
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
-
-                  <div className="border-t-2 border-doce-yellow pt-4 mt-4">
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-xl font-bold text-doce-brown">Total:</span>
-                      <span className="text-2xl font-bold text-doce-red">
-                        {formatPrice(calculateTotal())}
-                      </span>
-                    </div>
-                    <Button
-                      onClick={handleCheckout}
-                      className="w-full bg-doce-yellow hover:bg-doce-yellow/90 text-doce-brown font-bold py-6"
+              <ScrollArea className="h-[350px] pr-4">
+                {cart.map((item) => {
+                  const product = products.find(p => p.id === item.id);
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex items-center gap-4 p-4 mb-3 bg-white rounded-lg border-2 border-doce-brown/10"
                     >
-                      Finalizar Pedido
-                    </Button>
-                  </div>
+                      {product && (
+                        <img
+                          src={product.image}
+                          alt={item.nome}
+                          className="w-16 h-16 object-cover rounded"
+                        />
+                      )}
+                      <div className="flex-1">
+                        <h3 className="font-bold text-doce-brown text-sm">{item.nome}</h3>
+                        <p className="text-doce-brown/70 text-sm">{item.preco}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          onClick={() => decreaseQuantity(item.id)}
+                          className="h-8 w-8"
+                        >
+                          <Minus className="w-4 h-4" />
+                        </Button>
+                        <span className="w-8 text-center font-bold">{item.quantidade}</span>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          onClick={() => increaseQuantity(item.id)}
+                          className="h-8 w-8"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          onClick={() => removeItem(item.id)}
+                          className="h-8 w-8 text-red-600"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </ScrollArea>
+
+              <div className="mt-4 pt-4 border-t">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-lg font-bold text-doce-brown">Total:</span>
+                  <span className="text-2xl font-bold text-doce-brown">
+                    {formatPrice(calculateTotal())}
+                  </span>
                 </div>
+                <Button
+                  onClick={handleCheckout}
+                  className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90"
+                  disabled={cart.length === 0}
+                >
+                  Finalizar Pedido
+                </Button>
               </div>
-            )}
+            </div>
+          ) : step === 4 ? (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleBack}
+                  className="text-doce-brown"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Voltar
+                </Button>
+                <h2 className="text-xl font-bold text-doce-brown">Informações</h2>
+                <div></div>
+              </div>
 
-            {/* ETAPA 4: Informações do Cliente */}
-            {step === 4 && (
-              <div>
-                <div className="flex items-center mb-4">
-                  <Button
-                    variant="ghost"
-                    onClick={handleBack}
-                    className="text-doce-brown"
-                  >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Voltar
-                  </Button>
-                </div>
-
+              <ScrollArea className="h-[400px] pr-4">
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="name" className="text-doce-brown font-semibold">
-                      Nome Completo *
-                    </Label>
+                    <label className="block text-sm font-medium text-doce-brown mb-1">
+                      Nome completo *
+                    </label>
                     <Input
-                      id="name"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
-                      placeholder="Seu nome completo"
-                      className="mt-1 bg-input-background"
+                      placeholder="Seu nome"
+                      className="border-doce-brown/20"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="address" className="text-doce-brown font-semibold">
-                      Endereço Completo *
-                    </Label>
-                    <Textarea
-                      id="address"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      placeholder="Rua, número, complemento, bairro, cidade"
-                      className="mt-1 min-h-[100px] bg-input-background"
+                    <label className="block text-sm font-medium text-doce-brown mb-1">
+                      Rua e número *
+                    </label>
+                    <Input
+                      value={street}
+                      onChange={(e) => setStreet(e.target.value)}
+                      placeholder="Ex: Rua das Flores, 123"
+                      className="border-doce-brown/20"
                     />
                   </div>
 
                   <div>
-                    <Label className="text-doce-brown font-semibold mb-3 block">
-                      Forma de Pagamento *
-                    </Label>
-                    <RadioGroup value={payment} onValueChange={setPayment}>
-                      <div className="space-y-2">
-                        <div className="flex items-center space-x-2 border-2 border-doce-yellow/20 rounded-lg p-3 hover:border-doce-yellow/50 transition-all">
-                          <RadioGroupItem value="Pix" id="pix" />
-                          <Label htmlFor="pix" className="flex-1 cursor-pointer text-doce-brown">
-                            Pix
-                          </Label>
-                        </div>
-                        <div className="flex items-center space-x-2 border-2 border-doce-yellow/20 rounded-lg p-3 hover:border-doce-yellow/50 transition-all">
-                          <RadioGroupItem value="Dinheiro" id="dinheiro" />
-                          <Label htmlFor="dinheiro" className="flex-1 cursor-pointer text-doce-brown">
-                            Dinheiro
-                          </Label>
-                        </div>
-                        <div className="flex items-center space-x-2 border-2 border-doce-yellow/20 rounded-lg p-3 hover:border-doce-yellow/50 transition-all">
-                          <RadioGroupItem value="Débito/Crédito na Maquininha" id="cartao" />
-                          <Label htmlFor="cartao" className="flex-1 cursor-pointer text-doce-brown">
-                            Débito/Crédito na Maquininha
-                          </Label>
-                        </div>
-                      </div>
-                    </RadioGroup>
+                    <label className="block text-sm font-medium text-doce-brown mb-1">
+                      Complemento (opcional)
+                    </label>
+                    <Input
+                      value={complement}
+                      onChange={(e) => setComplement(e.target.value)}
+                      placeholder="Ex: Apto 45"
+                      className="border-doce-brown/20"
+                    />
                   </div>
 
-                  <div className="border-t-2 border-doce-yellow pt-4 mt-4">
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-lg font-bold text-doce-brown">Total do Pedido:</span>
-                      <span className="text-2xl font-bold text-doce-red">
-                        {formatPrice(calculateTotal())}
-                      </span>
+                  <div>
+                    <label className="block text-sm font-medium text-doce-brown mb-1">
+                      Bairro *
+                    </label>
+                    <Input
+                      value={neighborhood}
+                      onChange={(e) => setNeighborhood(e.target.value)}
+                      placeholder="Seu bairro"
+                      className="border-doce-brown/20"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-doce-brown mb-1">
+                      Cidade *
+                    </label>
+                    <Input
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      placeholder="Sua cidade"
+                      className="border-doce-brown/20"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-doce-brown mb-2">
+                      Forma de pagamento *
+                    </label>
+                    <div className="grid grid-cols-3 gap-3">
+                      {["Pix", "Dinheiro", "Débito/Crédito"].map((method) => (
+                        <Button
+                          key={method}
+                          onClick={() => setPayment(method)}
+                          variant={payment === method ? "default" : "outline"}
+                          className={
+                            payment === method
+                              ? "bg-red-600 hover:bg-red-700 text-white"
+                              : "border-doce-brown/20 text-doce-brown hover:bg-doce-brown/5"
+                          }
+                        >
+                          {method}
+                        </Button>
+                      ))}
                     </div>
-                    <Button
-                      onClick={handleSendOrder}
-                      className="w-full bg-doce-yellow hover:bg-doce-yellow/90 text-doce-brown font-bold py-6 text-lg"
-                    >
-                      ENVIAR PEDIDO
-                    </Button>
                   </div>
                 </div>
+              </ScrollArea>
+
+              <div className="mt-4 pt-4 border-t">
+                <Button
+                  onClick={handleSendOrder}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white font-bold"
+                  disabled={!customerName || !street || !neighborhood || !city || !payment || isLoading}
+                >
+                  ENVIAR
+                </Button>
               </div>
-            )}
-          </ScrollArea>
+            </div>
+          ) : null}
         </div>
       </DialogContent>
     </Dialog>

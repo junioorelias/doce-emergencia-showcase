@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Flame, Percent, BookOpen, Handshake, Shield, CreditCard } from "lucide-react";
+import { TrendingUp, Gift, BookOpen, Handshake, Shield, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import ActionCard from "@/components/ActionCard";
@@ -17,7 +17,7 @@ const Home = () => {
     if (!carouselApi) return;
     const id = setInterval(() => {
       carouselApi.scrollNext();
-    }, 3500);
+    }, 5000);
     return () => clearInterval(id);
   }, [carouselApi]);
 
@@ -52,7 +52,7 @@ const Home = () => {
       <section className="container mx-auto px-4 mb-4 md:mb-6">
         <div className="max-w-2xl mx-auto">
           <Button onClick={handleQuickOrder} className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 text-lg md:text-xl font-bold py-8 md:py-10 h-auto shadow-lg transition-all duration-300 active:scale-95 rounded-xl">
-            ⚡ PEDIR AGORA
+            ⚡ FAZER PEDIDO RÁPIDO
           </Button>
         </div>
       </section>
@@ -61,15 +61,15 @@ const Home = () => {
         <div className="max-w-2xl mx-auto">
           <div className="grid grid-cols-2 gap-4 md:gap-6">
             <ActionCard 
-              title="MAIS PEDIDOS" 
-              icon={Flame} 
+              title="FAVORITOS DA GALERA" 
+              icon={TrendingUp} 
               variant="cream" 
               onClick={() => navigate('/fazer-pedido?filter=mais-pedidos')} 
               className="w-full" 
             />
             <ActionCard 
               title="DESCONTOS EXCLUSIVOS" 
-              icon={Percent} 
+              icon={Gift} 
               variant="cream" 
               onClick={() => navigate('/descontos-exclusivos')} 
               className="w-full" 

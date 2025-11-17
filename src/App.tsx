@@ -9,7 +9,6 @@ import Header from "./components/Header";
 import SplashScreen from "./components/SplashScreen";
 import Home from "./pages/Home";
 import FazerPedido from "./pages/FazerPedido";
-import Recompensas from "./pages/Recompensas";
 import Franquia from "./pages/Franquia";
 import DescontosExclusivos from "./pages/DescontosExclusivos";
 import NossaHistoria from "./pages/NossaHistoria";
@@ -57,7 +56,6 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/fazer-pedido" element={<FazerPedido />} />
-            <Route path="/recompensas" element={<Recompensas />} />
             <Route path="/franquia" element={<Franquia />} />
             <Route path="/descontos-exclusivos" element={<DescontosExclusivos />} />
             <Route path="/nossa-historia" element={<NossaHistoria />} />

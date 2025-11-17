@@ -50,14 +50,24 @@ const Header = () => {
                 CARDÁPIO
               </Link>
               <Link
-                to="/recompensas"
+                to="/descontos-exclusivos"
                 className={`text-sm font-medium transition-colors whitespace-nowrap ${
-                  isActive("/recompensas")
+                  isActive("/descontos-exclusivos")
                     ? "text-doce-white border-b-2 border-doce-yellow"
                     : "text-doce-white/80 hover:text-doce-white"
                 }`}
               >
-                RECOMPENSAS
+                DESCONTOS
+              </Link>
+              <Link
+                to="/nossa-historia"
+                className={`text-sm font-medium transition-colors whitespace-nowrap ${
+                  isActive("/nossa-historia")
+                    ? "text-doce-white border-b-2 border-doce-yellow"
+                    : "text-doce-white/80 hover:text-doce-white"
+                }`}
+              >
+                HISTÓRIA
               </Link>
               <Link
                 to="/franquia"
@@ -103,8 +113,13 @@ const Header = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/recompensas" className="w-full cursor-pointer">
-                    RECOMPENSAS
+                  <Link to="/descontos-exclusivos" className="w-full cursor-pointer">
+                    DESCONTOS
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/nossa-historia" className="w-full cursor-pointer">
+                    HISTÓRIA
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>

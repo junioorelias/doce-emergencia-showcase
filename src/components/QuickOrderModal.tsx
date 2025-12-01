@@ -164,18 +164,18 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] md:max-w-2xl max-h-[90vh] p-0">
+      <DialogContent className="max-w-[95vw] md:max-w-2xl max-h-[90vh] bg-white rounded-2xl p-0 overflow-hidden">
         <div className="p-6">
           <QuickOrderProgressBar progress={progress} />
 
           {step === 5 ? (
             <div className="flex flex-col items-center justify-center py-12">
-              <CheckCircle2 className="w-16 h-16 text-green-500 mb-4" />
+              <CheckCircle2 className="w-16 h-16 mb-4" style={{ color: '#49C861' }} />
               <h3 className="text-xl font-bold text-doce-brown mb-2">
                 Pedido realizado com sucesso.
               </h3>
               <p className="text-sm text-doce-brown/70">
-                Aguarde! Estamos direcionando seu pedido para o whatsapp.
+                Aguarde! Estamos direcionando seu pedido para o WhatsApp.
               </p>
             </div>
           ) : step === 1 ? (
@@ -183,17 +183,18 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
               <h2 className="text-2xl font-bold text-doce-brown mb-6 text-center">
                 Escolha uma categoria
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {categories.map((category) => {
                   const Icon = categoryIcons[category];
                   return (
                     <Button
                       key={category}
                       onClick={() => handleCategorySelect(category)}
-                      className="h-24 flex flex-col items-center justify-center gap-2 bg-doce-yellow/10 hover:bg-doce-yellow text-doce-brown border-2 border-doce-yellow/20 hover:border-doce-yellow"
+                      className="h-20 flex flex-col items-center justify-center gap-2 text-white border-0"
+                      style={{ backgroundColor: '#E53935' }}
                     >
-                      <Icon className="w-8 h-8" />
-                      <span className="text-sm font-medium">{category}</span>
+                      <Icon className="w-6 h-6" />
+                      <span className="text-xs font-medium">{category}</span>
                     </Button>
                   );
                 })}
@@ -225,29 +226,31 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
                 </Button>
               </div>
 
-              <ScrollArea className="h-[400px] pr-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ScrollArea className="h-[350px] pr-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {getFilteredProducts().map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg border-2 border-doce-brown/10 overflow-hidden hover:shadow-lg transition-shadow"
+                      className="flex items-center gap-3 p-3 bg-white rounded-lg border border-gray-200"
                     >
                       <img
                         src={product.image}
                         alt={product.nome}
-                        className="w-full aspect-square object-cover"
+                        className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
                       />
-                      <div className="p-3">
-                        <h3 className="font-bold text-doce-brown text-sm mb-1">
-                          {product.nome}
-                        </h3>
-                        <p className="text-lg font-bold text-doce-brown mb-2">
-                          {product.preco}
-                        </p>
+                      <div className="flex-1 flex items-center justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-bold text-doce-brown text-sm leading-tight mb-1">
+                            {product.nome}
+                          </h3>
+                          <p className="text-sm font-semibold text-doce-brown">
+                            {product.preco}
+                          </p>
+                        </div>
                         <Button
                           onClick={() => addToCart(product)}
-                          className="w-full bg-red-600 hover:bg-red-700 text-white"
-                          size="sm"
+                          className="text-white font-bold text-sm px-3 py-1 h-8"
+                          style={{ backgroundColor: '#E53935' }}
                         >
                           +1
                         </Button>
@@ -261,7 +264,8 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
                 <div className="mt-4 pt-4 border-t">
                   <Button
                     onClick={handleViewCart}
-                    className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90"
+                    className="w-full text-white font-bold"
+                    style={{ backgroundColor: '#E53935' }}
                   >
                     Visualizar Carrinho ({cart.length})
                   </Button>
@@ -290,16 +294,16 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center gap-4 p-4 mb-3 bg-white rounded-lg border-2 border-doce-brown/10"
+                      className="flex items-center gap-3 p-3 mb-3 bg-white rounded-lg border border-gray-200"
                     >
                       {product && (
                         <img
                           src={product.image}
                           alt={item.nome}
-                          className="w-16 h-16 object-cover rounded"
+                          className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
                         />
                       )}
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <h3 className="font-bold text-doce-brown text-sm">{item.nome}</h3>
                         <p className="text-doce-brown/70 text-sm">{item.preco}</p>
                       </div>
@@ -325,7 +329,8 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
                           size="icon"
                           variant="ghost"
                           onClick={() => removeItem(item.id)}
-                          className="h-8 w-8 text-red-600"
+                          className="h-8 w-8"
+                          style={{ color: '#E53935' }}
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -344,10 +349,11 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
                 </div>
                 <Button
                   onClick={handleCheckout}
-                  className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90"
+                  className="w-full text-white font-bold"
+                  style={{ backgroundColor: '#E53935' }}
                   disabled={cart.length === 0}
                 >
-                  Finalizar Pedido
+                  Finalizar pedido
                 </Button>
               </div>
             </div>
@@ -441,9 +447,10 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
                           variant={payment === method ? "default" : "outline"}
                           className={
                             payment === method
-                              ? "bg-red-600 hover:bg-red-700 text-white"
+                              ? "text-white font-medium"
                               : "border-doce-brown/20 text-doce-brown hover:bg-doce-brown/5"
                           }
+                          style={payment === method ? { backgroundColor: '#E53935' } : {}}
                         >
                           {method}
                         </Button>
@@ -456,7 +463,8 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
               <div className="mt-4 pt-4 border-t">
                 <Button
                   onClick={handleSendOrder}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-bold"
+                  className="w-full text-white font-bold"
+                  style={{ backgroundColor: '#E53935' }}
                   disabled={!customerName || !street || !neighborhood || !city || !payment || isLoading}
                 >
                   ENVIAR

@@ -3,9 +3,9 @@ import { TrendingUp, Gift, BookOpen, Handshake, Shield, CreditCard } from "lucid
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import ActionCard from "@/components/ActionCard";
-import heroDoces from "@/assets/hero-doces.jpg";
-import banner1 from "@/assets/banner-1.jpg";
-import banner2 from "@/assets/banner-2.jpg";
+import bannerRequeijao from "@/assets/banner-requeijao.jpg";
+import bannerBrigadeiro from "@/assets/banner-brigadeiro.jpg";
+import bannerCloseFriends from "@/assets/banner-closefriends.jpg";
 import { useNavigate } from "react-router-dom";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import QuickOrderModal from "@/components/QuickOrderModal";
@@ -36,19 +36,13 @@ const Home = () => {
               <Carousel setApi={setCarouselApi} opts={{ loop: true }}>
                 <CarouselContent>
                   <CarouselItem>
-                    <img src={heroDoces} alt="Deliciosos doces da Doce Emergência - Slide 1" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
+                    <img src={bannerRequeijao} alt="Super Requeijão - Mussarela Gratinada - Doce Emergência" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
                   </CarouselItem>
                   <CarouselItem>
-                    <img src={banner1} alt="Super Requeijão - Doce Emergência - Slide 2" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
+                    <img src={bannerBrigadeiro} alt="Tradicional Brigadeiro - Doce Emergência" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
                   </CarouselItem>
                   <CarouselItem>
-                    <img src={banner2} alt="Tradicional Brigadeiro - Doce Emergência - Slide 3" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <img src="/lovable-uploads/a4a13826-9001-4d9f-aae3-2ad87589ea6d.png" alt="Promoções e novidades - Doce Emergência - Slide 4" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <img src="/lovable-uploads/8756e0fa-396e-4224-9737-73def986814f.png" alt="Lançamentos da semana - Doce Emergência - Slide 5" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
+                    <img src={bannerCloseFriends} alt="Descontos Exclusivos Close Friends - Doce Emergência" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
                   </CarouselItem>
                 </CarouselContent>
               </Carousel>

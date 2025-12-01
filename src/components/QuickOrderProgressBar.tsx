@@ -7,12 +7,15 @@ interface QuickOrderProgressBarProps {
 const QuickOrderProgressBar = ({ progress }: QuickOrderProgressBarProps) => {
   return (
     <div className="mb-6">
-      <Progress value={progress} className="h-2 bg-gray-200">
+      <div className="relative h-2 w-full overflow-hidden rounded-full bg-gray-200">
         <div 
-          className="h-full bg-green-500 transition-all duration-500 ease-in-out" 
-          style={{ width: `${progress}%` }}
+          className="h-full transition-all duration-500 ease-in-out" 
+          style={{ 
+            width: `${progress}%`,
+            backgroundColor: '#49C861'
+          }}
         />
-      </Progress>
+      </div>
     </div>
   );
 };

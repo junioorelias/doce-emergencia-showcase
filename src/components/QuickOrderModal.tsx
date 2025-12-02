@@ -146,20 +146,24 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
 
     await new Promise(resolve => setTimeout(resolve, 3000));
 
-    window.open(whatsappUrl, '_blank');
+    // Use window.location.href para compatibilidade com iOS/Safari
+    window.location.href = whatsappUrl;
     
-    setCart([]);
-    setCustomerName("");
-    setStreet("");
-    setComplement("");
-    setNeighborhood("");
-    setCity("");
-    setPayment("");
-    setStep(1);
-    setProgress(2);
-    setSelectedCategory(null);
-    setIsLoading(false);
-    onOpenChange(false);
+    // Limpar estados após um pequeno delay para garantir redirecionamento
+    setTimeout(() => {
+      setCart([]);
+      setCustomerName("");
+      setStreet("");
+      setComplement("");
+      setNeighborhood("");
+      setCity("");
+      setPayment("");
+      setStep(1);
+      setProgress(2);
+      setSelectedCategory(null);
+      setIsLoading(false);
+      onOpenChange(false);
+    }, 500);
   };
 
   return (

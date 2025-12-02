@@ -83,35 +83,43 @@ const NossaHistoria = () => {
           {/* Founder Section */}
           <div className="bg-doce-white rounded-2xl p-8 md:p-12 shadow-xl">
             
-            {/* Founder Title */}
-            <h2 className="text-3xl md:text-4xl font-bold text-doce-brown mb-10 text-center">
-              A mente por trás da marca
-            </h2>
-            
-            {/* Founder Content with Photo */}
-            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+            {/* Header with Photo and Title */}
+            <div className="flex flex-col md:flex-row gap-8 items-start mb-10">
               {/* Photo Placeholder */}
               <div className="flex flex-col items-center flex-shrink-0">
-                <div className="w-48 h-48 bg-doce-brown/10 rounded-2xl flex items-center justify-center mb-4">
+                <div className="w-48 aspect-[3/4] bg-doce-brown/10 rounded-2xl flex items-center justify-center mb-4">
                   <span className="text-doce-brown/40 text-sm text-center px-4">Foto do Fundador</span>
                 </div>
-                <p className="text-sm font-semibold text-doce-brown text-center">
-                  Elias Junior<br />
-                  (@junioorelias)<br />
-                  Fundador
-                </p>
+                <div className="text-sm text-doce-brown text-center">
+                  <span className="font-bold">Elias Junior</span>{" "}
+                  <a 
+                    href="https://instagram.com/junioorelias" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-doce-brown hover:text-doce-red transition-colors"
+                  >
+                    @junioorelias
+                  </a>
+                  <br />
+                  <span className="italic">Fundador</span>
+                </div>
               </div>
               
-              {/* Text Content */}
-              <div className="space-y-8 flex-1">
-                <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                  Movido por visão, intensidade e criatividade, Elias decidiu criar seu próprio negócio com personalidade. Deixando claro desde o início que seguiria seus instintos — sempre indo além da expectativa e convidando as pessoas a viver boas experiências.
-                </p>
-                
-                <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                  Com uma abordagem inquieta e ambiciosa, ele acredita que grandes ideias podem nascer de momentos simples. Provando silenciosamente, que o impossível é apenas questão de opinião — principalmente quando se constrói algo com verdade.
-                </p>
-              </div>
+              {/* Title */}
+              <h2 className="text-3xl md:text-4xl font-bold text-doce-brown flex-1 md:pt-8">
+                A mente por trás da marca
+              </h2>
+            </div>
+            
+            {/* Text Content */}
+            <div className="space-y-8">
+              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                Movido por visão, intensidade e criatividade, Elias decidiu criar seu próprio negócio com personalidade. Deixando claro desde o início que seguiria seus instintos — sempre indo além da expectativa e convidando as pessoas a viver boas experiências.
+              </p>
+              
+              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                Com uma abordagem inquieta e ambiciosa, ele acredita que grandes ideias podem nascer de momentos simples. Provando silenciosamente, que o impossível é apenas questão de opinião — principalmente quando se constrói algo com verdade.
+              </p>
             </div>
             
           </div>

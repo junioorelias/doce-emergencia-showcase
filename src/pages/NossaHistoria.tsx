@@ -1,4 +1,3 @@
-import { Heart, Target, Zap, Users } from "lucide-react";
 import heroDoces from "@/assets/hero-doces.jpg";
 
 const NossaHistoria = () => {
@@ -24,70 +23,91 @@ const NossaHistoria = () => {
       <section className="container mx-auto px-4 py-8 md:py-12">
         <div className="max-w-4xl mx-auto">
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-bold text-doce-white text-center mb-8 md:mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-doce-white text-center mb-12 md:mb-16">
             Nossa História
           </h1>
 
           {/* Story Content */}
-          <div className="bg-doce-white rounded-2xl p-6 md:p-10 shadow-xl mb-8 space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-doce-yellow/20 flex items-center justify-center">
-                <Heart className="w-6 h-6 text-doce-brown" />
-              </div>
-              <p className="text-doce-brown text-lg leading-relaxed pt-2">
-                Em junho de 2023, um jovem empreendedor de 26 anos decidiu colocar à prova seus conhecimentos criando uma marca promissora. O sonho era simples, mas poderoso: trazer de volta aquele gostinho de infância, aquele doce que nos conecta com memórias afetivas.
+          <div className="bg-doce-white rounded-2xl p-8 md:p-12 shadow-xl mb-8">
+            {/* Opening Statement */}
+            <div className="mb-16">
+              <p className="text-2xl md:text-3xl font-bold text-doce-brown leading-relaxed text-center">
+                Uma ideia simples. Uma visão clara. E um momento que mudou tudo.
               </p>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-doce-yellow/20 flex items-center justify-center">
-                <Target className="w-6 h-6 text-doce-brown" />
+            {/* First Block */}
+            <div className="mb-12">
+              <p className="text-lg md:text-xl text-doce-brown leading-relaxed mb-8">
+                A Doce Emergência nasce na primeira mordida dada no brigadeiro certo — aquele instante que lembra todo mundo de como a vida fica mais leve quando o doce certo aparece na hora exata.
+              </p>
+              
+              <div className="my-8 pl-6 border-l-4 border-doce-yellow">
+                <p className="text-xl md:text-2xl font-semibold text-doce-brown italic">
+                  A pergunta veio na sequência:<br />
+                  "Como posso compartilhar esse sentimento?"
+                </p>
               </div>
-              <p className="text-doce-brown text-lg leading-relaxed pt-2">
-                O propósito de conectar as pessoas à praticidade em encontrar aquele docinho favorito que carrega uma memória afetiva. Cada brigadeiro, cada bolo, cada doce é feito com carinho, pensando em proporcionar momentos especiais.
+            </div>
+
+            {/* Second Block */}
+            <div className="mb-12">
+              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                Daí surgiu o projeto. Daquela primeira mordida no brigadeiro de amendoim, nasceu a base de uma marca com identidade forte, qualidade e a missão de entregar esse suspiro que todos merecem no meio da rotina.
               </p>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-doce-yellow/20 flex items-center justify-center">
-                <Zap className="w-6 h-6 text-doce-brown" />
+            {/* Third Block */}
+            <div className="mb-12">
+              <p className="text-lg md:text-xl text-doce-brown leading-relaxed mb-6">
+                O projeto cresce com estratégia, autenticidade e a convicção de que o simples, quando bem-feito, conquista. Logo ficou evidente:
+              </p>
+              
+              <div className="bg-doce-yellow/10 rounded-xl p-6 mb-6">
+                <p className="text-lg md:text-xl font-semibold text-doce-brown">
+                  Nossos clientes buscam mais do que sabor.
+                </p>
               </div>
-              <p className="text-doce-brown text-lg leading-relaxed pt-2">
-                A visão de tornar a entrega rápida e acessível a qualquer momento do dia. Seja uma emergência doce às 22h ou aquela vontade de tarde, estamos aqui para você. Nossa missão é estar sempre prontos quando você mais precisar.
+              
+              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                Se trata de criar boas memórias e compartilhar momentos de prazer.
               </p>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-doce-yellow/20 flex items-center justify-center">
-                <Users className="w-6 h-6 text-doce-brown" />
-              </div>
-              <p className="text-doce-brown text-lg leading-relaxed pt-2">
-                Hoje, nossa meta é expandir a marca, fortalecer a conexão emocional com nossos clientes e criar um impacto positivo na comunidade. Cada pedido nos motiva a continuar crescendo e levando felicidade de porta em porta.
+            {/* Fourth Block */}
+            <div className="mb-0">
+              <p className="text-lg md:text-xl text-doce-brown leading-relaxed mb-6">
+                Hoje, a Doce Emergência existe para isso:
+              </p>
+              
+              <p className="text-xl md:text-2xl font-bold text-doce-brown leading-relaxed">
+                ser a pausa rápida em meio ao caos, atendendo cada "emergência" com o alívio imediato de uma mordida inesquecível.
               </p>
             </div>
           </div>
 
           {/* Founder Section */}
-          <div className="bg-doce-white rounded-2xl p-6 md:p-10 shadow-xl">
-            <h2 className="text-2xl md:text-3xl font-bold text-doce-brown mb-6 text-center">
-              Sobre o Fundador
+          <div className="bg-doce-white rounded-2xl p-8 md:p-12 shadow-xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-doce-brown mb-10 text-center">
+              Fundador — A mente por trás da marca
             </h2>
             
-            <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
-              {/* Placeholder for founder photo */}
-              <div className="flex-shrink-0 w-32 h-32 md:w-40 md:h-40 rounded-full bg-doce-yellow/20 flex items-center justify-center overflow-hidden">
-                <Users className="w-16 h-16 text-doce-brown/40" />
+            <div className="flex flex-col items-center">
+              {/* Founder Name */}
+              <div className="mb-8 text-center">
+                <h3 className="text-2xl md:text-3xl font-bold text-doce-brown mb-2">
+                  Elias
+                </h3>
               </div>
               
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-xl font-bold text-doce-brown mb-2">
-                  [Nome do Fundador]
-                </h3>
-                <p className="text-doce-brown/70 font-medium mb-3">
-                  Empreendedor & Confeiteiro
+              {/* Founder Story */}
+              <div className="space-y-8">
+                <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                  Movido por visão, intensidade e criatividade, Elias decidiu criar seu próprio negócio com personalidade. Deixando claro desde o início que seguiria seus instintos — sempre indo além da expectativa e convidando as pessoas a viver boas experiências.
                 </p>
-                <p className="text-doce-brown leading-relaxed">
-                  Com 26 anos e movido pela paixão por empreender e criar experiências únicas, transformou um sonho em realidade. Acredita que cada doce tem o poder de criar conexões e despertar memórias especiais. Sua missão é levar felicidade através de sabores autênticos e atendimento excepcional.
+                
+                <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                  Com uma abordagem inquieta e ambiciosa, ele acredita que grandes ideias podem nascer de momentos simples. Provando silenciosamente, que o impossível é apenas questão de opinião — principalmente quando se constrói algo com verdade.
                 </p>
               </div>
             </div>

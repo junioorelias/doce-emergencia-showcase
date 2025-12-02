@@ -28,8 +28,7 @@ const NossaHistoria = () => {
             
             {/* Title H1 */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-doce-brown leading-tight mb-16 md:mb-20 text-center">
-              Uma ideia simples. Uma visão clara.<br />
-              E um momento que mudou tudo.
+              Mordida inesquecível
             </h1>
 
             {/* Bloco 1 — Introdução */}
@@ -89,15 +88,30 @@ const NossaHistoria = () => {
               A mente por trás da marca
             </h2>
             
-            {/* Founder Content */}
-            <div className="space-y-8">
-              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                Movido por visão, intensidade e criatividade, Elias decidiu criar seu próprio negócio com personalidade. Deixando claro desde o início que seguiria seus instintos — sempre indo além da expectativa e convidando as pessoas a viver boas experiências.
-              </p>
+            {/* Founder Content with Photo */}
+            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+              {/* Photo Placeholder */}
+              <div className="flex flex-col items-center flex-shrink-0">
+                <div className="w-48 h-48 bg-doce-brown/10 rounded-2xl flex items-center justify-center mb-4">
+                  <span className="text-doce-brown/40 text-sm text-center px-4">Foto do Fundador</span>
+                </div>
+                <p className="text-sm font-semibold text-doce-brown text-center">
+                  Elias Junior<br />
+                  (@junioorelias)<br />
+                  Fundador
+                </p>
+              </div>
               
-              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                Com uma abordagem inquieta e ambiciosa, ele acredita que grandes ideias podem nascer de momentos simples. Provando silenciosamente, que o impossível é apenas questão de opinião — principalmente quando se constrói algo com verdade.
-              </p>
+              {/* Text Content */}
+              <div className="space-y-8 flex-1">
+                <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                  Movido por visão, intensidade e criatividade, Elias decidiu criar seu próprio negócio com personalidade. Deixando claro desde o início que seguiria seus instintos — sempre indo além da expectativa e convidando as pessoas a viver boas experiências.
+                </p>
+                
+                <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                  Com uma abordagem inquieta e ambiciosa, ele acredita que grandes ideias podem nascer de momentos simples. Provando silenciosamente, que o impossível é apenas questão de opinião — principalmente quando se constrói algo com verdade.
+                </p>
+              </div>
             </div>
             
           </div>

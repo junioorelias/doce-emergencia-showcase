@@ -83,10 +83,15 @@ const NossaHistoria = () => {
           {/* Founder Section */}
           <div className="bg-doce-white rounded-2xl p-8 md:p-12 shadow-xl">
             
-            {/* Header with Photo and Title */}
-            <div className="flex flex-col md:flex-row gap-8 items-start mb-10">
-              {/* Photo Placeholder */}
-              <div className="flex flex-col items-center flex-shrink-0">
+            {/* Title */}
+            <h2 className="text-3xl md:text-4xl font-bold text-doce-brown mb-10 text-center">
+              A mente por trás da marca
+            </h2>
+            
+            {/* Content with Photo on Left */}
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              {/* Photo Placeholder - Fixed Left */}
+              <div className="flex flex-col items-center flex-shrink-0 mx-auto md:mx-0">
                 <div className="w-48 aspect-[3/4] bg-doce-brown/10 rounded-2xl flex items-center justify-center mb-4">
                   <span className="text-doce-brown/40 text-sm text-center px-4">Foto do Fundador</span>
                 </div>
@@ -105,21 +110,16 @@ const NossaHistoria = () => {
                 </div>
               </div>
               
-              {/* Title */}
-              <h2 className="text-3xl md:text-4xl font-bold text-doce-brown flex-1 md:pt-8">
-                A mente por trás da marca
-              </h2>
-            </div>
-            
-            {/* Text Content */}
-            <div className="space-y-8">
-              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                Movido por visão, intensidade e criatividade, Elias decidiu criar seu próprio negócio com personalidade. Deixando claro desde o início que seguiria seus instintos — sempre indo além da expectativa e convidando as pessoas a viver boas experiências.
-              </p>
-              
-              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                Com uma abordagem inquieta e ambiciosa, ele acredita que grandes ideias podem nascer de momentos simples. Provando silenciosamente, que o impossível é apenas questão de opinião — principalmente quando se constrói algo com verdade.
-              </p>
+              {/* Text Content - Right Side */}
+              <div className="flex-1 space-y-6">
+                <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                  Movido por visão, intensidade e criatividade, Elias decidiu criar seu próprio negócio com personalidade. Deixando claro desde o início que seguiria seus instintos — sempre indo além da expectativa e convidando as pessoas a viver boas experiências.
+                </p>
+                
+                <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                  Com uma abordagem inquieta e ambiciosa, ele acredita que grandes ideias podem nascer de momentos simples. Provando silenciosamente, que o impossível é apenas questão de opinião — principalmente quando se constrói algo com verdade.
+                </p>
+              </div>
             </div>
             
           </div>

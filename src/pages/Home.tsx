@@ -54,7 +54,7 @@ const Home = () => {
       <section className="container mx-auto px-4 mb-4 md:mb-6">
         <div className="max-w-2xl mx-auto">
           <Button onClick={handleQuickOrder} className="w-full bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 text-lg md:text-xl font-bold py-8 md:py-10 h-auto shadow-lg transition-all duration-300 active:scale-95 rounded-xl">
-            ⚡ FAZER PEDIDO RÁPIDO
+            FAZER PEDIDO RÁPIDO
           </Button>
         </div>
       </section>

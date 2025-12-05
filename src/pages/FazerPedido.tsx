@@ -1,36 +1,60 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import ProductModal from "@/components/ProductModal";
 import { useIsMobile } from "@/hooks/use-mobile";
 import QuickOrderModal from "@/components/QuickOrderModal";
 import { products, Product } from "@/data/products";
-import { Card } from "@/components/ui/card";
+import { CartItem } from "@/lib/orderUtils";
 import { Button } from "@/components/ui/button";
-import { Utensils, Cake, Cookie, Coffee, Sandwich, Star, ShoppingBag } from "lucide-react";
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious,
+  type CarouselApi 
+} from "@/components/ui/carousel";
+import { Utensils, Cake, Cookie, Coffee, Sandwich, Star, Minus, Plus, Droplet } from "lucide-react";
 
-const doces = products;
+type Category = "Mais Pedidos" | "Dia a Dia" | "Bolo" | "Snacks" | "Tradicionais" | "Salgados" | "Bebidas";
 
-// Category configuration with icons
-const categoryConfig = [
-  { name: "Dia a Dia", icon: Star, color: "bg-amber-500" },
+// Category configuration
+const categoryConfig: { name: Category; icon: any; color: string }[] = [
+  { name: "Mais Pedidos", icon: Star, color: "bg-amber-500" },
+  { name: "Dia a Dia", icon: Coffee, color: "bg-orange-500" },
   { name: "Bolo", icon: Cake, color: "bg-pink-500" },
-  { name: "Snacks", icon: Cookie, color: "bg-orange-500" },
+  { name: "Snacks", icon: Cookie, color: "bg-purple-500" },
   { name: "Tradicionais", icon: Utensils, color: "bg-yellow-600" },
   { name: "Salgados", icon: Sandwich, color: "bg-green-600" },
-  { name: "Bebidas", icon: Coffee, color: "bg-blue-500" },
+  { name: "Bebidas", icon: Droplet, color: "bg-blue-500" },
 ];
+
+// IDs dos mais pedidos
+const mostOrderedIds = [1, 2, 6, 9, 19];
 
 const FazerPedido = () => {
   const [searchParams] = useSearchParams();
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [quickOrderOpen, setQuickOrderOpen] = useState(false);
   const isMobile = useIsMobile();
   
-  // Refs for category sections
-  const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  // State
+  const [activeCategory, setActiveCategory] = useState<Category>("Mais Pedidos");
+  const [quantity, setQuantity] = useState(1);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [quickOrderOpen, setQuickOrderOpen] = useState(false);
+  const [initialCartForModal, setInitialCartForModal] = useState<CartItem[]>([]);
 
-  // SEO básico para a página
+  // Get products by category
+  const getProductsByCategory = useCallback((category: Category): Product[] => {
+    if (category === "Mais Pedidos") {
+      return products.filter(p => mostOrderedIds.includes(p.id));
+    }
+    return products.filter(p => p.categoria === category);
+  }, []);
+
+  const currentProducts = getProductsByCategory(activeCategory);
+  const currentProduct = currentProducts[currentSlide] || null;
+
+  // SEO
   useEffect(() => {
     document.title = "Cardápio - Doce Emergência | Peça pelo WhatsApp";
     let meta = document.querySelector(`meta[name="description"]`);
@@ -50,241 +74,229 @@ const FazerPedido = () => {
     canonical.href = window.location.href;
   }, []);
 
-  // Handle filter from URL params - open quick order if coming from "favoritos"
+  // Handle URL params
   useEffect(() => {
     const filter = searchParams.get('filter');
     if (filter === 'mais-pedidos') {
-      setQuickOrderOpen(true);
+      setActiveCategory("Mais Pedidos");
     }
   }, [searchParams]);
 
-  const handleProductClick = (doce: Product) => {
-    setSelectedProduct(doce);
-    setIsModalOpen(true);
-  };
+  // Handle carousel slide change
+  useEffect(() => {
+    if (!carouselApi) return;
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedProduct(null);
-  };
+    const onSelect = () => {
+      setCurrentSlide(carouselApi.selectedScrollSnap());
+      setQuantity(1); // Reset quantity when slide changes
+    };
 
-  const handlePedir = () => {
-    setQuickOrderOpen(true);
-  };
+    carouselApi.on("select", onSelect);
+    return () => {
+      carouselApi.off("select", onSelect);
+    };
+  }, [carouselApi]);
 
-  const scrollToCategory = (categoryName: string) => {
-    const section = sectionRefs.current[categoryName];
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Handle category change
+  const handleCategoryChange = (category: Category) => {
+    setActiveCategory(category);
+    setCurrentSlide(0);
+    setQuantity(1);
+    // Scroll carousel to start
+    if (carouselApi) {
+      carouselApi.scrollTo(0);
     }
   };
 
-  // Get products by category
-  const getProductsByCategory = (category: string) => {
-    return doces.filter(d => d.categoria === category);
+  // Quantity handlers
+  const increaseQuantity = () => setQuantity(prev => prev + 1);
+  const decreaseQuantity = () => setQuantity(prev => prev > 1 ? prev - 1 : 1);
+
+  // Add to cart and open modal
+  const handleAddToCart = () => {
+    if (!currentProduct) return;
+    
+    const cartItem: CartItem = {
+      id: currentProduct.id,
+      nome: currentProduct.nome,
+      preco: currentProduct.preco,
+      quantidade: quantity
+    };
+    
+    setInitialCartForModal([cartItem]);
+    setQuickOrderOpen(true);
+    setQuantity(1); // Reset quantity after adding
   };
 
-  // Get featured product (first one) and recommended products (rest)
-  const getFeaturedProduct = (category: string) => {
-    const products = getProductsByCategory(category);
-    return products[0] || null;
-  };
-
-  const getRecommendedProducts = (category: string) => {
-    const products = getProductsByCategory(category);
-    return products.slice(1);
+  // Handle modal close - reset initial cart
+  const handleModalClose = (open: boolean) => {
+    setQuickOrderOpen(open);
+    if (!open) {
+      setInitialCartForModal([]);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background py-6">
-      <div className="container mx-auto px-4 py-4 md:py-12">
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-6 md:py-12">
         {/* Header */}
-        <div className="text-center mb-6 md:mb-10">
-          <h1 className="text-4xl font-bold text-doce-white mb-2 md:mb-4">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-doce-white mb-2">
             Nosso Cardápio
           </h1>
-          <p className="text-doce-white/80 text-lg mb-6">
+          <p className="text-doce-white/80 text-base md:text-lg">
             Explore nossos produtos e faça seu pedido
           </p>
-          
-          {/* Quick Order CTA Button */}
-          <Button 
-            onClick={handlePedir}
-            className="bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 font-bold text-lg px-8 py-6 h-auto rounded-xl shadow-lg"
-          >
-            <ShoppingBag className="w-5 h-5 mr-2" />
-            FAZER PEDIDO RÁPIDO
-          </Button>
         </div>
 
-        {/* Category Cards - Horizontal Scroll */}
-        <div className="mb-10">
-          <h2 className="text-xl font-bold text-doce-white mb-4">Categorias</h2>
-          <div className="overflow-x-auto pb-2">
-            <div className="flex gap-3 min-w-max">
+        {/* Categories - Fixed horizontal row */}
+        <div className="mb-8">
+          <div className="flex justify-center">
+            <div className={`flex gap-2 md:gap-3 ${isMobile ? 'overflow-x-auto pb-2 max-w-full' : 'flex-wrap justify-center'}`}>
               {categoryConfig.map((cat) => {
                 const IconComponent = cat.icon;
+                const isActive = activeCategory === cat.name;
+                
                 return (
-                  <Card
+                  <button
                     key={cat.name}
-                    onClick={() => scrollToCategory(cat.name)}
-                    className="bg-doce-white border-0 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer hover:scale-105 flex-shrink-0"
+                    onClick={() => handleCategoryChange(cat.name)}
+                    className={`
+                      flex flex-col items-center gap-1 p-3 md:p-4 rounded-xl transition-all duration-200 flex-shrink-0
+                      ${isActive 
+                        ? 'bg-doce-yellow text-doce-brown scale-105 shadow-lg' 
+                        : 'bg-doce-white/10 text-doce-white hover:bg-doce-white/20'
+                      }
+                    `}
                   >
-                    <div className="p-4 flex flex-col items-center gap-2 min-w-[100px]">
-                      <div className={`w-12 h-12 ${cat.color} rounded-full flex items-center justify-center`}>
-                        <IconComponent className="w-6 h-6 text-white" />
-                      </div>
-                      <span className="text-sm font-semibold text-doce-brown text-center">
-                        {cat.name}
-                      </span>
+                    <div className={`w-10 h-10 md:w-12 md:h-12 ${isActive ? 'bg-doce-brown/20' : cat.color} rounded-full flex items-center justify-center`}>
+                      <IconComponent className={`w-5 h-5 md:w-6 md:h-6 ${isActive ? 'text-doce-brown' : 'text-white'}`} />
                     </div>
-                  </Card>
+                    <span className="text-xs md:text-sm font-semibold whitespace-nowrap">
+                      {cat.name}
+                    </span>
+                  </button>
                 );
               })}
             </div>
           </div>
         </div>
 
-        {/* Category Sections */}
-        <div className="space-y-12">
-          {categoryConfig.map((cat) => {
-            const featured = getFeaturedProduct(cat.name);
-            const recommended = getRecommendedProducts(cat.name);
-            const IconComponent = cat.icon;
-
-            if (!featured) return null;
-
-            return (
-              <section 
-                key={cat.name} 
-                ref={(el: HTMLDivElement | null) => { sectionRefs.current[cat.name] = el; }}
-                className="scroll-mt-24"
-              >
-                {/* Category Header */}
-                <div className="flex items-center gap-3 mb-6">
-                  <div className={`w-10 h-10 ${cat.color} rounded-full flex items-center justify-center`}>
-                    <IconComponent className="w-5 h-5 text-white" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-doce-white">{cat.name}</h2>
-                </div>
-
-                {/* Featured Product (Banner) */}
-                <Card 
-                  onClick={() => handleProductClick(featured)}
-                  className="bg-doce-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer mb-6 overflow-hidden"
-                >
-                  <div className="flex flex-col md:flex-row">
-                    <div className="md:w-1/3 h-48 md:h-auto bg-doce-yellow/20 flex items-center justify-center p-6">
+        {/* Product Carousel */}
+        <div className="max-w-xl mx-auto">
+          <Carousel
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            setApi={setCarouselApi}
+            className="w-full"
+          >
+            <CarouselContent>
+              {currentProducts.map((product) => (
+                <CarouselItem key={product.id}>
+                  <div className="bg-doce-white rounded-2xl shadow-xl overflow-hidden">
+                    {/* Product Image */}
+                    <div className="w-full aspect-square bg-gradient-to-br from-doce-yellow/20 to-doce-yellow/5 flex items-center justify-center p-8">
                       <img
-                        src={featured.image || "/placeholder.svg"}
-                        alt={`${featured.nome} - Doce Emergência`}
-                        className="h-32 md:h-40 object-contain"
-                        loading="lazy"
+                        src={product.image || "/placeholder.svg"}
+                        alt={product.nome}
+                        className="max-h-full max-w-full object-contain"
                       />
                     </div>
-                    <div className="md:w-2/3 p-6 flex flex-col justify-center">
-                      <span className="text-xs font-semibold text-doce-yellow bg-doce-yellow/20 px-2 py-1 rounded w-fit mb-2">
-                        ⭐ Destaque
-                      </span>
-                      <h3 className="text-xl md:text-2xl font-bold text-doce-brown mb-2">
-                        {featured.nome}
-                      </h3>
-                      <p className="text-doce-brown/70 mb-4">
-                        {featured.descricao}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-bold text-doce-brown">
-                            {featured.preco}
-                          </span>
-                          {featured.peso && (
-                            <span className="text-sm text-doce-brown/70">• {featured.peso}</span>
-                          )}
-                        </div>
-                        <Button
-                          onClick={(e) => { e.stopPropagation(); handlePedir(); }}
-                          className="bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 font-bold"
-                        >
-                          Pedir
-                        </Button>
-                      </div>
-                    </div>
                   </div>
-                </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            
+            {/* Navigation arrows - only on desktop */}
+            {!isMobile && (
+              <>
+                <CarouselPrevious className="left-0 -translate-x-12 bg-doce-white text-doce-brown hover:bg-doce-yellow" />
+                <CarouselNext className="right-0 translate-x-12 bg-doce-white text-doce-brown hover:bg-doce-yellow" />
+              </>
+            )}
+          </Carousel>
 
-                {/* Recommended Products Grid */}
-                {recommended.length > 0 && (
-                  <>
-                    <h3 className="text-lg font-semibold text-doce-white/80 mb-4">
-                      Mais opções
-                    </h3>
-                    <div className={`grid ${isMobile ? 'grid-cols-2' : 'grid-cols-3 lg:grid-cols-4'} gap-4`}>
-                      {recommended.map((product) => (
-                        <Card
-                          key={product.id}
-                          onClick={() => handleProductClick(product)}
-                          className="bg-doce-white border-0 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer hover:scale-102"
-                        >
-                          <div className="p-3">
-                            <div className="w-full aspect-square bg-doce-yellow/10 rounded-lg flex items-center justify-center overflow-hidden mb-3">
-                              <img
-                                src={product.image || "/placeholder.svg"}
-                                alt={`${product.nome} - Doce Emergência`}
-                                className="w-3/4 h-3/4 object-contain"
-                                loading="lazy"
-                              />
-                            </div>
-                            <p className="text-sm font-semibold text-doce-brown leading-snug line-clamp-2 mb-2">
-                              {product.nome}
-                            </p>
-                            <div className="flex items-center justify-between">
-                              <span className="text-sm font-bold text-doce-brown">{product.preco}</span>
-                              <Button
-                                onClick={(e) => { e.stopPropagation(); handlePedir(); }}
-                                className="bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 font-bold h-8 px-3 text-xs rounded-full"
-                              >
-                                Pedir
-                              </Button>
-                            </div>
-                          </div>
-                        </Card>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </section>
-            );
-          })}
-        </div>
+          {/* Product Info - Below carousel */}
+          {currentProduct && (
+            <div className="mt-6 bg-doce-white rounded-2xl p-6 shadow-lg">
+              {/* Product Name */}
+              <h2 className="text-xl md:text-2xl font-bold text-doce-brown text-center mb-2">
+                {currentProduct.nome}
+              </h2>
+              
+              {/* Price */}
+              <p className="text-2xl md:text-3xl font-bold text-doce-brown text-center mb-3">
+                {currentProduct.preco}
+              </p>
+              
+              {/* Description */}
+              <p className="text-doce-brown/70 text-center text-sm md:text-base mb-6">
+                {currentProduct.descricao}
+              </p>
 
-        {/* Product Modal */}
-        <ProductModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          product={selectedProduct}
-          onAddToCart={handlePedir}
-        />
+              {/* Quantity Selector */}
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <span className="text-doce-brown font-medium">Quantidade:</span>
+                <div className="flex items-center gap-3">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={decreaseQuantity}
+                    className="h-10 w-10 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </Button>
+                  <span className="text-xl font-bold text-doce-brown w-8 text-center">
+                    {quantity}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={increaseQuantity}
+                    className="h-10 w-10 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
 
-        {/* Quick Order Modal */}
-        <QuickOrderModal open={quickOrderOpen} onOpenChange={setQuickOrderOpen} />
+              {/* Add to Cart Button */}
+              <Button
+                onClick={handleAddToCart}
+                className="w-full h-14 text-lg font-bold rounded-xl text-white"
+                style={{ backgroundColor: '#E53935' }}
+              >
+                ADICIONAR AO CARRINHO
+              </Button>
+            </div>
+          )}
 
-        {/* CTA Section */}
-        <div className="text-center mt-16">
-          <div className="bg-doce-white rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold text-doce-brown mb-4">
-              Pronto para pedir?
-            </h2>
-            <p className="text-doce-brown/80 mb-6">
-              Clique no botão abaixo para montar seu pedido e enviar pelo WhatsApp!
-            </p>
-            <Button
-              onClick={handlePedir}
-              className="bg-doce-yellow text-doce-brown hover:bg-doce-yellow/90 font-bold px-8 py-3"
-            >
-              FAZER PEDIDO RÁPIDO
-            </Button>
+          {/* Carousel Indicators */}
+          <div className="flex justify-center gap-2 mt-4">
+            {currentProducts.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => carouselApi?.scrollTo(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                  index === currentSlide 
+                    ? 'bg-doce-yellow w-6' 
+                    : 'bg-doce-white/40 hover:bg-doce-white/60'
+                }`}
+                aria-label={`Ir para produto ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
+
+        {/* Quick Order Modal */}
+        <QuickOrderModal 
+          open={quickOrderOpen} 
+          onOpenChange={handleModalClose}
+          initialCart={initialCartForModal.length > 0 ? initialCartForModal : undefined}
+          initialStep={initialCartForModal.length > 0 ? 3 : undefined}
+        />
       </div>
     </div>
   );

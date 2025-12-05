@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,8 @@ import { toast } from "sonner";
 interface QuickOrderModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialCart?: CartItem[];
+  initialStep?: 1 | 2 | 3 | 4 | 5;
 }
 
 type Category = "Mais Pedidos" | "Todos" | "Tradicionais" | "Dia a Dia" | "Bolo" | "Snacks" | "Salgados" | "Bebidas";
@@ -27,7 +29,7 @@ const categoryIcons: Record<Category, any> = {
   "Bebidas": Droplet,
 };
 
-const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
+const QuickOrderModal = ({ open, onOpenChange, initialCart, initialStep }: QuickOrderModalProps) => {
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -39,6 +41,34 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
   const [payment, setPayment] = useState("");
   const [progress, setProgress] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Handle initial cart and step when modal opens
+  useEffect(() => {
+    if (open && initialCart && initialCart.length > 0 && initialStep) {
+      setCart(initialCart);
+      setStep(initialStep);
+      // Set progress based on step
+      if (initialStep === 3) {
+        setProgress(65);
+      } else if (initialStep === 4) {
+        setProgress(95);
+      }
+    }
+  }, [open, initialCart, initialStep]);
+
+  // Reset state when modal closes
+  useEffect(() => {
+    if (!open) {
+      // Small delay to avoid visual glitch
+      setTimeout(() => {
+        if (!initialCart || initialCart.length === 0) {
+          setStep(1);
+          setProgress(2);
+          setSelectedCategory(null);
+        }
+      }, 300);
+    }
+  }, [open, initialCart]);
 
   const categories: Category[] = [
     "Mais Pedidos",
@@ -118,6 +148,12 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
       setStep(3);
       setProgress(65);
     }
+  };
+
+  const handleBackToCategories = () => {
+    setStep(1);
+    setProgress(2);
+    setSelectedCategory(null);
   };
 
   const handleViewCart = () => {
@@ -282,11 +318,11 @@ const QuickOrderModal = ({ open, onOpenChange }: QuickOrderModalProps) => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={handleBack}
+                  onClick={handleBackToCategories}
                   className="text-doce-brown"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Continuar
+                  Continuar comprando
                 </Button>
                 <h2 className="text-xl font-bold text-doce-brown">Carrinho</h2>
                 <div></div>

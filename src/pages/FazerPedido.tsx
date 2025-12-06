@@ -223,10 +223,10 @@ const FazerPedido = () => {
           {isMobile ? <MobileCategories /> : <DesktopCategories />}
         </div>
 
-        {/* Product Carousel + Info - Takes remaining space */}
-        <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-          {/* Carousel */}
-          <div className="flex-shrink-0 relative">
+        {/* Product Carousel + Info - Compact layout */}
+        <div className="flex flex-col">
+          {/* Carousel - Image without white card */}
+          <div className="relative">
             <Carousel
               opts={{
                 align: "center",
@@ -245,22 +245,23 @@ const FazerPedido = () => {
                     >
                       <div 
                         className={`
-                          bg-doce-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer
+                          transition-all duration-300 cursor-pointer
                           ${isActive 
-                            ? 'shadow-lg scale-100 opacity-100' 
-                            : 'shadow scale-90 opacity-50'
+                            ? 'scale-100 opacity-100' 
+                            : 'scale-90 opacity-50'
                           }
                         `}
                         onClick={() => !isActive && carouselApi?.scrollTo(index)}
                       >
-                        {/* Product Image - Compact */}
-                        <div className="w-full aspect-square flex items-center justify-center p-2 bg-gradient-to-br from-doce-yellow/20 to-doce-yellow/5"
-                          style={{ maxHeight: isMobile ? '18vh' : '20vh' }}
+                        {/* Product Image - Floating, no card */}
+                        <div 
+                          className="w-full flex items-center justify-center"
+                          style={{ height: isMobile ? '22vh' : '24vh' }}
                         >
                           <img
                             src={product.image || "/placeholder.svg"}
                             alt={product.nome}
-                            className="max-h-full max-w-full object-contain"
+                            className="max-h-full max-w-full object-contain drop-shadow-lg"
                           />
                         </div>
                       </div>
@@ -279,69 +280,64 @@ const FazerPedido = () => {
             </Carousel>
           </div>
 
-          {/* Product Info - Compact card below */}
+          {/* Product Info - Auto height based on content */}
           {currentProduct && (
-            <div className="flex-1 flex flex-col mt-2 bg-doce-white rounded-lg p-3 md:p-4 shadow-lg overflow-hidden">
+            <div className="flex flex-col items-center text-center px-4 mt-3">
               {/* Name & Price */}
-              <div className="flex items-baseline justify-between gap-2 flex-shrink-0">
-                <h2 className="text-sm md:text-lg font-bold text-doce-brown truncate flex-1">
-                  {currentProduct.nome}
-                </h2>
-                <p className="text-base md:text-xl font-bold text-doce-brown whitespace-nowrap">
-                  {currentProduct.preco}
-                </p>
-              </div>
+              <h2 className="text-base md:text-xl font-bold text-doce-white">
+                {currentProduct.nome}
+              </h2>
+              <p className="text-lg md:text-2xl font-bold text-doce-yellow mt-0.5">
+                {currentProduct.preco}
+              </p>
               
               {/* Description - Max 2 lines */}
-              <p className="text-doce-brown/70 text-[11px] md:text-sm line-clamp-2 mt-1 flex-shrink-0">
+              <p className="text-doce-white/70 text-xs md:text-sm line-clamp-2 mt-1 max-w-sm">
                 {currentProduct.descricao}
               </p>
 
-              {/* Spacer */}
-              <div className="flex-1 min-h-1" />
-
-              {/* Quantity Selector - Centered */}
-              <div className="flex items-center justify-center gap-3 mt-2 flex-shrink-0">
+              {/* Quantity Selector */}
+              <div className="flex items-center justify-center gap-4 mt-3">
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={decreaseQuantity}
-                  className="h-8 w-8 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
+                  className="h-9 w-9 rounded-full border-doce-white/30 text-doce-white hover:bg-doce-white/20 bg-transparent"
                 >
-                  <Minus className="w-3 h-3" />
+                  <Minus className="w-4 h-4" />
                 </Button>
-                <span className="text-lg font-bold text-doce-brown w-8 text-center">
+                <span className="text-xl font-bold text-doce-white w-8 text-center">
                   {quantity}
                 </span>
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={increaseQuantity}
-                  className="h-8 w-8 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
+                  className="h-9 w-9 rounded-full border-doce-white/30 text-doce-white hover:bg-doce-white/20 bg-transparent"
                 >
-                  <Plus className="w-3 h-3" />
+                  <Plus className="w-4 h-4" />
                 </Button>
               </div>
 
-              {/* Add to Cart Button - Centered below quantity */}
+              {/* Add to Cart Button */}
               <Button
                 onClick={handleAddToCart}
-                className="w-full max-w-xs mx-auto h-10 text-sm font-bold rounded-lg text-white mt-2 flex-shrink-0"
+                className="w-full max-w-xs h-11 text-sm font-bold rounded-lg text-white mt-3"
                 style={{ backgroundColor: '#E53935' }}
               >
                 ADICIONAR AO CARRINHO
               </Button>
 
               {/* Carousel Indicators */}
-              <div className="flex justify-center gap-1.5 mt-2 flex-shrink-0">
+              <div className="flex justify-center gap-1.5 mt-3">
                 {currentProducts.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => carouselApi?.scrollTo(index)}
                     className={`h-1.5 rounded-full transition-all duration-200 ${
                       index === currentSlide 
-                        ? 'bg-doce-brown w-4' 
-                        : 'bg-doce-brown/30 w-1.5 hover:bg-doce-brown/50'
+                        ? 'bg-doce-yellow w-5' 
+                        : 'bg-doce-white/30 w-1.5 hover:bg-doce-white/50'
                     }`}
                     aria-label={`Ir para produto ${index + 1}`}
                   />

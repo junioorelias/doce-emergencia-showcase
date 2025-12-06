@@ -136,158 +136,232 @@ const FazerPedido = () => {
     }
   };
 
+  // Go to next slide (for clicking on preview)
+  const goToNextSlide = () => {
+    if (carouselApi) {
+      carouselApi.scrollNext();
+    }
+  };
+
+  // Mobile Categories Component - Icons only, expand on tap
+  const MobileCategories = () => (
+    <div className="flex justify-center items-center gap-1 px-2 w-full">
+      {categoryConfig.map((cat) => {
+        const IconComponent = cat.icon;
+        const isActive = activeCategory === cat.name;
+        
+        return (
+          <button
+            key={cat.name}
+            onClick={() => handleCategoryChange(cat.name)}
+            className={`
+              flex items-center gap-1.5 rounded-full transition-all duration-300 ease-out
+              ${isActive 
+                ? 'bg-doce-yellow text-doce-brown px-3 py-2 shadow-md' 
+                : 'bg-doce-white/10 text-doce-white p-2 hover:bg-doce-white/20'
+              }
+            `}
+          >
+            <div className={`
+              ${isActive ? 'w-6 h-6' : 'w-8 h-8'} 
+              ${isActive ? '' : cat.color} 
+              rounded-full flex items-center justify-center transition-all
+            `}>
+              <IconComponent className={`${isActive ? 'w-4 h-4' : 'w-4 h-4'} ${isActive ? 'text-doce-brown' : 'text-white'}`} />
+            </div>
+            {isActive && (
+              <span className="text-xs font-semibold whitespace-nowrap pr-1 animate-in fade-in slide-in-from-left-2 duration-200">
+                {cat.name}
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  // Desktop Categories Component
+  const DesktopCategories = () => (
+    <div className="flex justify-center gap-2">
+      {categoryConfig.map((cat) => {
+        const IconComponent = cat.icon;
+        const isActive = activeCategory === cat.name;
+        
+        return (
+          <button
+            key={cat.name}
+            onClick={() => handleCategoryChange(cat.name)}
+            className={`
+              flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200
+              ${isActive 
+                ? 'bg-doce-yellow text-doce-brown shadow-lg scale-105' 
+                : 'bg-doce-white/10 text-doce-white hover:bg-doce-white/20'
+              }
+            `}
+          >
+            <div className={`w-8 h-8 ${isActive ? 'bg-doce-brown/20' : cat.color} rounded-full flex items-center justify-center`}>
+              <IconComponent className={`w-4 h-4 ${isActive ? 'text-doce-brown' : 'text-white'}`} />
+            </div>
+            <span className="text-sm font-semibold whitespace-nowrap">
+              {cat.name}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-6 md:py-12">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-doce-white mb-2">
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Main content - fill available height */}
+      <div className="flex-1 flex flex-col container mx-auto px-3 md:px-4 py-3 md:py-6 max-h-[calc(100vh-64px)] overflow-hidden">
+        
+        {/* Header - Compact */}
+        <div className="text-center mb-3 md:mb-4 flex-shrink-0">
+          <h1 className="text-xl md:text-3xl font-bold text-doce-white">
             Nosso Cardápio
           </h1>
-          <p className="text-doce-white/80 text-base md:text-lg">
-            Explore nossos produtos e faça seu pedido
+          <p className="text-doce-white/70 text-xs md:text-sm">
+            Explore e faça seu pedido
           </p>
         </div>
 
-        {/* Categories - Fixed horizontal row */}
-        <div className="mb-8">
-          <div className="flex justify-center">
-            <div className={`flex gap-2 md:gap-3 ${isMobile ? 'overflow-x-auto pb-2 max-w-full' : 'flex-wrap justify-center'}`}>
-              {categoryConfig.map((cat) => {
-                const IconComponent = cat.icon;
-                const isActive = activeCategory === cat.name;
-                
-                return (
-                  <button
-                    key={cat.name}
-                    onClick={() => handleCategoryChange(cat.name)}
-                    className={`
-                      flex flex-col items-center gap-1 p-3 md:p-4 rounded-xl transition-all duration-200 flex-shrink-0
-                      ${isActive 
-                        ? 'bg-doce-yellow text-doce-brown scale-105 shadow-lg' 
-                        : 'bg-doce-white/10 text-doce-white hover:bg-doce-white/20'
-                      }
-                    `}
-                  >
-                    <div className={`w-10 h-10 md:w-12 md:h-12 ${isActive ? 'bg-doce-brown/20' : cat.color} rounded-full flex items-center justify-center`}>
-                      <IconComponent className={`w-5 h-5 md:w-6 md:h-6 ${isActive ? 'text-doce-brown' : 'text-white'}`} />
-                    </div>
-                    <span className="text-xs md:text-sm font-semibold whitespace-nowrap">
-                      {cat.name}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+        {/* Categories */}
+        <div className="mb-3 md:mb-4 flex-shrink-0">
+          {isMobile ? <MobileCategories /> : <DesktopCategories />}
         </div>
 
-        {/* Product Carousel */}
-        <div className="max-w-xl mx-auto">
-          <Carousel
-            opts={{
-              align: "center",
-              loop: true,
-            }}
-            setApi={setCarouselApi}
-            className="w-full"
-          >
-            <CarouselContent>
-              {currentProducts.map((product) => (
-                <CarouselItem key={product.id}>
-                  <div className="bg-doce-white rounded-2xl shadow-xl overflow-hidden">
-                    {/* Product Image */}
-                    <div className="w-full aspect-square bg-gradient-to-br from-doce-yellow/20 to-doce-yellow/5 flex items-center justify-center p-8">
-                      <img
-                        src={product.image || "/placeholder.svg"}
-                        alt={product.nome}
-                        className="max-h-full max-w-full object-contain"
-                      />
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            
-            {/* Navigation arrows - only on desktop */}
-            {!isMobile && (
-              <>
-                <CarouselPrevious className="left-0 -translate-x-12 bg-doce-white text-doce-brown hover:bg-doce-yellow" />
-                <CarouselNext className="right-0 translate-x-12 bg-doce-white text-doce-brown hover:bg-doce-yellow" />
-              </>
-            )}
-          </Carousel>
+        {/* Product Area - Takes remaining space */}
+        <div className="flex-1 flex flex-col min-h-0">
+          {/* Carousel with Preview */}
+          <div className="relative flex-shrink-0">
+            <Carousel
+              opts={{
+                align: "center",
+                loop: true,
+              }}
+              setApi={setCarouselApi}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {currentProducts.map((product, index) => {
+                  const isActive = index === currentSlide;
+                  return (
+                    <CarouselItem 
+                      key={product.id} 
+                      className={`pl-2 md:pl-4 ${isMobile ? 'basis-[75%]' : 'basis-[50%] md:basis-[40%]'}`}
+                    >
+                      <div 
+                        className={`
+                          bg-doce-white rounded-xl overflow-hidden transition-all duration-300 cursor-pointer
+                          ${isActive 
+                            ? 'shadow-xl scale-100 opacity-100' 
+                            : 'shadow-md scale-95 opacity-60 hover:opacity-80'
+                          }
+                        `}
+                        onClick={() => !isActive && carouselApi?.scrollTo(index)}
+                      >
+                        {/* Product Image - Compact height */}
+                        <div className={`
+                          w-full bg-gradient-to-br from-doce-yellow/20 to-doce-yellow/5 
+                          flex items-center justify-center p-3 md:p-4
+                          ${isMobile ? 'h-28' : 'h-36 md:h-44'}
+                        `}>
+                          <img
+                            src={product.image || "/placeholder.svg"}
+                            alt={product.nome}
+                            className="max-h-full max-w-full object-contain"
+                          />
+                        </div>
+                      </div>
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+              
+              {/* Navigation arrows - Desktop only */}
+              {!isMobile && (
+                <>
+                  <CarouselPrevious className="left-0 -translate-x-4 bg-doce-white text-doce-brown hover:bg-doce-yellow h-8 w-8" />
+                  <CarouselNext className="right-0 translate-x-4 bg-doce-white text-doce-brown hover:bg-doce-yellow h-8 w-8" />
+                </>
+              )}
+            </Carousel>
+          </div>
 
-          {/* Product Info - Below carousel */}
+          {/* Product Info - Below carousel, compact */}
           {currentProduct && (
-            <div className="mt-6 bg-doce-white rounded-2xl p-6 shadow-lg">
-              {/* Product Name */}
-              <h2 className="text-xl md:text-2xl font-bold text-doce-brown text-center mb-2">
-                {currentProduct.nome}
-              </h2>
+            <div className="flex-1 flex flex-col mt-3 md:mt-4 bg-doce-white rounded-xl p-3 md:p-4 shadow-lg min-h-0">
+              {/* Name & Price - Same line on mobile */}
+              <div className="flex items-center justify-between mb-1 md:mb-2 flex-shrink-0">
+                <h2 className="text-base md:text-xl font-bold text-doce-brown truncate flex-1 mr-2">
+                  {currentProduct.nome}
+                </h2>
+                <p className="text-lg md:text-2xl font-bold text-doce-brown whitespace-nowrap">
+                  {currentProduct.preco}
+                </p>
+              </div>
               
-              {/* Price */}
-              <p className="text-2xl md:text-3xl font-bold text-doce-brown text-center mb-3">
-                {currentProduct.preco}
-              </p>
-              
-              {/* Description */}
-              <p className="text-doce-brown/70 text-center text-sm md:text-base mb-6">
+              {/* Description - Limited height */}
+              <p className="text-doce-brown/70 text-xs md:text-sm mb-2 md:mb-3 line-clamp-2 flex-shrink-0">
                 {currentProduct.descricao}
               </p>
 
-              {/* Quantity Selector */}
-              <div className="flex items-center justify-center gap-4 mb-6">
-                <span className="text-doce-brown font-medium">Quantidade:</span>
-                <div className="flex items-center gap-3">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={decreaseQuantity}
-                    className="h-10 w-10 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </Button>
-                  <span className="text-xl font-bold text-doce-brown w-8 text-center">
-                    {quantity}
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={increaseQuantity}
-                    className="h-10 w-10 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </Button>
+              {/* Quantity & Add to Cart - Row layout on mobile */}
+              <div className={`flex items-center gap-3 flex-shrink-0 ${isMobile ? 'flex-row' : 'flex-col'}`}>
+                {/* Quantity Selector */}
+                <div className="flex items-center gap-2">
+                  <span className="text-doce-brown text-xs md:text-sm font-medium">Qtd:</span>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={decreaseQuantity}
+                      className="h-8 w-8 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
+                    >
+                      <Minus className="w-3 h-3" />
+                    </Button>
+                    <span className="text-lg font-bold text-doce-brown w-6 text-center">
+                      {quantity}
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={increaseQuantity}
+                      className="h-8 w-8 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
+                    >
+                      <Plus className="w-3 h-3" />
+                    </Button>
+                  </div>
                 </div>
+
+                {/* Add to Cart Button */}
+                <Button
+                  onClick={handleAddToCart}
+                  className={`${isMobile ? 'flex-1' : 'w-full'} h-10 md:h-12 text-sm md:text-base font-bold rounded-lg text-white`}
+                  style={{ backgroundColor: '#E53935' }}
+                >
+                  ADICIONAR AO CARRINHO
+                </Button>
               </div>
 
-              {/* Add to Cart Button */}
-              <Button
-                onClick={handleAddToCart}
-                className="w-full h-14 text-lg font-bold rounded-xl text-white"
-                style={{ backgroundColor: '#E53935' }}
-              >
-                ADICIONAR AO CARRINHO
-              </Button>
+              {/* Carousel Indicators - Compact */}
+              <div className="flex justify-center gap-1.5 mt-2 md:mt-3 flex-shrink-0">
+                {currentProducts.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => carouselApi?.scrollTo(index)}
+                    className={`h-1.5 rounded-full transition-all duration-200 ${
+                      index === currentSlide 
+                        ? 'bg-doce-brown w-4' 
+                        : 'bg-doce-brown/30 w-1.5 hover:bg-doce-brown/50'
+                    }`}
+                    aria-label={`Ir para produto ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           )}
-
-          {/* Carousel Indicators */}
-          <div className="flex justify-center gap-2 mt-4">
-            {currentProducts.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => carouselApi?.scrollTo(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                  index === currentSlide 
-                    ? 'bg-doce-yellow w-6' 
-                    : 'bg-doce-white/40 hover:bg-doce-white/60'
-                }`}
-                aria-label={`Ir para produto ${index + 1}`}
-              />
-            ))}
-          </div>
         </div>
 
         {/* Quick Order Modal */}

@@ -18,14 +18,14 @@ import { Utensils, Cake, Cookie, Coffee, Sandwich, Star, Minus, Plus, Droplet } 
 type Category = "Mais Pedidos" | "Dia a Dia" | "Bolo" | "Snacks" | "Tradicionais" | "Salgados" | "Bebidas";
 
 // Category configuration
-const categoryConfig: { name: Category; icon: any; color: string }[] = [
-  { name: "Mais Pedidos", icon: Star, color: "bg-amber-500" },
-  { name: "Dia a Dia", icon: Coffee, color: "bg-orange-500" },
-  { name: "Bolo", icon: Cake, color: "bg-pink-500" },
-  { name: "Snacks", icon: Cookie, color: "bg-purple-500" },
-  { name: "Tradicionais", icon: Utensils, color: "bg-yellow-600" },
-  { name: "Salgados", icon: Sandwich, color: "bg-green-600" },
-  { name: "Bebidas", icon: Droplet, color: "bg-blue-500" },
+const categoryConfig: { name: Category; icon: any; color: string; shortName: string }[] = [
+  { name: "Mais Pedidos", icon: Star, color: "bg-amber-500", shortName: "Top" },
+  { name: "Dia a Dia", icon: Coffee, color: "bg-orange-500", shortName: "Dia" },
+  { name: "Bolo", icon: Cake, color: "bg-pink-500", shortName: "Bolo" },
+  { name: "Snacks", icon: Cookie, color: "bg-purple-500", shortName: "Snack" },
+  { name: "Tradicionais", icon: Utensils, color: "bg-yellow-600", shortName: "Trad" },
+  { name: "Salgados", icon: Sandwich, color: "bg-green-600", shortName: "Salg" },
+  { name: "Bebidas", icon: Droplet, color: "bg-blue-500", shortName: "Beb" },
 ];
 
 // IDs dos mais pedidos
@@ -102,7 +102,6 @@ const FazerPedido = () => {
     setActiveCategory(category);
     setCurrentSlide(0);
     setQuantity(1);
-    // Scroll carousel to start
     if (carouselApi) {
       carouselApi.scrollTo(0);
     }
@@ -125,10 +124,10 @@ const FazerPedido = () => {
     
     setInitialCartForModal([cartItem]);
     setQuickOrderOpen(true);
-    setQuantity(1); // Reset quantity after adding
+    setQuantity(1);
   };
 
-  // Handle modal close - reset initial cart
+  // Handle modal close
   const handleModalClose = (open: boolean) => {
     setQuickOrderOpen(open);
     if (!open) {
@@ -136,16 +135,9 @@ const FazerPedido = () => {
     }
   };
 
-  // Go to next slide (for clicking on preview)
-  const goToNextSlide = () => {
-    if (carouselApi) {
-      carouselApi.scrollNext();
-    }
-  };
-
-  // Mobile Categories Component - Icons only, expand on tap
+  // Mobile Categories - All icons visible, active expands with short name
   const MobileCategories = () => (
-    <div className="flex justify-center items-center gap-1 px-2 w-full">
+    <div className="flex justify-between items-center w-full px-1">
       {categoryConfig.map((cat) => {
         const IconComponent = cat.icon;
         const isActive = activeCategory === cat.name;
@@ -155,23 +147,23 @@ const FazerPedido = () => {
             key={cat.name}
             onClick={() => handleCategoryChange(cat.name)}
             className={`
-              flex items-center gap-1.5 rounded-full transition-all duration-300 ease-out
+              flex items-center justify-center rounded-full transition-all duration-200
               ${isActive 
-                ? 'bg-doce-yellow text-doce-brown px-3 py-2 shadow-md' 
-                : 'bg-doce-white/10 text-doce-white p-2 hover:bg-doce-white/20'
+                ? 'bg-doce-yellow px-2.5 py-1.5 gap-1 shadow-md' 
+                : 'p-1.5'
               }
             `}
           >
             <div className={`
-              ${isActive ? 'w-6 h-6' : 'w-8 h-8'} 
+              ${isActive ? 'w-5 h-5' : 'w-7 h-7'} 
               ${isActive ? '' : cat.color} 
-              rounded-full flex items-center justify-center transition-all
+              rounded-full flex items-center justify-center
             `}>
-              <IconComponent className={`${isActive ? 'w-4 h-4' : 'w-4 h-4'} ${isActive ? 'text-doce-brown' : 'text-white'}`} />
+              <IconComponent className={`w-3.5 h-3.5 ${isActive ? 'text-doce-brown' : 'text-white'}`} />
             </div>
             {isActive && (
-              <span className="text-xs font-semibold whitespace-nowrap pr-1 animate-in fade-in slide-in-from-left-2 duration-200">
-                {cat.name}
+              <span className="text-[10px] font-bold text-doce-brown">
+                {cat.shortName}
               </span>
             )}
           </button>
@@ -180,9 +172,9 @@ const FazerPedido = () => {
     </div>
   );
 
-  // Desktop Categories Component
+  // Desktop Categories
   const DesktopCategories = () => (
-    <div className="flex justify-center gap-2">
+    <div className="flex justify-center gap-2 flex-wrap">
       {categoryConfig.map((cat) => {
         const IconComponent = cat.icon;
         const isActive = activeCategory === cat.name;
@@ -192,17 +184,17 @@ const FazerPedido = () => {
             key={cat.name}
             onClick={() => handleCategoryChange(cat.name)}
             className={`
-              flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200
+              flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-200
               ${isActive 
                 ? 'bg-doce-yellow text-doce-brown shadow-lg scale-105' 
                 : 'bg-doce-white/10 text-doce-white hover:bg-doce-white/20'
               }
             `}
           >
-            <div className={`w-8 h-8 ${isActive ? 'bg-doce-brown/20' : cat.color} rounded-full flex items-center justify-center`}>
-              <IconComponent className={`w-4 h-4 ${isActive ? 'text-doce-brown' : 'text-white'}`} />
+            <div className={`w-6 h-6 ${isActive ? 'bg-doce-brown/20' : cat.color} rounded-full flex items-center justify-center`}>
+              <IconComponent className={`w-3 h-3 ${isActive ? 'text-doce-brown' : 'text-white'}`} />
             </div>
-            <span className="text-sm font-semibold whitespace-nowrap">
+            <span className="text-xs font-semibold whitespace-nowrap">
               {cat.name}
             </span>
           </button>
@@ -212,29 +204,29 @@ const FazerPedido = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      {/* Main content - fill available height */}
-      <div className="flex-1 flex flex-col container mx-auto px-3 md:px-4 py-3 md:py-6 max-h-[calc(100vh-64px)] overflow-hidden">
+    <div className="h-[100dvh] bg-background flex flex-col overflow-hidden">
+      {/* Main content - fixed height, no scroll */}
+      <div className="flex-1 flex flex-col px-3 md:px-6 py-2 md:py-4 overflow-hidden">
         
-        {/* Header - Compact */}
-        <div className="text-center mb-3 md:mb-4 flex-shrink-0">
-          <h1 className="text-xl md:text-3xl font-bold text-doce-white">
+        {/* Header - Very compact */}
+        <div className="text-center mb-2 flex-shrink-0">
+          <h1 className="text-lg md:text-2xl font-bold text-doce-white">
             Nosso Cardápio
           </h1>
-          <p className="text-doce-white/70 text-xs md:text-sm">
+          <p className="text-doce-white/70 text-[10px] md:text-xs">
             Explore e faça seu pedido
           </p>
         </div>
 
         {/* Categories */}
-        <div className="mb-3 md:mb-4 flex-shrink-0">
+        <div className="mb-2 md:mb-3 flex-shrink-0">
           {isMobile ? <MobileCategories /> : <DesktopCategories />}
         </div>
 
-        {/* Product Area - Takes remaining space */}
-        <div className="flex-1 flex flex-col min-h-0">
-          {/* Carousel with Preview */}
-          <div className="relative flex-shrink-0">
+        {/* Product Carousel + Info - Takes remaining space */}
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+          {/* Carousel */}
+          <div className="flex-shrink-0 relative">
             <Carousel
               opts={{
                 align: "center",
@@ -243,30 +235,28 @@ const FazerPedido = () => {
               setApi={setCarouselApi}
               className="w-full"
             >
-              <CarouselContent className="-ml-2 md:-ml-4">
+              <CarouselContent className="-ml-2">
                 {currentProducts.map((product, index) => {
                   const isActive = index === currentSlide;
                   return (
                     <CarouselItem 
                       key={product.id} 
-                      className={`pl-2 md:pl-4 ${isMobile ? 'basis-[75%]' : 'basis-[50%] md:basis-[40%]'}`}
+                      className={`pl-2 ${isMobile ? 'basis-[70%]' : 'basis-[45%]'}`}
                     >
                       <div 
                         className={`
-                          bg-doce-white rounded-xl overflow-hidden transition-all duration-300 cursor-pointer
+                          bg-doce-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer
                           ${isActive 
-                            ? 'shadow-xl scale-100 opacity-100' 
-                            : 'shadow-md scale-95 opacity-60 hover:opacity-80'
+                            ? 'shadow-lg scale-100 opacity-100' 
+                            : 'shadow scale-90 opacity-50'
                           }
                         `}
                         onClick={() => !isActive && carouselApi?.scrollTo(index)}
                       >
-                        {/* Product Image - Compact height */}
-                        <div className={`
-                          w-full bg-gradient-to-br from-doce-yellow/20 to-doce-yellow/5 
-                          flex items-center justify-center p-3 md:p-4
-                          ${isMobile ? 'h-28' : 'h-36 md:h-44'}
-                        `}>
+                        {/* Product Image - Compact */}
+                        <div className="w-full aspect-square flex items-center justify-center p-2 bg-gradient-to-br from-doce-yellow/20 to-doce-yellow/5"
+                          style={{ maxHeight: isMobile ? '18vh' : '20vh' }}
+                        >
                           <img
                             src={product.image || "/placeholder.svg"}
                             alt={product.nome}
@@ -282,71 +272,68 @@ const FazerPedido = () => {
               {/* Navigation arrows - Desktop only */}
               {!isMobile && (
                 <>
-                  <CarouselPrevious className="left-0 -translate-x-4 bg-doce-white text-doce-brown hover:bg-doce-yellow h-8 w-8" />
-                  <CarouselNext className="right-0 translate-x-4 bg-doce-white text-doce-brown hover:bg-doce-yellow h-8 w-8" />
+                  <CarouselPrevious className="left-2 bg-doce-white text-doce-brown hover:bg-doce-yellow h-7 w-7" />
+                  <CarouselNext className="right-2 bg-doce-white text-doce-brown hover:bg-doce-yellow h-7 w-7" />
                 </>
               )}
             </Carousel>
           </div>
 
-          {/* Product Info - Below carousel, compact */}
+          {/* Product Info - Compact card below */}
           {currentProduct && (
-            <div className="flex-1 flex flex-col mt-3 md:mt-4 bg-doce-white rounded-xl p-3 md:p-4 shadow-lg min-h-0">
-              {/* Name & Price - Same line on mobile */}
-              <div className="flex items-center justify-between mb-1 md:mb-2 flex-shrink-0">
-                <h2 className="text-base md:text-xl font-bold text-doce-brown truncate flex-1 mr-2">
+            <div className="flex-1 flex flex-col mt-2 bg-doce-white rounded-lg p-3 md:p-4 shadow-lg overflow-hidden">
+              {/* Name & Price */}
+              <div className="flex items-baseline justify-between gap-2 flex-shrink-0">
+                <h2 className="text-sm md:text-lg font-bold text-doce-brown truncate flex-1">
                   {currentProduct.nome}
                 </h2>
-                <p className="text-lg md:text-2xl font-bold text-doce-brown whitespace-nowrap">
+                <p className="text-base md:text-xl font-bold text-doce-brown whitespace-nowrap">
                   {currentProduct.preco}
                 </p>
               </div>
               
-              {/* Description - Limited height */}
-              <p className="text-doce-brown/70 text-xs md:text-sm mb-2 md:mb-3 line-clamp-2 flex-shrink-0">
+              {/* Description - Max 2 lines */}
+              <p className="text-doce-brown/70 text-[11px] md:text-sm line-clamp-2 mt-1 flex-shrink-0">
                 {currentProduct.descricao}
               </p>
 
-              {/* Quantity & Add to Cart - Row layout on mobile */}
-              <div className={`flex items-center gap-3 flex-shrink-0 ${isMobile ? 'flex-row' : 'flex-col'}`}>
-                {/* Quantity Selector */}
-                <div className="flex items-center gap-2">
-                  <span className="text-doce-brown text-xs md:text-sm font-medium">Qtd:</span>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={decreaseQuantity}
-                      className="h-8 w-8 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
-                    >
-                      <Minus className="w-3 h-3" />
-                    </Button>
-                    <span className="text-lg font-bold text-doce-brown w-6 text-center">
-                      {quantity}
-                    </span>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={increaseQuantity}
-                      className="h-8 w-8 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
-                    >
-                      <Plus className="w-3 h-3" />
-                    </Button>
-                  </div>
-                </div>
+              {/* Spacer */}
+              <div className="flex-1 min-h-1" />
 
-                {/* Add to Cart Button */}
+              {/* Quantity Selector - Centered */}
+              <div className="flex items-center justify-center gap-3 mt-2 flex-shrink-0">
                 <Button
-                  onClick={handleAddToCart}
-                  className={`${isMobile ? 'flex-1' : 'w-full'} h-10 md:h-12 text-sm md:text-base font-bold rounded-lg text-white`}
-                  style={{ backgroundColor: '#E53935' }}
+                  variant="outline"
+                  size="icon"
+                  onClick={decreaseQuantity}
+                  className="h-8 w-8 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
                 >
-                  ADICIONAR AO CARRINHO
+                  <Minus className="w-3 h-3" />
+                </Button>
+                <span className="text-lg font-bold text-doce-brown w-8 text-center">
+                  {quantity}
+                </span>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={increaseQuantity}
+                  className="h-8 w-8 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-yellow/20"
+                >
+                  <Plus className="w-3 h-3" />
                 </Button>
               </div>
 
-              {/* Carousel Indicators - Compact */}
-              <div className="flex justify-center gap-1.5 mt-2 md:mt-3 flex-shrink-0">
+              {/* Add to Cart Button - Centered below quantity */}
+              <Button
+                onClick={handleAddToCart}
+                className="w-full max-w-xs mx-auto h-10 text-sm font-bold rounded-lg text-white mt-2 flex-shrink-0"
+                style={{ backgroundColor: '#E53935' }}
+              >
+                ADICIONAR AO CARRINHO
+              </Button>
+
+              {/* Carousel Indicators */}
+              <div className="flex justify-center gap-1.5 mt-2 flex-shrink-0">
                 {currentProducts.map((_, index) => (
                   <button
                     key={index}

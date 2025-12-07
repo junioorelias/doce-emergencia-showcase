@@ -130,9 +130,7 @@ const FazerPedido = () => {
   // Handle modal close
   const handleModalClose = (open: boolean) => {
     setQuickOrderOpen(open);
-    if (!open) {
-      setInitialCartForModal([]);
-    }
+    // Don't clear initialCartForModal on close - cart is managed in modal
   };
 
   // Mobile Categories - All icons visible, active expands with short name
@@ -241,7 +239,7 @@ const FazerPedido = () => {
                   return (
                     <CarouselItem 
                       key={product.id} 
-                      className={`pl-2 ${isMobile ? 'basis-[70%]' : 'basis-[45%]'}`}
+                      className={`pl-2 ${isMobile ? 'basis-[85%]' : 'basis-[50%]'}`}
                     >
                       <div 
                         className={`
@@ -280,55 +278,59 @@ const FazerPedido = () => {
             </Carousel>
           </div>
 
-          {/* Product Info - Auto height based on content */}
+          {/* Product Info - White card with auto height */}
           {currentProduct && (
-            <div className="flex flex-col items-center text-center px-4 mt-3">
-              {/* Name & Price */}
-              <h2 className="text-base md:text-xl font-bold text-doce-white">
-                {currentProduct.nome}
-              </h2>
-              <p className="text-lg md:text-2xl font-bold text-doce-yellow mt-0.5">
-                {currentProduct.preco}
-              </p>
-              
-              {/* Description - Max 2 lines */}
-              <p className="text-doce-white/70 text-xs md:text-sm line-clamp-2 mt-1 max-w-sm">
-                {currentProduct.descricao}
-              </p>
+            <div className="px-4 mt-3">
+              <div className="bg-white rounded-2xl p-4 shadow-lg">
+                {/* Name & Price */}
+                <div className="text-center">
+                  <h2 className="text-base md:text-xl font-bold text-doce-brown">
+                    {currentProduct.nome}
+                  </h2>
+                  <p className="text-lg md:text-2xl font-bold text-doce-red mt-0.5">
+                    {currentProduct.preco}
+                  </p>
+                  
+                  {/* Description - Max 2 lines */}
+                  <p className="text-doce-brown/70 text-xs md:text-sm line-clamp-2 mt-1">
+                    {currentProduct.descricao}
+                  </p>
+                </div>
 
-              {/* Quantity Selector */}
-              <div className="flex items-center justify-center gap-4 mt-3">
+                {/* Quantity Selector */}
+                <div className="flex items-center justify-center gap-4 mt-3">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={decreaseQuantity}
+                    className="h-9 w-9 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-brown/10 bg-transparent"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </Button>
+                  <span className="text-xl font-bold text-doce-brown w-8 text-center">
+                    {quantity}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={increaseQuantity}
+                    className="h-9 w-9 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-brown/10 bg-transparent"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </Button>
+                </div>
+
+                {/* Add to Cart Button */}
                 <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={decreaseQuantity}
-                  className="h-9 w-9 rounded-full border-doce-white/30 text-doce-white hover:bg-doce-white/20 bg-transparent"
+                  onClick={handleAddToCart}
+                  className="w-full h-11 text-sm font-bold rounded-lg text-white mt-3"
+                  style={{ backgroundColor: '#E53935' }}
                 >
-                  <Minus className="w-4 h-4" />
-                </Button>
-                <span className="text-xl font-bold text-doce-white w-8 text-center">
-                  {quantity}
-                </span>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={increaseQuantity}
-                  className="h-9 w-9 rounded-full border-doce-white/30 text-doce-white hover:bg-doce-white/20 bg-transparent"
-                >
-                  <Plus className="w-4 h-4" />
+                  ADICIONAR AO CARRINHO
                 </Button>
               </div>
 
-              {/* Add to Cart Button */}
-              <Button
-                onClick={handleAddToCart}
-                className="w-full max-w-xs h-11 text-sm font-bold rounded-lg text-white mt-3"
-                style={{ backgroundColor: '#E53935' }}
-              >
-                ADICIONAR AO CARRINHO
-              </Button>
-
-              {/* Carousel Indicators */}
+              {/* Carousel Indicators - Outside white card */}
               <div className="flex justify-center gap-1.5 mt-3">
                 {currentProducts.map((_, index) => (
                   <button

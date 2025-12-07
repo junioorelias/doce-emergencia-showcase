@@ -42,10 +42,28 @@ const QuickOrderModal = ({ open, onOpenChange, initialCart, initialStep }: Quick
   const [progress, setProgress] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Handle initial cart and step when modal opens
+  // Handle initial cart - MERGE items instead of replacing
   useEffect(() => {
     if (open && initialCart && initialCart.length > 0 && initialStep) {
-      setCart(initialCart);
+      setCart(prevCart => {
+        const newCart = [...prevCart];
+        
+        initialCart.forEach(newItem => {
+          const existingIndex = newCart.findIndex(item => item.id === newItem.id);
+          if (existingIndex >= 0) {
+            // Item already exists: sum quantities
+            newCart[existingIndex] = {
+              ...newCart[existingIndex],
+              quantidade: newCart[existingIndex].quantidade + newItem.quantidade
+            };
+          } else {
+            // New item: add to cart
+            newCart.push(newItem);
+          }
+        });
+        
+        return newCart;
+      });
       setStep(initialStep);
       // Set progress based on step
       if (initialStep === 3) {
@@ -56,19 +74,17 @@ const QuickOrderModal = ({ open, onOpenChange, initialCart, initialStep }: Quick
     }
   }, [open, initialCart, initialStep]);
 
-  // Reset state when modal closes
+  // Reset step/progress when modal closes, but KEEP cart
   useEffect(() => {
     if (!open) {
-      // Small delay to avoid visual glitch
       setTimeout(() => {
-        if (!initialCart || initialCart.length === 0) {
-          setStep(1);
-          setProgress(2);
-          setSelectedCategory(null);
-        }
+        setStep(1);
+        setProgress(2);
+        setSelectedCategory(null);
+        // Cart is intentionally NOT cleared - persists until order sent
       }, 300);
     }
-  }, [open, initialCart]);
+  }, [open]);
 
   const categories: Category[] = [
     "Mais Pedidos",

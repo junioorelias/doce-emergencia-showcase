@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useCart } from "@/contexts/CartContext";
 import QuickOrderModal from "@/components/QuickOrderModal";
 import { products, Product } from "@/data/products";
-import { CartItem } from "@/lib/orderUtils";
 import { Button } from "@/components/ui/button";
 import { 
   Carousel, 
@@ -14,10 +14,10 @@ import {
   type CarouselApi 
 } from "@/components/ui/carousel";
 import { Utensils, Cake, Cookie, Coffee, Sandwich, Star, Minus, Plus, Droplet } from "lucide-react";
+import { toast } from "sonner";
 
 type Category = "Mais Pedidos" | "Dia a Dia" | "Bolo" | "Snacks" | "Tradicionais" | "Salgados" | "Bebidas";
 
-// Category configuration
 const categoryConfig: { name: Category; icon: any; color: string; shortName: string }[] = [
   { name: "Mais Pedidos", icon: Star, color: "bg-amber-500", shortName: "Top" },
   { name: "Dia a Dia", icon: Coffee, color: "bg-orange-500", shortName: "Dia" },
@@ -28,22 +28,19 @@ const categoryConfig: { name: Category; icon: any; color: string; shortName: str
   { name: "Bebidas", icon: Droplet, color: "bg-blue-500", shortName: "Beb" },
 ];
 
-// IDs dos mais pedidos
 const mostOrderedIds = [1, 2, 6, 9, 19];
 
 const FazerPedido = () => {
   const [searchParams] = useSearchParams();
   const isMobile = useIsMobile();
+  const { addToCart } = useCart();
   
-  // State
   const [activeCategory, setActiveCategory] = useState<Category>("Mais Pedidos");
   const [quantity, setQuantity] = useState(1);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [quickOrderOpen, setQuickOrderOpen] = useState(false);
-  const [initialCartForModal, setInitialCartForModal] = useState<CartItem[]>([]);
 
-  // Get products by category
   const getProductsByCategory = useCallback((category: Category): Product[] => {
     if (category === "Mais Pedidos") {
       return products.filter(p => mostOrderedIds.includes(p.id));
@@ -88,7 +85,7 @@ const FazerPedido = () => {
 
     const onSelect = () => {
       setCurrentSlide(carouselApi.selectedScrollSnap());
-      setQuantity(1); // Reset quantity when slide changes
+      setQuantity(1);
     };
 
     carouselApi.on("select", onSelect);
@@ -97,7 +94,6 @@ const FazerPedido = () => {
     };
   }, [carouselApi]);
 
-  // Handle category change
   const handleCategoryChange = (category: Category) => {
     setActiveCategory(category);
     setCurrentSlide(0);
@@ -107,33 +103,25 @@ const FazerPedido = () => {
     }
   };
 
-  // Quantity handlers
   const increaseQuantity = () => setQuantity(prev => prev + 1);
   const decreaseQuantity = () => setQuantity(prev => prev > 1 ? prev - 1 : 1);
 
-  // Add to cart and open modal
   const handleAddToCart = () => {
     if (!currentProduct) return;
     
-    const cartItem: CartItem = {
+    addToCart({
       id: currentProduct.id,
       nome: currentProduct.nome,
       preco: currentProduct.preco,
       quantidade: quantity
-    };
+    });
     
-    setInitialCartForModal([cartItem]);
+    toast.success(`${currentProduct.nome} adicionado ao carrinho!`);
     setQuickOrderOpen(true);
     setQuantity(1);
   };
 
-  // Handle modal close
-  const handleModalClose = (open: boolean) => {
-    setQuickOrderOpen(open);
-    // Don't clear initialCartForModal on close - cart is managed in modal
-  };
-
-  // Mobile Categories - All icons visible, active expands with short name
+  // Mobile Categories
   const MobileCategories = () => (
     <div className="flex justify-between items-center w-full px-1">
       {categoryConfig.map((cat) => {
@@ -202,29 +190,30 @@ const FazerPedido = () => {
   );
 
   return (
-    <div className="h-[100dvh] bg-background flex flex-col overflow-hidden">
-      {/* Main content - fixed height, no scroll */}
-      <div className="flex-1 flex flex-col px-3 md:px-6 py-2 md:py-4 overflow-hidden">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="flex-1 flex flex-col py-4 md:py-6">
         
-        {/* Header - Very compact */}
-        <div className="text-center mb-2 flex-shrink-0">
-          <h1 className="text-lg md:text-2xl font-bold text-doce-white">
+        {/* Header */}
+        <div className="text-center mb-3 px-4">
+          <h1 className="text-xl md:text-2xl font-bold text-doce-white">
             Nosso Cardápio
           </h1>
-          <p className="text-doce-white/70 text-[10px] md:text-xs">
+          <p className="text-doce-white/70 text-xs md:text-sm">
             Explore e faça seu pedido
           </p>
         </div>
 
-        {/* Categories */}
-        <div className="mb-2 md:mb-3 flex-shrink-0">
-          {isMobile ? <MobileCategories /> : <DesktopCategories />}
+        {/* Categories - Aligned to max-w-2xl */}
+        <div className="mb-4 px-4">
+          <div className="max-w-2xl mx-auto">
+            {isMobile ? <MobileCategories /> : <DesktopCategories />}
+          </div>
         </div>
 
-        {/* Product Carousel + Info - Compact layout */}
-        <div className="flex flex-col">
-          {/* Carousel - Image without white card */}
-          <div className="relative">
+        {/* Product Carousel + Info */}
+        <div className="flex flex-col flex-1">
+          {/* Carousel - Shows previews on sides */}
+          <div className="max-w-2xl mx-auto w-full px-4">
             <Carousel
               opts={{
                 align: "center",
@@ -239,7 +228,7 @@ const FazerPedido = () => {
                   return (
                     <CarouselItem 
                       key={product.id} 
-                      className={`pl-2 ${isMobile ? 'basis-[85%]' : 'basis-[50%]'}`}
+                      className={`pl-2 ${isMobile ? 'basis-[90%]' : 'basis-[85%]'}`}
                     >
                       <div 
                         className={`
@@ -251,15 +240,12 @@ const FazerPedido = () => {
                         `}
                         onClick={() => !isActive && carouselApi?.scrollTo(index)}
                       >
-                        {/* Product Image - Floating, no card */}
-                        <div 
-                          className="w-full flex items-center justify-center"
-                          style={{ height: isMobile ? '22vh' : '24vh' }}
-                        >
+                        {/* Product Image - Square, no frame */}
+                        <div className="w-full aspect-square flex items-center justify-center">
                           <img
                             src={product.image || "/placeholder.svg"}
                             alt={product.nome}
-                            className="max-h-full max-w-full object-contain drop-shadow-lg"
+                            className="w-full h-full object-contain drop-shadow-lg"
                           />
                         </div>
                       </div>
@@ -271,79 +257,84 @@ const FazerPedido = () => {
               {/* Navigation arrows - Desktop only */}
               {!isMobile && (
                 <>
-                  <CarouselPrevious className="left-2 bg-doce-white text-doce-brown hover:bg-doce-yellow h-7 w-7" />
-                  <CarouselNext className="right-2 bg-doce-white text-doce-brown hover:bg-doce-yellow h-7 w-7" />
+                  <CarouselPrevious className="left-0 bg-doce-white text-doce-brown hover:bg-doce-yellow h-8 w-8" />
+                  <CarouselNext className="right-0 bg-doce-white text-doce-brown hover:bg-doce-yellow h-8 w-8" />
                 </>
               )}
             </Carousel>
           </div>
 
-          {/* Product Info - White card with auto height */}
+          {/* Product Info - White card */}
           {currentProduct && (
-            <div className="px-4 mt-3">
-              <div className="bg-white rounded-2xl p-4 shadow-lg">
-                {/* Name & Price */}
-                <div className="text-center">
-                  <h2 className="text-base md:text-xl font-bold text-doce-brown">
-                    {currentProduct.nome}
-                  </h2>
-                  <p className="text-lg md:text-2xl font-bold text-doce-red mt-0.5">
-                    {currentProduct.preco}
-                  </p>
-                  
-                  {/* Description - Max 2 lines */}
-                  <p className="text-doce-brown/70 text-xs md:text-sm line-clamp-2 mt-1">
-                    {currentProduct.descricao}
-                  </p>
+            <div className="px-4 mt-4">
+              <div className="max-w-2xl mx-auto">
+                <div className="bg-white rounded-2xl p-5 shadow-lg">
+                  {/* Name & Price */}
+                  <div className="text-center">
+                    <h2 className="text-lg md:text-xl font-bold text-doce-brown">
+                      {currentProduct.nome}
+                    </h2>
+                    <p className="text-xl md:text-2xl font-bold text-doce-red mt-1">
+                      {currentProduct.preco}
+                    </p>
+                    
+                    {/* Description */}
+                    <p className="text-doce-brown/70 text-sm line-clamp-2 mt-2">
+                      {currentProduct.descricao}
+                    </p>
+                  </div>
+
+                  {/* Quantity Selector */}
+                  <div className="flex items-center justify-center gap-4 mt-4">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={decreaseQuantity}
+                      className="h-10 w-10 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-brown/10 bg-transparent"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                    <span className="text-2xl font-bold text-doce-brown w-10 text-center">
+                      {quantity}
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={increaseQuantity}
+                      className="h-10 w-10 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-brown/10 bg-transparent"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
+
+                  {/* Add to Cart Button - Black, proportional on desktop */}
+                  <div className="mt-4 flex justify-center">
+                    <Button
+                      onClick={handleAddToCart}
+                      className={`h-12 text-sm font-bold rounded-lg text-white bg-black hover:bg-black/90 ${
+                        isMobile ? 'w-full' : 'px-12'
+                      }`}
+                    >
+                      ADICIONAR AO CARRINHO
+                    </Button>
+                  </div>
                 </div>
 
-                {/* Quantity Selector */}
-                <div className="flex items-center justify-center gap-4 mt-3">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={decreaseQuantity}
-                    className="h-9 w-9 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-brown/10 bg-transparent"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </Button>
-                  <span className="text-xl font-bold text-doce-brown w-8 text-center">
-                    {quantity}
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={increaseQuantity}
-                    className="h-9 w-9 rounded-full border-doce-brown/30 text-doce-brown hover:bg-doce-brown/10 bg-transparent"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </Button>
+                {/* Carousel Indicators */}
+                <div className="flex justify-center gap-1.5 mt-4">
+                  {currentProducts.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => carouselApi?.scrollTo(index)}
+                      className={`h-1.5 rounded-full transition-all duration-200 ${
+                        index === currentSlide 
+                          ? 'bg-doce-yellow w-6' 
+                          : 'bg-doce-white/30 w-1.5 hover:bg-doce-white/50'
+                      }`}
+                      aria-label={`Ir para produto ${index + 1}`}
+                    />
+                  ))}
                 </div>
-
-                {/* Add to Cart Button */}
-                <Button
-                  onClick={handleAddToCart}
-                  className="w-full h-11 text-sm font-bold rounded-lg text-white mt-3"
-                  style={{ backgroundColor: '#E53935' }}
-                >
-                  ADICIONAR AO CARRINHO
-                </Button>
-              </div>
-
-              {/* Carousel Indicators - Outside white card */}
-              <div className="flex justify-center gap-1.5 mt-3">
-                {currentProducts.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => carouselApi?.scrollTo(index)}
-                    className={`h-1.5 rounded-full transition-all duration-200 ${
-                      index === currentSlide 
-                        ? 'bg-doce-yellow w-5' 
-                        : 'bg-doce-white/30 w-1.5 hover:bg-doce-white/50'
-                    }`}
-                    aria-label={`Ir para produto ${index + 1}`}
-                  />
-                ))}
               </div>
             </div>
           )}
@@ -352,9 +343,8 @@ const FazerPedido = () => {
         {/* Quick Order Modal */}
         <QuickOrderModal 
           open={quickOrderOpen} 
-          onOpenChange={handleModalClose}
-          initialCart={initialCartForModal.length > 0 ? initialCartForModal : undefined}
-          initialStep={initialCartForModal.length > 0 ? 3 : undefined}
+          onOpenChange={setQuickOrderOpen}
+          initialStep={3}
         />
       </div>
     </div>

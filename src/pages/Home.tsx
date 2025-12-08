@@ -97,7 +97,6 @@ const Home = () => {
       <footer className="container mx-auto px-4 py-6 md:py-8">
         <div className="max-w-2xl mx-auto">
           <div className="bg-doce-gray rounded-2xl p-6 md:p-8 shadow-xl">
-            {/* Logo */}
             <div className="flex justify-center mb-4">
               <img 
                 src="/lovable-uploads/a4a13826-9001-4d9f-aae3-2ad87589ea6d.png" 
@@ -106,7 +105,6 @@ const Home = () => {
               />
             </div>
 
-            {/* Security Text */}
             <div className="text-center mb-4">
               <div className="flex items-center justify-center gap-2 text-doce-white/90 mb-1">
                 <Shield className="w-4 h-4" />
@@ -117,7 +115,6 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Payment Methods */}
             <div className="flex justify-center items-center gap-3 mb-4 pb-4 border-b border-doce-white/10">
               <CreditCard className="w-6 h-6 text-doce-white/70" />
               <span className="text-doce-white/70 text-sm">Pix</span>
@@ -127,7 +124,6 @@ const Home = () => {
               <span className="text-doce-white/70 text-sm">Cartão</span>
             </div>
 
-            {/* Links */}
             <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-doce-white/60 text-xs mb-3">
               <Link to="/politica-privacidade" className="hover:text-doce-white transition-colors">
                 Política de Privacidade
@@ -147,7 +143,6 @@ const Home = () => {
               </a>
             </div>
 
-            {/* Copyright */}
             <p className="text-center text-doce-white/50 text-xs">
               © 2025-2026 Doce Emergência. Todos os direitos reservados.
             </p>

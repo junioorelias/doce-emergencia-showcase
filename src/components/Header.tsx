@@ -92,7 +92,7 @@ const Header = () => {
             </button>
           </Link>
 
-          {/* Mobile Menu */}
+          {/* Mobile Menu - White background, red text */}
           <div className="md:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger className="text-doce-white p-2">
@@ -100,35 +100,35 @@ const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent 
                 align="end" 
-                className="w-56 bg-background border-doce-brown/20"
+                className="w-56 bg-white border-gray-200"
               >
                 <DropdownMenuItem asChild>
-                  <Link to="/" className="w-full cursor-pointer">
+                  <Link to="/" className="w-full cursor-pointer text-red-600 hover:bg-red-50 focus:bg-red-50 focus:text-red-600">
                     HOME
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/fazer-pedido" className="w-full cursor-pointer">
+                  <Link to="/fazer-pedido" className="w-full cursor-pointer text-red-600 hover:bg-red-50 focus:bg-red-50 focus:text-red-600">
                     CARDÁPIO
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/descontos-exclusivos" className="w-full cursor-pointer">
+                  <Link to="/descontos-exclusivos" className="w-full cursor-pointer text-red-600 hover:bg-red-50 focus:bg-red-50 focus:text-red-600">
                     DESCONTOS
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/nossa-historia" className="w-full cursor-pointer">
+                  <Link to="/nossa-historia" className="w-full cursor-pointer text-red-600 hover:bg-red-50 focus:bg-red-50 focus:text-red-600">
                     HISTÓRIA
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/franquia" className="w-full cursor-pointer">
+                  <Link to="/franquia" className="w-full cursor-pointer text-red-600 hover:bg-red-50 focus:bg-red-50 focus:text-red-600">
                     FRANQUIA
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/descontos-exclusivos" className="w-full cursor-pointer">
+                  <Link to="/descontos-exclusivos" className="w-full cursor-pointer text-red-600 hover:bg-red-50 focus:bg-red-50 focus:text-red-600">
                     TORNE-SE MEMBRO
                   </Link>
                 </DropdownMenuItem>

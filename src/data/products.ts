@@ -17,7 +17,7 @@ export const products: Product[] = [
     preco: "R$3,80",
     peso: "20g",
     categoria: "Dia a Dia",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/8B4513/FFFFFF?text=Brigadeiro+Sorte",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ export const products: Product[] = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/5D3A1A/FFFFFF?text=Brigadeiro+Chocolate",
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ export const products: Product[] = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/F5F5DC/333333?text=Beijinho",
   },
   {
     id: 4,
@@ -44,7 +44,7 @@ export const products: Product[] = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/D2691E/FFFFFF?text=Amendoim",
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ export const products: Product[] = [
     preco: "R$5",
     peso: "40g",
     categoria: "Dia a Dia",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/93C572/FFFFFF?text=Pistache",
   },
 
   // Bolo
@@ -64,7 +64,7 @@ export const products: Product[] = [
     preco: "R$11,90",
     peso: "300g",
     categoria: "Bolo",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/DAA520/FFFFFF?text=Cake+Doce+Leite",
   },
   {
     id: 7,
@@ -73,7 +73,7 @@ export const products: Product[] = [
     preco: "R$11,90",
     peso: "300g",
     categoria: "Bolo",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/3C1414/FFFFFF?text=Cake+Chocolate",
   },
   {
     id: 8,
@@ -82,7 +82,7 @@ export const products: Product[] = [
     preco: "R$11,90",
     peso: "300g",
     categoria: "Bolo",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/F5DEB3/333333?text=Cake+Toalha",
   },
 
   // Snacks
@@ -93,7 +93,7 @@ export const products: Product[] = [
     preco: "R$16",
     peso: "100g",
     categoria: "Snacks",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/FFD700/333333?text=Moonrocks+Solo",
   },
   {
     id: 10,
@@ -102,7 +102,7 @@ export const products: Product[] = [
     preco: "R$21",
     peso: "200g",
     categoria: "Snacks",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/FFA500/FFFFFF?text=Moonrocks+Duo",
   },
   {
     id: 11,
@@ -111,7 +111,7 @@ export const products: Product[] = [
     preco: "R$42",
     peso: "400g",
     categoria: "Snacks",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/FF8C00/FFFFFF?text=Moonrocks+Familia",
   },
 
   // Tradicionais
@@ -122,7 +122,7 @@ export const products: Product[] = [
     preco: "R$3,50",
     peso: "73g",
     categoria: "Tradicionais",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/CD853F/FFFFFF?text=Doce+Amendoim",
   },
   {
     id: 13,
@@ -131,7 +131,7 @@ export const products: Product[] = [
     preco: "R$3,50",
     peso: "55g",
     categoria: "Tradicionais",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/FF7F00/FFFFFF?text=Doce+Abobora",
   },
   {
     id: 14,
@@ -140,7 +140,7 @@ export const products: Product[] = [
     preco: "R$3,50",
     peso: "70g",
     categoria: "Tradicionais",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/FFD700/333333?text=Quindim",
   },
   {
     id: 15,
@@ -149,7 +149,7 @@ export const products: Product[] = [
     preco: "R$3,50",
     peso: "70g",
     categoria: "Tradicionais",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/FFFACD/333333?text=Queijadinha",
   },
 
   // Salgados
@@ -160,7 +160,7 @@ export const products: Product[] = [
     preco: "R$27",
     peso: "500g",
     categoria: "Salgados",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/DEB887/333333?text=Baguete+Casadinhos",
   },
   {
     id: 17,
@@ -169,7 +169,7 @@ export const products: Product[] = [
     preco: "R$25",
     peso: "500g",
     categoria: "Salgados",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/228B22/FFFFFF?text=Baguete+Vegetariana",
   },
   {
     id: 18,
@@ -178,7 +178,7 @@ export const products: Product[] = [
     preco: "R$18,90",
     peso: "250g",
     categoria: "Salgados",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/F4A460/FFFFFF?text=Super+Reqhnaze",
   },
 
   // Bebidas
@@ -189,7 +189,7 @@ export const products: Product[] = [
     preco: "R$6",
     peso: "470ml",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/32CD32/FFFFFF?text=Refresko",
   },
   {
     id: 20,
@@ -198,7 +198,7 @@ export const products: Product[] = [
     preco: "R$9",
     peso: "470ml",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/FF6347/FFFFFF?text=Nuku+Juice",
   },
   {
     id: 21,
@@ -207,7 +207,7 @@ export const products: Product[] = [
     preco: "R$17",
     peso: "1L",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/FF4500/FFFFFF?text=Nuku+Juice+1L",
   },
   {
     id: 22,
@@ -216,7 +216,7 @@ export const products: Product[] = [
     preco: "R$4",
     peso: "500ml",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/87CEEB/333333?text=Agua",
   },
   {
     id: 23,
@@ -225,7 +225,7 @@ export const products: Product[] = [
     preco: "R$5",
     peso: "500ml",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/ADD8E6/333333?text=Agua+Gas",
   },
   {
     id: 24,
@@ -234,7 +234,7 @@ export const products: Product[] = [
     preco: "R$6",
     peso: "350ml",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/DC143C/FFFFFF?text=Refrigerante",
   },
   {
     id: 25,
@@ -243,6 +243,6 @@ export const products: Product[] = [
     preco: "R$9",
     peso: "2L",
     categoria: "Bebidas",
-    image: "/placeholder.svg",
+    image: "https://placehold.co/400x400/8B0000/FFFFFF?text=Coca+Cola+2L",
   },
 ];

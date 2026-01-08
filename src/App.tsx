@@ -39,15 +39,8 @@ const App = () => {
     setIsAppReady(true);
   };
 
-  if (showSplash) {
-    return <SplashScreen onComplete={handleSplashComplete} />;
-  }
-
-  if (!isAppReady) {
-    return null; // Prevent flash before splash or content loads
-  }
-
-  return (
+  // Always render content, but show splash overlay on top
+  const mainContent = (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         <TooltipProvider>
@@ -63,7 +56,6 @@ const App = () => {
               <Route path="/nossa-historia" element={<NossaHistoria />} />
               <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
               <Route path="/termos-uso" element={<TermosUso />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
@@ -71,6 +63,23 @@ const App = () => {
       </CartProvider>
     </QueryClientProvider>
   );
+
+  if (showSplash) {
+    return (
+      <>
+        <div style={{ visibility: 'hidden', position: 'absolute', pointerEvents: 'none' }}>
+          {mainContent}
+        </div>
+        <SplashScreen onComplete={handleSplashComplete} />
+      </>
+    );
+  }
+
+  if (!isAppReady) {
+    return null;
+  }
+
+  return mainContent;
 };
 
 export default App;

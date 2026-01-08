@@ -11,8 +11,8 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-      setTimeout(onComplete, 500); // Increased delay for smoother transition
-    }, 2500); // Increased duration to avoid flash
+      setTimeout(onComplete, 300); // Faster transition
+    }, 1500); // Reduced duration for better performance
 
     return () => clearTimeout(timer);
   }, [onComplete]);

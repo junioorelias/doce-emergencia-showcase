@@ -36,13 +36,13 @@ const Home = () => {
               <Carousel setApi={setCarouselApi} opts={{ loop: true }}>
                 <CarouselContent>
                   <CarouselItem>
-                    <img src={bannerRequeijao} alt="Super Requeijão - Mussarela Gratinada - Doce Emergência" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
+                    <img src={bannerRequeijao} alt="Super Requeijão - Mussarela Gratinada - Doce Emergência" className="w-full h-40 md:h-56 object-cover" fetchPriority="high" />
                   </CarouselItem>
                   <CarouselItem>
-                    <img src={bannerBrigadeiro} alt="Tradicional Brigadeiro - Doce Emergência" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
+                    <img src={bannerBrigadeiro} alt="Tradicional Brigadeiro - Doce Emergência" className="w-full h-40 md:h-56 object-cover" />
                   </CarouselItem>
                   <CarouselItem>
-                    <img src={bannerCloseFriends} alt="Descontos Exclusivos Close Friends - Doce Emergência" className="w-full h-40 md:h-56 object-cover" loading="lazy" />
+                    <img src={bannerCloseFriends} alt="Descontos Exclusivos Close Friends - Doce Emergência" className="w-full h-40 md:h-56 object-cover" />
                   </CarouselItem>
                 </CarouselContent>
               </Carousel>

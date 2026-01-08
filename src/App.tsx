@@ -5,17 +5,19 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import Header from "./components/Header";
 import SplashScreen from "./components/SplashScreen";
 import Home from "./pages/Home";
-import FazerPedido from "./pages/FazerPedido";
-import Franquia from "./pages/Franquia";
-import DescontosExclusivos from "./pages/DescontosExclusivos";
-import NossaHistoria from "./pages/NossaHistoria";
-import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
-import TermosUso from "./pages/TermosUso";
-import NotFound from "./pages/NotFound";
+
+// Lazy load non-critical pages
+const FazerPedido = lazy(() => import("./pages/FazerPedido"));
+const Franquia = lazy(() => import("./pages/Franquia"));
+const DescontosExclusivos = lazy(() => import("./pages/DescontosExclusivos"));
+const NossaHistoria = lazy(() => import("./pages/NossaHistoria"));
+const PoliticaPrivacidade = lazy(() => import("./pages/PoliticaPrivacidade"));
+const TermosUso = lazy(() => import("./pages/TermosUso"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -50,13 +52,13 @@ const App = () => {
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/fazer-pedido" element={<FazerPedido />} />
-              <Route path="/franquia" element={<Franquia />} />
-              <Route path="/descontos-exclusivos" element={<DescontosExclusivos />} />
-              <Route path="/nossa-historia" element={<NossaHistoria />} />
-              <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
-              <Route path="/termos-uso" element={<TermosUso />} />
-              <Route path="*" element={<NotFound />} />
+              <Route path="/fazer-pedido" element={<Suspense fallback={null}><FazerPedido /></Suspense>} />
+              <Route path="/franquia" element={<Suspense fallback={null}><Franquia /></Suspense>} />
+              <Route path="/descontos-exclusivos" element={<Suspense fallback={null}><DescontosExclusivos /></Suspense>} />
+              <Route path="/nossa-historia" element={<Suspense fallback={null}><NossaHistoria /></Suspense>} />
+              <Route path="/politica-privacidade" element={<Suspense fallback={null}><PoliticaPrivacidade /></Suspense>} />
+              <Route path="/termos-uso" element={<Suspense fallback={null}><TermosUso /></Suspense>} />
+              <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
             </Routes>
           </BrowserRouter>
         </TooltipProvider>

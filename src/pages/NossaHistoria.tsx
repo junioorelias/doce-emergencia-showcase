@@ -1,4 +1,7 @@
 import heroDoces from "@/assets/hero-doces.jpg";
+import confeitariaConceito from "@/assets/confeitaria-conceito.jpg";
+import founderPhoto from "@/assets/founder-elias.png";
+import { Award, Heart, Sparkles, Users } from "lucide-react";
 
 const NossaHistoria = () => {
   return (
@@ -27,15 +30,24 @@ const NossaHistoria = () => {
           <div className="bg-doce-white rounded-2xl p-8 md:p-12 shadow-xl mb-8">
             
             {/* 1 — Abertura com impacto */}
-            <div className="mb-20">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-doce-brown leading-tight mb-6">
-                A Doce Emergência nasceu<br className="hidden md:block" /> de uma ideia simples:
-              </h1>
-              <p className="text-lg md:text-xl text-doce-brown/80 leading-relaxed max-w-2xl">
-                Levar doces tradicionais, de qualidade e com identidade afetiva<br className="hidden md:block" />
-                a todas as pessoas que enxergam no doce<br className="hidden md:block" />
-                um momento de conforto, celebração ou pausa no dia.
-              </p>
+            <div className="mb-20 flex flex-col md:flex-row gap-8 items-start">
+              <div className="flex-1">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-doce-brown leading-tight mb-6">
+                  A Doce Emergência nasceu<br className="hidden md:block" /> de uma ideia simples:
+                </h1>
+                <p className="text-lg md:text-xl text-doce-brown/80 leading-relaxed max-w-2xl">
+                  Levar doces tradicionais, de qualidade e com identidade afetiva<br className="hidden md:block" />
+                  a todas as pessoas que enxergam no doce<br className="hidden md:block" />
+                  um momento de conforto, celebração ou pausa no dia.
+                </p>
+              </div>
+              <div className="w-full md:w-64 flex-shrink-0">
+                <img 
+                  src={confeitariaConceito} 
+                  alt="Doces artesanais tradicionais" 
+                  className="w-full h-48 md:h-56 object-cover rounded-2xl shadow-lg"
+                />
+              </div>
             </div>
 
             {/* 2 — Bloco emocional */}
@@ -50,15 +62,21 @@ const NossaHistoria = () => {
 
             {/* 3 — Bloco institucional */}
             <div className="mb-20 space-y-6">
-              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                Nossa missão é tornar os clássicos da confeitaria mais acessíveis,<br className="hidden md:block" />
-                mantendo padrão, sabor e consistência.
-              </p>
-              <p className="text-base md:text-lg text-doce-brown/70 leading-relaxed">
-                Trabalhamos com processos organizados,<br className="hidden md:block" />
-                ingredientes selecionados<br className="hidden md:block" />
-                e foco total na experiência do cliente.
-              </p>
+              <div className="flex items-start gap-3">
+                <Award className="w-5 h-5 text-doce-brown/40 mt-1.5 flex-shrink-0" strokeWidth={1.5} />
+                <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                  Nossa missão é tornar os clássicos da confeitaria mais acessíveis,<br className="hidden md:block" />
+                  mantendo padrão, sabor e consistência.
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <Heart className="w-5 h-5 text-doce-brown/40 mt-1.5 flex-shrink-0" strokeWidth={1.5} />
+                <p className="text-base md:text-lg text-doce-brown/70 leading-relaxed">
+                  Trabalhamos com processos organizados,<br className="hidden md:block" />
+                  ingredientes selecionados<br className="hidden md:block" />
+                  e foco total na experiência do cliente.
+                </p>
+              </div>
             </div>
 
             {/* 4 — Encerramento minimalista */}
@@ -84,8 +102,8 @@ const NossaHistoria = () => {
             <div className="flex flex-col md:flex-row gap-8 items-start">
               {/* Photo Placeholder - Fixed Left */}
               <div className="flex flex-col items-center flex-shrink-0 mx-auto md:mx-0">
-                <div className="w-48 aspect-[3/4] bg-doce-brown/10 rounded-2xl flex items-center justify-center mb-4">
-                  <span className="text-doce-brown/40 text-sm text-center px-4">Foto do Fundador</span>
+                <div className="w-48 aspect-[3/4] rounded-2xl overflow-hidden mb-4">
+                  <img src={founderPhoto} alt="Elias Junior - Fundador da Doce Emergência" className="w-full h-full object-cover" />
                 </div>
                 <div className="text-sm text-doce-brown text-center">
                   <span className="font-bold">Elias Junior</span>{" "}

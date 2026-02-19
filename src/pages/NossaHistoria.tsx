@@ -77,7 +77,7 @@ const NossaHistoria = () => {
             
             {/* Title */}
             <h2 className="text-3xl md:text-4xl font-bold text-doce-brown mb-10 text-center">
-              A mente por trás da marca
+              Nosso Fundador
             </h2>
             
             {/* Content with Photo on Left */}
@@ -105,11 +105,20 @@ const NossaHistoria = () => {
               {/* Text Content - Right Side */}
               <div className="flex-1 space-y-6">
                 <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                  Movido por visão, intensidade e criatividade, Elias decidiu criar seu próprio negócio com personalidade. Deixando claro desde o início que seguiria seus instintos — sempre indo além da expectativa e convidando as pessoas a viver boas experiências.
+                  A Doce Emergência é conduzida por um perfil criativo com base em design e produção audiovisual — alguém acostumado a construir marcas, organizar processos e pensar experiência do início ao fim.
                 </p>
                 
                 <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                  Com uma abordagem inquieta e ambiciosa, ele acredita que grandes ideias podem nascer de momentos simples. Provando silenciosamente, que o impossível é apenas questão de opinião — principalmente quando se constrói algo com verdade.
+                  A ideia não começou em um escritório. Começou no contato direto com as pessoas, testando sabores, ajustando detalhes e entendendo, na prática, o que realmente encanta. Cada interação serviu como termômetro para refinar produto, comunicação e posicionamento.
+                </p>
+
+                <p className="text-xl md:text-2xl text-doce-brown leading-loose">
+                  O olhar estético virou padrão.<br />
+                  A experiência virou método.
+                </p>
+
+                <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
+                  Hoje, a marca cresce com estrutura e direção clara — mantendo a mesma atenção aos detalhes que a fizeram ganhar espaço desde o primeiro dia.
                 </p>
               </div>
             </div>

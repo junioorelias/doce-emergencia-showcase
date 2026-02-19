@@ -26,55 +26,47 @@ const NossaHistoria = () => {
           {/* Story Content */}
           <div className="bg-doce-white rounded-2xl p-8 md:p-12 shadow-xl mb-8">
             
-            {/* Title H1 */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-doce-brown leading-tight mb-16 md:mb-20 text-center">
-              Mordida inesquecível
-            </h1>
+            {/* 1 — Abertura com impacto */}
+            <div className="mb-20">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-doce-brown leading-tight mb-6">
+                A Doce Emergência nasceu<br className="hidden md:block" /> de uma ideia simples:
+              </h1>
+              <p className="text-lg md:text-xl text-doce-brown/80 leading-relaxed max-w-2xl">
+                Levar doces tradicionais, de qualidade e com identidade afetiva<br className="hidden md:block" />
+                a todas as pessoas que enxergam no doce<br className="hidden md:block" />
+                um momento de conforto, celebração ou pausa no dia.
+              </p>
+            </div>
 
-            {/* Bloco 1 — Introdução */}
-            <div className="mb-16">
+            {/* 2 — Bloco emocional */}
+            <div className="mb-20 pl-6 border-l-4 border-doce-yellow">
+              <p className="text-xl md:text-2xl text-doce-brown leading-loose">
+                O doce não é apenas produto.<br />
+                É memória.<br />
+                É presente.<br />
+                É cuidado.
+              </p>
+            </div>
+
+            {/* 3 — Bloco institucional */}
+            <div className="mb-20 space-y-6">
               <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                A Doce Emergência nasce na primeira mordida dada no brigadeiro certo — aquele instante que lembra todo mundo de como a vida fica mais leve quando o doce certo aparece na hora exata.
+                Nossa missão é tornar os clássicos da confeitaria mais acessíveis,<br className="hidden md:block" />
+                mantendo padrão, sabor e consistência.
+              </p>
+              <p className="text-base md:text-lg text-doce-brown/70 leading-relaxed">
+                Trabalhamos com processos organizados,<br className="hidden md:block" />
+                ingredientes selecionados<br className="hidden md:block" />
+                e foco total na experiência do cliente.
               </p>
             </div>
 
-            {/* Bloco 2 — Pergunta (destaque/citação) */}
-            <div className="mb-16 pl-6 border-l-4 border-doce-yellow">
-              <p className="text-xl md:text-2xl font-semibold text-doce-brown italic leading-relaxed">
-                A pergunta veio na sequência:<br />
-                "Como posso compartilhar esse sentimento?"
-              </p>
-            </div>
-
-            {/* Bloco 3 — Desenvolvimento */}
-            <div className="mb-16 space-y-8">
-              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                Dai surgiu o projeto. Daquela primeira mordida no brigadeiro de amendoim, nasceu a base de uma marca com identidade forte, qualidade e a missão de entregar esse suspiro que todos merecem no meio da rotina.
-              </p>
-              
-              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                O projeto cresce com estratégia, autenticidade e a convicção de que o simples, quando bem-feito, conquista. Logo ficou evidente:
-              </p>
-            </div>
-
-            {/* Bloco 4 — Destaque central */}
-            <div className="mb-16 bg-doce-yellow/10 rounded-xl p-8 md:p-10">
-              <p className="text-2xl md:text-3xl font-bold text-doce-brown text-center leading-relaxed">
-                Nossos clientes buscam mais do que sabor.
-              </p>
-            </div>
-
-            {/* Bloco 5 — Continuação */}
-            <div className="mb-16">
-              <p className="text-lg md:text-xl text-doce-brown leading-relaxed">
-                Se trata de criar boas memórias e compartilhar momentos de prazer.
-              </p>
-            </div>
-
-            {/* Bloco 6 — Manifesto visual */}
-            <div className="mb-0">
-              <p className="text-xl md:text-2xl lg:text-3xl font-bold text-doce-brown leading-relaxed text-center">
-                Existimos para ser a pausa rápida no meio do caos, atendendo cada "emergência" com o alívio de uma mordida inesquecível.
+            {/* 4 — Encerramento minimalista */}
+            <div className="mb-0 pt-10 border-t border-doce-brown/10">
+              <p className="text-base md:text-lg text-doce-brown/70 leading-relaxed">
+                Em breve, atendimento 24h.<br />
+                Porque algumas emergências não podem esperar —<br />
+                especialmente as mais doces.
               </p>
             </div>
 

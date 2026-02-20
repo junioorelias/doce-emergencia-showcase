@@ -301,7 +301,7 @@ const NossaHistoria = () => {
                   <img
                     src={founderPhoto}
                     alt="Elias Junior — Fundador da Doce Emergência"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top"
                   />
                 </div>
                 <div className="text-center md:text-left">

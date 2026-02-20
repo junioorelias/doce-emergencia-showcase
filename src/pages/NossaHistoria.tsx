@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import historiaHero from "@/assets/historia-hero.jpg";
+import heroDoces from "@/assets/hero-doces.jpg";
 import historiaProcesso from "@/assets/historia-processo.jpg";
 import founderPhoto from "@/assets/founder-elias.png";
 import {
@@ -8,7 +8,6 @@ import {
   Coffee,
   Award,
   Clock,
-  ChevronRight,
   Star,
 } from "lucide-react";
 
@@ -66,49 +65,72 @@ const NossaHistoria = () => {
       ══════════════════════════════════════════ */}
       <section className="relative bg-doce-white overflow-hidden">
         {/* subtle background accent */}
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-doce-brown/[0.03] hidden md:block" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-doce-brown/[0.025] hidden md:block" />
 
-        <div className="container mx-auto px-6 md:px-10 py-16 md:py-24">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center max-w-6xl mx-auto">
+        <div className="container mx-auto px-6 md:px-10 py-16 md:py-28">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center max-w-6xl mx-auto">
 
             {/* Text */}
             <FadeSection>
-              <p className="text-doce-red text-xs font-semibold tracking-[0.2em] uppercase mb-5">
+              <p className="text-doce-red text-xs font-semibold tracking-[0.2em] uppercase mb-6">
                 Nossa História
               </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-doce-brown leading-[1.1] mb-8">
-                Mais do que doces.{" "}
-                <span className="block text-doce-red mt-2">
-                  Pequenos momentos
+
+              {/* Headline principal */}
+              <h1 className="text-4xl md:text-5xl lg:text-[3.4rem] font-extrabold text-doce-brown leading-[1.1] mb-8">
+                Nem todo conforto{" "}
+                <span className="block">vem em palavras.</span>
+                <span className="block text-doce-red mt-2 font-extrabold">
+                  Alguns chegam em forma de doce.
                 </span>
-                que transformam o dia.
               </h1>
-              <p className="text-base md:text-lg text-doce-brown/65 leading-relaxed max-w-lg">
-                A Doce Emergência nasceu de uma ideia simples: levar doces tradicionais, de qualidade e com identidade afetiva, a todas as pessoas que enxergam no doce um momento de conforto, celebração ou pausa no dia.
-              </p>
-              <div className="mt-8 flex items-center gap-2 text-doce-brown/40 text-sm">
-                <ChevronRight className="w-4 h-4" />
-                <span>Conheça a história</span>
+
+              {/* Texto sensorial intermediário */}
+              <div className="space-y-2 mb-8 pl-4 border-l-2 border-doce-brown/10">
+                <p className="text-base md:text-lg text-doce-brown/60 leading-relaxed">
+                  Uma pausa breve.
+                </p>
+                <p className="text-base md:text-lg text-doce-brown/60 leading-relaxed">
+                  Um respiro no meio do dia.
+                </p>
+                <p className="text-base md:text-lg text-doce-brown/60 leading-relaxed">
+                  Um instante capaz de mudar o seu humor.
+                </p>
               </div>
+
+              {/* Frase final — ancoragem emocional */}
+              <p className="text-base md:text-lg text-doce-brown font-semibold leading-relaxed">
+                O sabor é só o começo.{" "}
+                <span className="text-doce-brown/55 font-normal">O que fica é a sensação.</span>
+              </p>
             </FadeSection>
 
             {/* Image */}
             <FadeSection delay={150}>
               <div className="relative">
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-[3/4]">
                   <img
-                    src={historiaHero}
-                    alt="Doces tradicionais Doce Emergência"
-                    className="w-full h-full object-cover"
+                    src={heroDoces}
+                    alt="Mulher saboreando um brigadeiro — momento de prazer e pausa"
+                    className="w-full h-full object-cover object-top"
                   />
                   {/* overlay tint */}
-                  <div className="absolute inset-0 bg-gradient-to-tl from-doce-brown/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-doce-brown/25 via-transparent to-transparent" />
+
+                  {/* micro selo sobre a imagem */}
+                  <div className="absolute bottom-5 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:bottom-6 md:left-6">
+                    <div className="flex items-center gap-2 bg-doce-white/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-doce-brown/8 whitespace-nowrap">
+                      <span className="w-1.5 h-1.5 rounded-full bg-doce-red inline-block" />
+                      <span className="text-doce-brown text-xs font-medium tracking-wide">
+                        feito para desacelerar o seu dia
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                {/* floating badge */}
-                <div className="absolute -bottom-5 -left-5 bg-doce-yellow rounded-2xl px-5 py-4 shadow-xl flex items-center gap-3">
-                  <Star className="w-4 h-4 text-doce-brown" fill="currentColor" strokeWidth={0} />
-                  <span className="text-doce-brown font-bold text-sm">Doces Artesanais</span>
-                </div>
+
+                {/* accent decorative block */}
+                <div className="absolute -top-4 -right-4 w-20 h-20 rounded-2xl bg-doce-yellow/20 -z-10 hidden md:block" />
+                <div className="absolute -bottom-4 -left-4 w-14 h-14 rounded-xl bg-doce-red/8 -z-10 hidden md:block" />
               </div>
             </FadeSection>
           </div>

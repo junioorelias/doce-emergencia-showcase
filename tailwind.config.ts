@@ -57,6 +57,7 @@ export default {
 				'doce-yellow': 'hsl(var(--doce-yellow))',
 				'doce-brown': 'hsl(var(--doce-brown))',
 				'doce-gray': 'hsl(var(--doce-gray))',
+				'doce-green': 'hsl(var(--doce-green))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
